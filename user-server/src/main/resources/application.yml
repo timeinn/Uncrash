@@ -1,0 +1,35 @@
+server:
+  port: 18500
+spring:
+  application:
+    name: CORE-USER-CENTER
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/uncrash?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
+    username: root
+    password: 123456
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+    asyncInit: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+uncrash:
+  authorize:
+    two-factor:
+      enable: false

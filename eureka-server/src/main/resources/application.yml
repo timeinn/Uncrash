@@ -1,0 +1,13 @@
+server:
+  port: 8761
+spring:
+  profiles:
+    active: dev
+  application:
+    name: UNCRASH_EUREKA
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      default-zone: http://localhost:${server.port}/eureka
