@@ -188,6 +188,7 @@ public class DefaultBasicAuthorizeDefinition implements AopAuthorizeDefinition {
     public DefaultBasicAuthorizeDefinition() {
     }
 
+    @Override
     public Authentication getAuthentication() {
         return authentication;
     }
@@ -199,18 +200,18 @@ public class DefaultBasicAuthorizeDefinition implements AopAuthorizeDefinition {
     @Override
     public String toString() {
         return "DefaultBasicAuthorizeDefinition{" +
-                "authentication=" + authentication +
-                ", permissionDescription=" + Arrays.toString(permissionDescription) +
-                ", actionDescription=" + Arrays.toString(actionDescription) +
-                ", permissions=" + permissions +
-                ", actions=" + actions +
-                ", roles=" + roles +
-                ", user=" + user +
-                ", message='" + message + '\'' +
-                ", logical=" + logical +
-                ", phased=" + phased +
-                ", targetClass=" + targetClass +
-                ", targetMethod=" + targetMethod +
-                '}';
+            "authentication=" + authentication +
+            ", permissionDescription=" + Arrays.toString(permissionDescription) +
+            ", actionDescription=" + Arrays.toString(actionDescription) +
+            ", permissions=" + permissions +
+            ", actions=" + actions +
+            ", roles=" + roles +
+            ", user=" + user +
+            ", message='" + message + '\'' +
+            ", logical=" + logical +
+            ", phased=" + phased +
+            ", targetClass=" + targetClass +
+            ", targetMethod=" + targetMethod +
+            '}';
     }
 }

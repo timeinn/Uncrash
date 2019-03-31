@@ -90,17 +90,17 @@ public class ClassUtils {
         arrys.add(clazz.getGenericSuperclass());
         arrys.addAll(Arrays.asList(clazz.getGenericInterfaces()));
         return arrys.stream()
-                .filter(Objects::nonNull)
-                .map(type -> {
-                    if (clazz != Object.class && !(type instanceof ParameterizedType)) {
-                        return getGenericType(clazz.getSuperclass(), index);
-                    }
-                    return getGenericTypeByType(((ParameterizedType) type), index);
-                })
-                .filter(Objects::nonNull)
-                .filter(res -> res != Object.class)
-                .findFirst()
-                .orElse((Class) Object.class);
+            .filter(Objects::nonNull)
+            .map(type -> {
+                if (clazz != Object.class && !(type instanceof ParameterizedType)) {
+                    return getGenericType(clazz.getSuperclass(), index);
+                }
+                return getGenericTypeByType(((ParameterizedType) type), index);
+            })
+            .filter(Objects::nonNull)
+            .filter(res -> res != Object.class)
+            .findFirst()
+            .orElse((Class) Object.class);
     }
 
     /**
@@ -115,18 +115,27 @@ public class ClassUtils {
 
 
     public static boolean instanceOf(Class clazz, Class target) {
-        if (clazz == null) return false;
-        if (clazz == target) return true;
+        if (clazz == null) {
+            return false;
+        }
+        if (clazz == target) {
+            return true;
+        }
         if (target.isInterface()) {
             for (Class aClass : clazz.getInterfaces()) {
-                if (aClass == target) return true;
+                if (aClass == target) {
+                    return true;
+                }
             }
         }
-        if (clazz.getSuperclass() == target) return true;
-        else {
+        if (clazz.getSuperclass() == target) {
+            return true;
+        } else {
             if (clazz.isInterface()) {
                 for (Class aClass : clazz.getInterfaces()) {
-                    if (instanceOf(aClass, target)) return true;
+                    if (instanceOf(aClass, target)) {
+                        return true;
+                    }
                 }
             }
             return instanceOf(clazz.getSuperclass(), target);
@@ -143,7 +152,9 @@ public class ClassUtils {
      * @return 转换后的值
      */
     public static final <T> T cast(Object value, Class<T> type) {
-        if (value == null) return null;
+        if (value == null) {
+            return null;
+        }
         Object newVal = null;
         if (ClassUtils.instanceOf(value.getClass(), type)) {
             newVal = value;
@@ -160,8 +171,9 @@ public class ClassUtils {
         } else if (type == String.class) {
             if (value instanceof Date) {
                 // newVal = DateTimeUtils.format(((Date) value), DateTimeUtils.YEAR_MONTH_DAY_HOUR_MINUTE_SECOND);
-            } else
+            } else {
                 newVal = String.valueOf(value);
+            }
         }
         return (T) newVal;
     }

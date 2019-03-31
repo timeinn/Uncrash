@@ -9,10 +9,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Project: sweb-framework.
- * Date: 2017/10/15 20:59
+ * String Utilities
  *
- * https://github.com/hs-web/hsweb-utils/blob/3.0/src/main/java/org/hswebframework/utils/StringUtils.java
+ * @author Sendya
  */
 public class StringUtils {
 
@@ -43,9 +42,9 @@ public class StringUtils {
      * @return 转换后的字符串
      */
     public static String toLowerCaseFirstOne(String str) {
-        if (Character.isLowerCase(str.charAt(0)))
+        if (Character.isLowerCase(str.charAt(0))) {
             return str;
-        else {
+        } else {
             char[] chars = str.toCharArray();
             chars[0] = Character.toLowerCase(chars[0]);
             return new String(chars);
@@ -59,9 +58,9 @@ public class StringUtils {
      * @return 转换后的字符串
      */
     public static String toUpperCaseFirstOne(String str) {
-        if (Character.isUpperCase(str.charAt(0)))
+        if (Character.isUpperCase(str.charAt(0))) {
             return str;
-        else {
+        } else {
             char[] chars = str.toCharArray();
             chars[0] = Character.toUpperCase(chars[0]);
             return new String(chars);
@@ -75,7 +74,9 @@ public class StringUtils {
      * @return 驼峰命名格式
      */
     public static String underScoreCase2CamelCase(String str) {
-        if (!str.contains("_")) return str;
+        if (!str.contains("_")) {
+            return str;
+        }
         StringBuilder sb = new StringBuilder();
         char[] chars = str.toCharArray();
         boolean hitUnderScore = false;
@@ -140,7 +141,9 @@ public class StringUtils {
     public static String concatSpiltWith(String split, Object... more) {
         StringBuilder buf = new StringBuilder();
         for (int i = 0; i < more.length; i++) {
-            if (i != 0) buf.append(split);
+            if (i != 0) {
+                buf.append(split);
+            }
             buf.append(more[i]);
         }
         return buf.toString();
@@ -190,7 +193,9 @@ public class StringUtils {
     public static boolean containsChineseChar(String str) {
         char[] chars = str.toCharArray();
         for (char aChar : chars) {
-            if (aChar >= CN_CHAR_START && aChar <= CN_CHAR_END) return true;
+            if (aChar >= CN_CHAR_START && aChar <= CN_CHAR_END) {
+                return true;
+            }
         }
         return false;
     }
@@ -198,7 +203,7 @@ public class StringUtils {
     public static boolean isBlank(CharSequence cs) {
         int strLen;
         if (cs != null && (strLen = cs.length()) != 0) {
-            for(int i = 0; i < strLen; ++i) {
+            for (int i = 0; i < strLen; ++i) {
                 if (!Character.isWhitespace(cs.charAt(i))) {
                     return false;
                 }
@@ -217,7 +222,7 @@ public class StringUtils {
             CharSequence[] arr$ = css;
             int len$ = css.length;
 
-            for(int i$ = 0; i$ < len$; ++i$) {
+            for (int i$ = 0; i$ < len$; ++i$) {
                 CharSequence cs = arr$[i$];
                 if (isBlank(cs)) {
                     return true;
@@ -257,7 +262,9 @@ public class StringUtils {
      * @return 是否是数字
      */
     public static boolean isNumber(Object obj) {
-        if (obj instanceof Number) return true;
+        if (obj instanceof Number) {
+            return true;
+        }
         return isInt(obj) || isDouble(obj);
     }
 
@@ -289,7 +296,7 @@ public class StringUtils {
      */
     public static boolean isDouble(Object obj) {
         return !isNullOrEmpty(obj) && (obj instanceof Double ||
-                obj instanceof Float || compileRegex("[-+]?\\d+\\.\\d+").matcher(obj.toString()).matches());
+            obj instanceof Float || compileRegex("[-+]?\\d+\\.\\d+").matcher(obj.toString()).matches());
     }
 
     /**
@@ -299,7 +306,9 @@ public class StringUtils {
      * @return 是否是一个boolean类型
      */
     public static boolean isBoolean(Object obj) {
-        if (obj instanceof Boolean) return true;
+        if (obj instanceof Boolean) {
+            return true;
+        }
         String strVal = String.valueOf(obj);
         return "true".equalsIgnoreCase(strVal) || "false".equalsIgnoreCase(strVal);
     }
@@ -318,13 +327,14 @@ public class StringUtils {
      * 文本是否为 中国手机号
      *
      * @param telephone
-     * @return  bool
+     * @return bool
      */
     public static boolean isTelephone(String telephone) {
         Pattern pattern = compileRegex("^1[3|4|5|6|7|8][0-9]\\d{8}$");
         Matcher matcher = pattern.matcher(telephone);
-        if (!matcher.matches())
+        if (!matcher.matches()) {
             return false;
+        }
         return true;
     }
 
@@ -336,7 +346,9 @@ public class StringUtils {
      * @return 是否包含
      */
     public static boolean contains(Object arr[], Object... obj) {
-        if (arr == null || obj == null || arr.length == 0) return false;
+        if (arr == null || obj == null || arr.length == 0) {
+            return false;
+        }
         return Arrays.asList(arr).containsAll(Arrays.asList(obj));
     }
 
@@ -348,8 +360,9 @@ public class StringUtils {
      * @return 转换后的值
      */
     public static int toInt(Object object, int defaultValue) {
-        if (object instanceof Number)
+        if (object instanceof Number) {
             return ((Number) object).intValue();
+        }
         if (isInt(object)) {
             return Integer.parseInt(object.toString());
         }
@@ -377,8 +390,9 @@ public class StringUtils {
      * @return 转换后的值
      */
     public static long toLong(Object object, long defaultValue) {
-        if (object instanceof Number)
+        if (object instanceof Number) {
             return ((Number) object).longValue();
+        }
         if (isInt(object)) {
             return Long.parseLong(object.toString());
         }
@@ -406,12 +420,15 @@ public class StringUtils {
      * @return 转换后的值
      */
     public static double toDouble(Object object, double defaultValue) {
-        if (object instanceof Number)
+        if (object instanceof Number) {
             return ((Number) object).doubleValue();
+        }
         if (isNumber(object)) {
             return Double.parseDouble(object.toString());
         }
-        if (null == object) return defaultValue;
+        if (null == object) {
+            return defaultValue;
+        }
         return 0;
     }
 
@@ -454,7 +471,9 @@ public class StringUtils {
      * @return 转换后的字符串
      */
     public static String toString(Object object, String defaultValue) {
-        if (object == null) return defaultValue;
+        if (object == null) {
+            return defaultValue;
+        }
         return String.valueOf(object);
     }
 
@@ -466,25 +485,27 @@ public class StringUtils {
      * @return 分隔后的对象
      */
     public static final String[] toStringAndSplit(Object object, String regex) {
-        if (isNullOrEmpty(object)) return null;
+        if (isNullOrEmpty(object)) {
+            return null;
+        }
         return String.valueOf(object).split(regex);
     }
 
     private static boolean isChinese(char c) {
         Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
         if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
-                || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
-                || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
-                || ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
-                || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
-                || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
+            || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+            || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+            || ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
+            || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
+            || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
             return true;
         }
         return false;
     }
 
     public static boolean isMessyCode(String strName) {
-        Pattern p = Pattern.compile("\\s*|\t*|\r*|\n*");
+        Pattern p = compileRegex("\\s*|\t*|\r*|\n*");
         Matcher m = p.matcher(strName);
         String after = m.replaceAll("");
         String temp = after.replaceAll("\\p{P}", "");

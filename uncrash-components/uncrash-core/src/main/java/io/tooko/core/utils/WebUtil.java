@@ -28,20 +28,21 @@ public class WebUtil {
         return new HttpParameterConverter(object).convert();
     }
 
-    public static Map<String,String> queryStringToMap(String queryString,String charset){
+    public static Map<String, String> queryStringToMap(String queryString, String charset) {
         try {
-            Map<String,String> map = new HashMap<>();
+            Map<String, String> map = new HashMap<>();
 
-            String[] decode = URLDecoder.decode(queryString,charset).split("&");
+            String[] decode = URLDecoder.decode(queryString, charset).split("&");
             for (String keyValue : decode) {
-                String[] kv = keyValue.split("[=]",2);
-                map.put(kv[0],kv.length>1?kv[1]:"");
+                String[] kv = keyValue.split("[=]", 2);
+                map.put(kv[0], kv.length > 1 ? kv[1] : "");
             }
             return map;
         } catch (UnsupportedEncodingException e) {
             throw new UnsupportedOperationException(e);
         }
     }
+
     /**
      * 尝试获取当前请求的HttpServletRequest实例
      *
@@ -82,10 +83,10 @@ public class WebUtil {
     }
 
     static final String[] ipHeaders = {
-            "X-Forwarded-For",
-            "X-Real-IP",
-            "Proxy-Client-IP",
-            "WL-Proxy-Client-IP"
+        "X-Forwarded-For",
+        "X-Real-IP",
+        "Proxy-Client-IP",
+        "WL-Proxy-Client-IP"
     };
 
     /**
@@ -95,7 +96,9 @@ public class WebUtil {
      * @return ip地址
      */
     public static String getIpAddr(HttpServletRequest request) {
-        if (request == null) return "";
+        if (request == null) {
+            return "";
+        }
         for (String ipHeader : ipHeaders) {
             String ip = request.getHeader(ipHeader);
             if (!StringUtils.isEmpty(ip) && !ip.contains("unknown")) {
@@ -116,7 +119,9 @@ public class WebUtil {
      * @return 绝对路径
      */
     public static String getBasePath(HttpServletRequest request) {
-        if (request == null) return "";
+        if (request == null) {
+            return "";
+        }
         String path = request.getContextPath();
         String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
         return basePath;

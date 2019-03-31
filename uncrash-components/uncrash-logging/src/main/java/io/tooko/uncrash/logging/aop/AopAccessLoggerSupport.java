@@ -1,13 +1,13 @@
 package io.tooko.uncrash.logging.aop;
 
 import io.tooko.core.boost.aop.MethodInterceptorHolder;
+import io.tooko.core.utils.WebUtil;
+import io.tooko.core.utils.id.IDGenerator;
 import io.tooko.uncrash.logging.api.AccessLoggerInfo;
 import io.tooko.uncrash.logging.api.AccessLoggerListener;
 import io.tooko.uncrash.logging.api.LoggerDefine;
 import io.tooko.uncrash.logging.api.events.AccessLoggerAfterEvent;
 import io.tooko.uncrash.logging.api.events.AccessLoggerBeforeEvent;
-import io.tooko.core.utils.WebUtil;
-import io.tooko.core.utils.id.IDGenerator;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.aop.support.StaticMethodMatcherPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +32,16 @@ public class AopAccessLoggerSupport extends StaticMethodMatcherPointcutAdvisor {
     private ApplicationEventPublisher eventPublisher;
 
     public AopAccessLoggerSupport addListener(AccessLoggerListener listener) {
-        if (!listeners.contains(listener))
+        if (!listeners.contains(listener)) {
             listeners.add(listener);
+        }
         return this;
     }
 
     public AopAccessLoggerSupport addParser(AccessLoggerParser parser) {
-        if (!loggerParsers.contains(parser))
+        if (!loggerParsers.contains(parser)) {
             loggerParsers.add(parser);
+        }
         return this;
     }
 
@@ -73,10 +75,10 @@ public class AopAccessLoggerSupport extends StaticMethodMatcherPointcutAdvisor {
         info.setId(IDGenerator.MD5.generate());
         info.setRequestTime(System.currentTimeMillis());
         LoggerDefine define = loggerParsers.stream()
-                .filter(parser -> parser.support(ClassUtils.getUserClass(holder.getTarget()), holder.getMethod()))
-                .findAny()
-                .map(parser -> parser.parse(holder))
-                .orElse(null);
+            .filter(parser -> parser.support(ClassUtils.getUserClass(holder.getTarget()), holder.getMethod()))
+            .findAny()
+            .map(parser -> parser.parse(holder))
+            .orElse(null);
 
         if (define != null) {
             info.setAction(define.getAction());

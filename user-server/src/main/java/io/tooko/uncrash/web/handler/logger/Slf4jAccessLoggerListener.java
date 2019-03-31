@@ -1,7 +1,5 @@
 package io.tooko.uncrash.web.handler.logger;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tooko.core.utils.JSONUtil;
 import io.tooko.uncrash.logging.api.AccessLoggerInfo;
 import io.tooko.uncrash.logging.api.events.AccessLoggerAfterEvent;
@@ -15,8 +13,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Serializable;
-import java.util.Map;
 import java.util.stream.Stream;
 
 @Component
@@ -42,7 +38,9 @@ public class Slf4jAccessLoggerListener {
         if (logger.isInfoEnabled()) {
             try {
                 logger.info(JSONUtil.toJSON(info.toSimpleMap(obj -> {
-                    if (Stream.of(EXCLUDES).anyMatch(aClass -> aClass.isInstance(obj))) return obj.getClass().getName();
+                    if (Stream.of(EXCLUDES).anyMatch(aClass -> aClass.isInstance(obj))) {
+                        return obj.getClass().getName();
+                    }
                     return JSONUtil.toJSON(obj);
                 })));
             } catch (Exception e) {

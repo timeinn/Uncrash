@@ -196,8 +196,9 @@ public class AccessLoggerInfo implements Serializable {
         map.put("target", target != null ? target.getName() : "");
         Map<String, Object> parameter = new LinkedHashMap<>(parameters);
         parameter.entrySet().forEach(entry -> {
-            if (entry.getValue() != null)
+            if (entry.getValue() != null) {
                 entry.setValue(objectFilter.apply(entry.getValue()));
+            }
         });
 
         map.put("parameters", parameter);
@@ -208,7 +209,7 @@ public class AccessLoggerInfo implements Serializable {
         map.put("response", objectFilter.apply(response));
         map.put("requestTime", requestTime);
         map.put("responseTime", responseTime);
-        map.put("id",id);
+        map.put("id", id);
         map.put("useTime", responseTime - requestTime);
 
         if (exception != null) {
