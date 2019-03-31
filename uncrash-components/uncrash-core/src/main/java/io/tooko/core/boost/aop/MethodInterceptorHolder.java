@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class MethodInterceptorHolder {
 
-    public static final ParameterNameDiscoverer nameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
+    public static final ParameterNameDiscoverer NAME_DISCOVERER = new LocalVariableTableParameterNameDiscoverer();
 
     private String id;
 
@@ -40,7 +40,7 @@ public class MethodInterceptorHolder {
     public static MethodInterceptorHolder create(MethodInvocation invocation) {
         // String.valueOf(invocation.getMethod().hashCode()).getBytes()
         String id = "";
-        String[] argNames = nameDiscoverer.getParameterNames(invocation.getMethod());
+        String[] argNames = NAME_DISCOVERER.getParameterNames(invocation.getMethod());
         Object[] args = invocation.getArguments();
         Map<String, Object> argMap = new LinkedHashMap<>();
         for (int i = 0, len = args.length; i < len; i++) {

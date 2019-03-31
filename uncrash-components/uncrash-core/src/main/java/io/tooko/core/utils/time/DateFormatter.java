@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 public interface DateFormatter {
 
-    List<DateFormatter> supportFormatter = new ArrayList<>(Arrays.asList(
+    List<DateFormatter> SUPPORT_FORMATTER = new ArrayList<>(Arrays.asList(
         /*
          *常见格式
          * */
@@ -127,7 +127,7 @@ public interface DateFormatter {
         if (null == date) {
             return null;
         }
-        for (DateFormatter formatter : supportFormatter) {
+        for (DateFormatter formatter : SUPPORT_FORMATTER) {
             if (formatter.getPattern().equals(format)) {
                 return formatter.toString(date);
             }
@@ -136,14 +136,14 @@ public interface DateFormatter {
     }
 
     static boolean isSupport(String dateString) {
-        return !(dateString == null || dateString.length() < 4) && supportFormatter.parallelStream().anyMatch(formatter -> formatter.support(dateString));
+        return !(dateString == null || dateString.length() < 4) && SUPPORT_FORMATTER.parallelStream().anyMatch(formatter -> formatter.support(dateString));
     }
 
     static DateFormatter getFormatter(String dateString) {
         if (dateString == null || dateString.length() < 4) {
             return null;
         }
-        for (DateFormatter formatter : supportFormatter) {
+        for (DateFormatter formatter : SUPPORT_FORMATTER) {
             if (formatter.support(dateString)) {
                 return formatter;
             }

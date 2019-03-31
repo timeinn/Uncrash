@@ -1,8 +1,17 @@
 package io.tooko.uncrash.authorization.api.dict;
 
 public enum TokenTypeEnum {
+    /**
+     * Basic
+     */
     BASIC((byte) 0, "基本"),
+    /**
+     * JSON Web Token
+     */
     JWT((byte) 1, "JWT"),
+    /**
+     * Session
+     */
     SESSION((byte) 2, "SESSION");
 
     private Byte value;

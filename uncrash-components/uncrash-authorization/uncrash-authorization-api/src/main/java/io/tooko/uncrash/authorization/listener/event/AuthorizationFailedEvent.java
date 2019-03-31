@@ -29,9 +29,21 @@ public class AuthorizationFailedEvent extends AbstractAuthorizationEvent {
     }
 
     public enum Reason {
+        /**
+         * Password is error
+         */
         PASSWORD_ERROR,
+        /**
+         * User has been disabled
+         */
         USER_DISABLED,
+        /**
+         * User is not exists
+         */
         USER_NOT_EXISTS,
+        /**
+         * Other reason
+         */
         OTHER
     }
 }

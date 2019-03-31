@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class EmptyAuthorizeDefinition implements AuthorizeDefinition {
 
-    public static final EmptyAuthorizeDefinition instance = new EmptyAuthorizeDefinition();
+    public static final EmptyAuthorizeDefinition INSTANCE = new EmptyAuthorizeDefinition();
 
     private EmptyAuthorizeDefinition() {
     }

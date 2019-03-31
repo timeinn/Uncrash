@@ -27,7 +27,7 @@ public final class PasswordBuilder {
      */
     public static String builder(String password, String salt) {
         String str = new StringJoiner(password).add("-").add(salt).toString();
-        return DecriptUtil.MD5(str);
+        return DecriptUtil.md5(str);
     }
 
     /**
@@ -40,7 +40,7 @@ public final class PasswordBuilder {
             return "";
         }
 
-        return DecriptUtil.MD5(password);
+        return DecriptUtil.md5(password);
     }
 
     /**

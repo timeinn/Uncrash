@@ -58,7 +58,7 @@ public @interface Authorize {
      * 验证时机，在方法调用前还是调用后
      * @return
      */
-    Phased phased() default Phased.before;
+    Phased phased() default Phased.BEFORE;
 
     /**
      * 是否忽略，忽略将不进行权限控制

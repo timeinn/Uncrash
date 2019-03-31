@@ -14,31 +14,31 @@ public class HttpParameterConverter {
 
     private String prefix = "";
 
-    private static final Map<Class, Function<Object, String>> convertMap = new HashMap<>();
+    private static final Map<Class, Function<Object, String>> CONVERT_MAP = new HashMap<>();
 
     private static Function<Object, String> defaultConvert = String::valueOf;
 
-    private static final Set<Class> basicClass = new HashSet<>();
+    private static final Set<Class> BASIC_CLASS = new HashSet<>();
 
     static {
-        basicClass.add(int.class);
-        basicClass.add(double.class);
-        basicClass.add(float.class);
-        basicClass.add(byte.class);
-        basicClass.add(short.class);
-        basicClass.add(char.class);
-        basicClass.add(boolean.class);
+        BASIC_CLASS.add(int.class);
+        BASIC_CLASS.add(double.class);
+        BASIC_CLASS.add(float.class);
+        BASIC_CLASS.add(byte.class);
+        BASIC_CLASS.add(short.class);
+        BASIC_CLASS.add(char.class);
+        BASIC_CLASS.add(boolean.class);
 
-        basicClass.add(Integer.class);
-        basicClass.add(Double.class);
-        basicClass.add(Float.class);
-        basicClass.add(Byte.class);
-        basicClass.add(Short.class);
-        basicClass.add(Character.class);
-        basicClass.add(String.class);
-        basicClass.add(Boolean.class);
+        BASIC_CLASS.add(Integer.class);
+        BASIC_CLASS.add(Double.class);
+        BASIC_CLASS.add(Float.class);
+        BASIC_CLASS.add(Byte.class);
+        BASIC_CLASS.add(Short.class);
+        BASIC_CLASS.add(Character.class);
+        BASIC_CLASS.add(String.class);
+        BASIC_CLASS.add(Boolean.class);
 
-        basicClass.add(Date.class);
+        BASIC_CLASS.add(Date.class);
 
 
         putConvert(Date.class, (date) -> DateFormatter.toString(date, "yyyy-MM-dd HH:mm:ss"));
@@ -48,12 +48,12 @@ public class HttpParameterConverter {
 
     @SuppressWarnings("unchecked")
     private static <T> void putConvert(Class<T> type, Function<T, String> convert) {
-        convertMap.put(type, (Function) convert);
+        CONVERT_MAP.put(type, (Function) convert);
 
     }
 
     private String convertValue(Object value) {
-        return convertMap.getOrDefault(value.getClass(), defaultConvert).apply(value);
+        return CONVERT_MAP.getOrDefault(value.getClass(), defaultConvert).apply(value);
     }
 
     @SuppressWarnings("unchecked")
@@ -80,7 +80,7 @@ public class HttpParameterConverter {
         }
         Class type = org.springframework.util.ClassUtils.getUserClass(value);
 
-        if (basicClass.contains(type) || value instanceof Number || value instanceof Enum) {
+        if (BASIC_CLASS.contains(type) || value instanceof Number || value instanceof Enum) {
             parameter.put(getParameterKey(key), convertValue(value));
             return;
         }

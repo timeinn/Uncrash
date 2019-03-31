@@ -82,7 +82,7 @@ public class WebUtil {
         return getHeaders(request);
     }
 
-    static final String[] ipHeaders = {
+    static final String[] IP_HEADERS = {
         "X-Forwarded-For",
         "X-Real-IP",
         "Proxy-Client-IP",
@@ -99,7 +99,7 @@ public class WebUtil {
         if (request == null) {
             return "";
         }
-        for (String ipHeader : ipHeaders) {
+        for (String ipHeader : IP_HEADERS) {
             String ip = request.getHeader(ipHeader);
             if (!StringUtils.isEmpty(ip) && !ip.contains("unknown")) {
                 return ip;

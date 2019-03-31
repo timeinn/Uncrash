@@ -21,7 +21,7 @@ public class DecriptUtil {
 
     private static final String HMAC_SHA1 = "HmacSHA1";
 
-    public static String SHA1(String decrypt) {
+    public static String sha1(String decrypt) {
         try {
             MessageDigest digest = MessageDigest
                     .getInstance("SHA-1");
@@ -45,7 +45,7 @@ public class DecriptUtil {
         return "";
     }
 
-    public static String MD5(String input) {
+    public static String md5(String input) {
         try {
             // 获得MD5摘要算法的 MessageDigest 对象
             MessageDigest mdInst = MessageDigest.getInstance("MD5");

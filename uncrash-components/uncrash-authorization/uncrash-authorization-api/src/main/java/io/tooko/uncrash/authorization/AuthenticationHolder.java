@@ -13,22 +13,22 @@ import java.util.function.Function;
 
 public final class AuthenticationHolder {
 
-    private static final List<AuthenticationSupplier> suppliers = new ArrayList<>();
+    private static final List<AuthenticationSupplier> SUPPLIERS = new ArrayList<>();
 
     private static final String CURRENT_USER_ID_KEY = Authentication.class.getName() + "_current_id";
 
-    private static final ReadWriteLock lock = new ReentrantReadWriteLock();
+    private static final ReadWriteLock LOCK = new ReentrantReadWriteLock();
 
     private static Authentication get(Function<AuthenticationSupplier, Authentication> func) {
-        lock.readLock().lock();
+        LOCK.readLock().lock();
         try {
-            return suppliers.stream()
+            return SUPPLIERS.stream()
                 .map(func)
                 .filter(Objects::nonNull)
                 .findFirst()
                 .orElse(null);
         } finally {
-            lock.readLock().unlock();
+            LOCK.readLock().unlock();
         }
     }
 
@@ -45,11 +45,11 @@ public final class AuthenticationHolder {
     }
 
     public static void addSupplier(AuthenticationSupplier supplier) {
-        lock.writeLock().lock();
+        LOCK.writeLock().lock();
         try {
-            suppliers.add(supplier);
+            SUPPLIERS.add(supplier);
         } finally {
-            lock.writeLock().lock();
+            LOCK.writeLock().lock();
         }
     }
 

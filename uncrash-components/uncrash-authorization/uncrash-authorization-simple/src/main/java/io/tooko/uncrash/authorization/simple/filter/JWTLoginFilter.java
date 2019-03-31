@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 
-    private static final Long timeout = 60 * 60 * 24 * 1000L;
+    private static final Long TIMEOUT = 60 * 60 * 24 * 1000L;
 
     private AuthenticationManager authenticationManager;
 
@@ -72,7 +72,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         String token = Jwts.builder()
                 .setClaims(claims)
                 .setSubject(auth.getName())
-                .setExpiration(new Date(System.currentTimeMillis() + timeout))
+                .setExpiration(new Date(System.currentTimeMillis() + TIMEOUT))
                 .signWith(SignatureAlgorithm.HS256, JwtConst.SIGNING_KEY).compact();
         response.setCharacterEncoding("UTF-8");
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);

@@ -14,23 +14,23 @@ public class ThreadLocalUtils {
     private ThreadLocalUtils() {
     }
 
-    private static final ThreadLocal<Map<String, Object>> local = ThreadLocal.withInitial(HashMap::new);
+    private static final ThreadLocal<Map<String, Object>> LOCAL = ThreadLocal.withInitial(HashMap::new);
 
     public static Map<String, Object> getAll() {
-        return local.get();
+        return LOCAL.get();
     }
 
     public static <T> T put(String key, T value) {
-        local.get().put(key, value);
+        LOCAL.get().put(key, value);
         return value;
     }
 
     public static void remove(String key) {
-        local.get().remove(key);
+        LOCAL.get().remove(key);
     }
 
     public static void clear() {
-        local.remove();
+        LOCAL.remove();
     }
 
     /**
@@ -43,7 +43,7 @@ public class ThreadLocalUtils {
      * @see ClassCastException
      */
     public static <T> T get(String key) {
-        return ((T) local.get().get(key));
+        return ((T) LOCAL.get().get(key));
     }
 
     /**
@@ -52,7 +52,7 @@ public class ThreadLocalUtils {
      * @see Supplier
      */
     public static <T> T get(String key, Supplier<T> supplier) {
-        return ( (T) local.get().computeIfAbsent(key, k -> supplier.get()));
+        return ( (T) LOCAL.get().computeIfAbsent(key, k -> supplier.get()));
     }
 
     /**

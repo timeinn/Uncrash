@@ -178,20 +178,20 @@ public class ClassUtils {
         return (T) newVal;
     }
 
-    public static final Set<Class> basicClass = new HashSet<>();
+    public static final Set<Class> BASIC_CLASS = new HashSet<>();
 
     static {
-        basicClass.add(int.class);
-        basicClass.add(double.class);
-        basicClass.add(float.class);
-        basicClass.add(byte.class);
-        basicClass.add(short.class);
-        basicClass.add(char.class);
-        basicClass.add(String.class);
+        BASIC_CLASS.add(int.class);
+        BASIC_CLASS.add(double.class);
+        BASIC_CLASS.add(float.class);
+        BASIC_CLASS.add(byte.class);
+        BASIC_CLASS.add(short.class);
+        BASIC_CLASS.add(char.class);
+        BASIC_CLASS.add(String.class);
     }
 
     public static boolean isBasicClass(Class clazz) {
-        return basicClass.contains(clazz);
+        return BASIC_CLASS.contains(clazz);
     }
 
 

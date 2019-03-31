@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public interface AopMethodAuthorizeDefinitionParser {
 
-    Set<String> excludeMethodName = new HashSet<>(Arrays.asList("toString", "clone", "hashCode", "getClass"));
+    Set<String> EXCLUDE_METHOD_NAME = new HashSet<>(Arrays.asList("toString", "clone", "hashCode", "getClass"));
 
     /**
      * 解析权限控制定义

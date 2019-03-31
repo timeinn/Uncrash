@@ -44,12 +44,12 @@ public class DefaultAopMethodAuthorizeDefinitionParser implements AopMethodAutho
         Authorize classAuth = AopUtils.findAnnotation(target, Authorize.class);
         Authorize methodAuth = AopUtils.findMethodAnnotation(target, method, Authorize.class);
         if (classAuth == null && methodAuth == null) {
-            cache.put(key, EmptyAuthorizeDefinition.instance);
+            cache.put(key, EmptyAuthorizeDefinition.INSTANCE);
             return null;
         }
 
         if ((methodAuth != null && methodAuth.ignore()) || (classAuth != null && classAuth.ignore())) {
-            cache.put(key, EmptyAuthorizeDefinition.instance);
+            cache.put(key, EmptyAuthorizeDefinition.INSTANCE);
             return null;
         }
 

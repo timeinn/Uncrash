@@ -5,10 +5,10 @@ import java.util.UUID;
 
 public class RandomUtil {
 
-    private static final Random random = new Random();
+    private static final Random RANDOM = new Random();
 
     public static Random getRandom() {
-        return random;
+        return RANDOM;
     }
 
     private static char[] chars = {

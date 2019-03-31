@@ -219,11 +219,10 @@ public class StringUtils {
         if (css == null || css.length <= 0) {
             return true;
         } else {
-            CharSequence[] arr$ = css;
-            int len$ = css.length;
+            int len = css.length;
 
-            for (int i$ = 0; i$ < len$; ++i$) {
-                CharSequence cs = arr$[i$];
+            for (int i = 0; i < len; ++i) {
+                CharSequence cs = css[i];
                 if (isBlank(cs)) {
                     return true;
                 }

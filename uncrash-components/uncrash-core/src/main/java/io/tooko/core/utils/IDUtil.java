@@ -12,7 +12,7 @@ public class IDUtil {
                 String.valueOf(System.nanoTime()).substring(7, 10);
     }
 
-    public static String LongID() {
+    public static String longID() {
         return "";
     }
 

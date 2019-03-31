@@ -36,7 +36,7 @@ public class DefaultBasicAuthorizeDefinition implements AopAuthorizeDefinition {
 
     private Logical logical = Logical.DEFAULT;
 
-    private Phased phased = Phased.before;
+    private Phased phased = Phased.BEFORE;
 
     private Class targetClass;
 
