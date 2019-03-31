@@ -34,7 +34,7 @@ public final class AopUtils {
                 if(aClass==null){
                     continue;
                 }
-                Method ims[] = new Method[1];
+                Method[] ims = new Method[1];
 
                 ReflectionUtils.doWithMethods(aClass, im -> {
                     if (im.getName().equals(method.getName()) && im.getParameterCount() == method.getParameterCount()) {
@@ -89,7 +89,7 @@ public final class AopUtils {
     public static Map<String, Object> getArgsMap(JoinPoint pjp) {
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Map<String, Object> args = new LinkedHashMap<>();
-        String names[] = signature.getParameterNames();
+        String[] names = signature.getParameterNames();
         for (int i = 0, len = names.length; i < len; i++) {
             args.put(names[i], pjp.getArgs()[i]);
         }

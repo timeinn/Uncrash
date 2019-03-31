@@ -344,7 +344,7 @@ public class StringUtils {
      * @param obj 要判断的对象
      * @return 是否包含
      */
-    public static boolean contains(Object arr[], Object... obj) {
+    public static boolean contains(Object[] arr, Object... obj) {
         if (arr == null || obj == null || arr.length == 0) {
             return false;
         }

@@ -148,7 +148,7 @@ public class ResponseMessage<T> implements Serializable {
         }
         fields.forEach(field -> {
             if (field.contains(".")) {
-                String tmp[] = field.split("[.]", 2);
+                String[] tmp = field.split("[.]", 2);
                 try {
                     Field field1 = type.getDeclaredField(tmp[0]);
                     if (field1 != null) {
