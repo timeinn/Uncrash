@@ -18,7 +18,8 @@ import org.springframework.context.annotation.Configuration;
 public class AuthenticationInjector {
 
     @Pointcut("execution(* io.tooko..api.controller..*(io.tooko.uncrash.authorization.AuthenticationUser,..))")
-    public void injectPoint() {}
+    public void injectPoint() {
+    }
 
     @Before(value = "injectPoint() && args(authenticationUser,..)")
     public void beforeController(JoinPoint joinPoint, AuthenticationUser authenticationUser) {

@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 
 /**
  * ThreadLocal 工具类,通过在ThreadLocal存储map信息,来实现在ThreadLocal中维护多个信息
+ *
  * @Author: zhouhao
  */
 @SuppressWarnings("unchecked")
@@ -52,7 +53,7 @@ public class ThreadLocalUtils {
      * @see Supplier
      */
     public static <T> T get(String key, Supplier<T> supplier) {
-        return ( (T) LOCAL.get().computeIfAbsent(key, k -> supplier.get()));
+        return ((T) LOCAL.get().computeIfAbsent(key, k -> supplier.get()));
     }
 
     /**

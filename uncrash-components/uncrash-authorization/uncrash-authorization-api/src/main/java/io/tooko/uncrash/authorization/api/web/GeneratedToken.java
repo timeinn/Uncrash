@@ -7,6 +7,7 @@ public interface GeneratedToken extends Serializable {
 
     /**
      * 响应的数据, 可自定义数据给调用者
+     *
      * @return
      */
     Map<String, Object> getResponse();

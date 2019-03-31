@@ -34,25 +34,41 @@ public class JwtUser implements UserDetails {
         return username;
     }
 
-    // 账号是否未过期
+    /**
+     * 账号是否未过期
+     *
+     * @return
+     */
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
-    // 账号是否未锁定
+    /**
+     * 账号是否未锁定
+     *
+     * @return
+     */
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
-    // 账号凭证是否未过期
+    /**
+     * 账号凭证是否未过期
+     *
+     * @return
+     */
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
-    // 账号是否启用
+    /**
+     * 账号是否启用
+     *
+     * @return
+     */
     @Override
     public boolean isEnabled() {
         return true;

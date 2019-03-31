@@ -39,15 +39,15 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getAuthentication(String token) {
         String result = token.replace(PREFIX, "").trim();
         Claims claims = Jwts.parser()
-                .setSigningKey(JwtConst.SIGNING_KEY)
-                .parseClaimsJws(result)
-                .getBody();
+            .setSigningKey(JwtConst.SIGNING_KEY)
+            .parseClaimsJws(result)
+            .getBody();
         String user = claims.getSubject();
         @SuppressWarnings("unchecked")
         List<String> roles = claims.get("roles", List.class);
         List<SimpleGrantedAuthority> auth = roles.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+            .map(SimpleGrantedAuthority::new)
+            .collect(Collectors.toList());
         if (user != null) {
             return new UsernamePasswordAuthenticationToken(user, null, auth);
         }

@@ -84,8 +84,8 @@ public class AopAuthorizingController extends StaticMethodMatcherPointcutAdvisor
     public boolean matches(Method method, Class<?> aClass) {
 
         boolean support = AopUtils.findAnnotation(aClass, Controller.class) != null
-                || AopUtils.findAnnotation(aClass, RestController.class) != null
-                || AopUtils.findAnnotation(aClass, method, Authorize.class) != null;
+            || AopUtils.findAnnotation(aClass, RestController.class) != null
+            || AopUtils.findAnnotation(aClass, method, Authorize.class) != null;
 
         if (support) {
             logger.trace("Class: {}\tMethod: {}, {}", aClass, method.getName(), method.getParameters());
@@ -101,8 +101,8 @@ public class AopAuthorizingController extends StaticMethodMatcherPointcutAdvisor
 
             logger.info("==definitions==:{}", definitions);
             List<AuthorizeDefinition> definitionList = definitions.stream()
-                    .filter( def -> !def.isEmpty())
-                    .collect(Collectors.toList());
+                .filter(def -> !def.isEmpty())
+                .collect(Collectors.toList());
 
             logger.info("definitionList: {}", definitionList);
 

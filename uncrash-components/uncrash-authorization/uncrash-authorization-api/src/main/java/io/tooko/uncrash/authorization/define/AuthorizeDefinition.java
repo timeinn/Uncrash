@@ -9,7 +9,6 @@ import java.util.Set;
 
 /**
  * 权限控制定义,定义权限控制的方式
- *
  */
 public interface AuthorizeDefinition {
 
@@ -44,6 +43,7 @@ public interface AuthorizeDefinition {
 
     /**
      * 获取完整登陆授权信息
+     *
      * @return
      */
     Authentication getAuthentication();

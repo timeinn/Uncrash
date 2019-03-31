@@ -75,7 +75,7 @@ public class HttpParameterConverter {
         if (value == null) {
             return;
         }
-        if(value instanceof Class){
+        if (value instanceof Class) {
             return;
         }
         Class type = org.springframework.util.ClassUtils.getUserClass(value);

@@ -22,10 +22,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userDao.findByUsername(s);
         return JwtUser.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .authorities(Collections.singleton(new SimpleGrantedAuthority("role")))
-                .build();
+            .id(user.getId())
+            .username(user.getUsername())
+            .password(user.getPassword())
+            .authorities(Collections.singleton(new SimpleGrantedAuthority("role")))
+            .build();
     }
 }

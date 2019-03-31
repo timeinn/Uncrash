@@ -14,9 +14,8 @@ public abstract class AbstractAuthorizationEvent extends ApplicationEvent implem
     private transient Function<String, Object> parameterGetter;
 
     /**
-     *
-     * @param username 用户名
-     * @param password 密码
+     * @param username        用户名
+     * @param password        密码
      * @param parameterGetter 参数获取函数,用户获取授权时传入的参数
      */
     public AbstractAuthorizationEvent(String username, String password, Function<String, Object> parameterGetter) {
@@ -30,7 +29,7 @@ public abstract class AbstractAuthorizationEvent extends ApplicationEvent implem
         this.parameterGetter = parameterGetter;
     }
 
-    public <T>Optional<T> getParameter(String name) {
+    public <T> Optional<T> getParameter(String name) {
         return Optional.ofNullable((T) parameterGetter.apply(name));
     }
 

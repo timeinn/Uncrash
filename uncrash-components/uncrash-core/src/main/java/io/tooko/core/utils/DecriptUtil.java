@@ -3,6 +3,7 @@ package io.tooko.core.utils;
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,10 +13,10 @@ import java.util.Base64;
 /**
  * 加密工具类
  * 目前支持：
- *  1. SHA1
- *  2. MD5
- *  3. AES en/de
- *  4. HMAC_SHA1
+ * 1. SHA1
+ * 2. MD5
+ * 3. AES en/de
+ * 4. HMAC_SHA1
  */
 public class DecriptUtil {
 
@@ -24,7 +25,7 @@ public class DecriptUtil {
     public static String sha1(String decrypt) {
         try {
             MessageDigest digest = MessageDigest
-                    .getInstance("SHA-1");
+                .getInstance("SHA-1");
             digest.update(decrypt.getBytes());
             byte[] messageDigest = digest.digest();
             // Create Hex String
@@ -71,8 +72,6 @@ public class DecriptUtil {
     }
 
 
-
-
     public static final class AES {
 
         static final String CIPHER_INSTANCE = "AES/CBC/PKCS5Padding";
@@ -80,10 +79,8 @@ public class DecriptUtil {
         /**
          * 加密
          *
-         * @param content
-         *            需要加密的内容
-         * @param password
-         *            加密密码
+         * @param content  需要加密的内容
+         * @param password 加密密码
          * @return byte[]
          */
         public static byte[] encrypt(String content, String password) {
@@ -93,24 +90,26 @@ public class DecriptUtil {
                 SecretKey secretKey = keyGenerator.generateKey();
                 byte[] enCodeFormat = secretKey.getEncoded();
                 SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
-                Cipher cipher = Cipher.getInstance(CIPHER_INSTANCE);// 创建密码器
-                byte[] byteContent = content.getBytes("utf-8");
-                cipher.init(Cipher.ENCRYPT_MODE, key);// 初始化
-                return cipher.doFinal(byteContent); // 加密
+                // 创建密码器
+                Cipher cipher = Cipher.getInstance(CIPHER_INSTANCE);
+                byte[] byteContent = content.getBytes(Charset.forName("UTF-8"));
+                // 初始化
+                cipher.init(Cipher.ENCRYPT_MODE, key);
+                // 加密
+                return cipher.doFinal(byteContent);
             } catch (NoSuchAlgorithmException | NoSuchPaddingException
-                    | InvalidKeyException | UnsupportedEncodingException
-                    | IllegalBlockSizeException | BadPaddingException e) {
+                | InvalidKeyException | IllegalBlockSizeException
+                | BadPaddingException e) {
                 e.printStackTrace();
             }
-            return new byte[] {};
+            return new byte[]{};
         }
 
         /**
          * 加密并转换为 Base64 编码
-         * @param content
-         *  待加密内容
-         * @param password
-         *  加密密钥
+         *
+         * @param content  待加密内容
+         * @param password 加密密钥
          * @return String
          */
         public static String encryptBase64(String content, String password) {
@@ -120,10 +119,8 @@ public class DecriptUtil {
         /**
          * 解密
          *
-         * @param content
-         *            待解密内容
-         * @param password
-         *            解密密钥
+         * @param content  待解密内容
+         * @param password 解密密钥
          * @return byte[]
          */
         public static byte[] decrypt(byte[] content, String password) {
@@ -133,24 +130,25 @@ public class DecriptUtil {
                 SecretKey secretKey = keyGenerator.generateKey();
                 byte[] enCodeFormat = secretKey.getEncoded();
                 SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
-                Cipher cipher = Cipher.getInstance(CIPHER_INSTANCE);// 创建密码器
-                cipher.init(Cipher.DECRYPT_MODE, key);// 初始化
-                return cipher.doFinal(content); // 加密
+                // 创建密码器
+                Cipher cipher = Cipher.getInstance(CIPHER_INSTANCE);
+                // 初始化
+                cipher.init(Cipher.DECRYPT_MODE, key);
+                // 加密
+                return cipher.doFinal(content);
             } catch (NoSuchAlgorithmException | NoSuchPaddingException
-                    | InvalidKeyException | IllegalBlockSizeException
-                    | BadPaddingException e) {
+                | InvalidKeyException | IllegalBlockSizeException
+                | BadPaddingException e) {
                 e.printStackTrace();
             }
-            return new byte[] {};
+            return new byte[]{};
         }
 
         /**
          * 解密
          *
-         * @param content
-         *            待解密内容
-         * @param password
-         *            解密密钥
+         * @param content  待解密内容
+         * @param password 解密密钥
          * @return String
          */
         public static String decryptBase64(String content, String password) {

@@ -21,13 +21,13 @@ public class WebUserTokenInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         List<ParsedToken> tokens = tokenParser.stream()
-                .map(parser -> parser.parseToken(request))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+            .map(parser -> parser.parseToken(request))
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
 
         if (tokens.isEmpty()) {
 
-            if ( basicAuthorization && handler instanceof HandlerMethod) {
+            if (basicAuthorization && handler instanceof HandlerMethod) {
                 HandlerMethod method = ((HandlerMethod) handler);
 
             }

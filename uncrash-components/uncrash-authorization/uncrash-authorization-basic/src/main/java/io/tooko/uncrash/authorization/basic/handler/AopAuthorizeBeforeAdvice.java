@@ -48,11 +48,11 @@ public class AopAuthorizeBeforeAdvice implements MethodBeforeAdvice, MethodInter
         log.warn("method: {}", method);
 
         Annotation[][] annotations = method.getParameterAnnotations();
-        for (int i = 0; i < annotations.length ; i++) {
-            for (int j = 0; j < annotations[i].length ; j++) {
+        for (int i = 0; i < annotations.length; i++) {
+            for (int j = 0; j < annotations[i].length; j++) {
                 Annotation annotation = annotations[i][j];
-                if(annotation instanceof Authorize){
-                    Authorize authorize = ((Authorize)annotation);
+                if (annotation instanceof Authorize) {
+                    Authorize authorize = ((Authorize) annotation);
                     String[] permission = authorize.permission();
                     String[] actions = authorize.action();
                     log.warn("permission: {}, actions: {}", permission, actions);

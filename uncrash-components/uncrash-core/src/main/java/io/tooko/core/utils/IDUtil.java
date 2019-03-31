@@ -8,8 +8,8 @@ public class IDUtil {
 
     public static String generate(String machineId) {
         return machineId == null ? "1" : machineId +
-                String.valueOf(System.currentTimeMillis()).substring(1) +
-                String.valueOf(System.nanoTime()).substring(7, 10);
+            String.valueOf(System.currentTimeMillis()).substring(1) +
+            String.valueOf(System.nanoTime()).substring(7, 10);
     }
 
     public static String longID() {

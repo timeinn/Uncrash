@@ -27,6 +27,6 @@ public class AopAuthorizeAutoConfiguration {
     public AopAuthorizingController aopAuthorizingController(AuthorizingHandler authorizingHandler,
                                                              AopMethodAuthorizeDefinitionParser aopMethodAuthorizeDefinitionParser) {
         return new AopAuthorizingController(authorizingHandler,
-                aopMethodAuthorizeDefinitionParser);
+            aopMethodAuthorizeDefinitionParser);
     }
 }

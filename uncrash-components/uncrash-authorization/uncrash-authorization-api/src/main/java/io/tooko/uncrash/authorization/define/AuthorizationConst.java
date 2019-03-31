@@ -10,8 +10,8 @@ public class AuthorizationConst {
 
     public static final String joiner(String token) {
         return new StringJoiner(":")
-                .add(REDIS_KEY)
-                .add(token).toString();
+            .add(REDIS_KEY)
+            .add(token).toString();
     }
 
 }

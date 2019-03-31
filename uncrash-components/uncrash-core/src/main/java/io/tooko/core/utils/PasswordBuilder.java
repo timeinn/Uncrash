@@ -9,10 +9,12 @@ import java.util.StringJoiner;
  */
 public final class PasswordBuilder {
 
-    private PasswordBuilder() {}
+    private PasswordBuilder() {
+    }
 
     /**
      * 创建一个 加密盐
+     *
      * @return
      */
     public static String createSalt() {
@@ -21,6 +23,7 @@ public final class PasswordBuilder {
 
     /**
      * 构建一个带盐的加密 MD5 密码
+     *
      * @param password
      * @param salt
      * @return String
@@ -32,6 +35,7 @@ public final class PasswordBuilder {
 
     /**
      * 构建一个不带盐的加密 MD5 密码
+     *
      * @param password
      * @return String
      */
@@ -45,6 +49,7 @@ public final class PasswordBuilder {
 
     /**
      * 未加密密码 与 加密密码比对
+     *
      * @param password
      * @param lastPassword
      * @return
@@ -65,6 +70,7 @@ public final class PasswordBuilder {
 
     /**
      * 密码加密并检查是否相等
+     *
      * @param password
      * @param salt
      * @param lastPassword

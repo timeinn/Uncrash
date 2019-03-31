@@ -48,7 +48,8 @@ public class DefaultAopMethodAuthorizeDefinitionParser implements AopMethodAutho
             return null;
         }
 
-        if ((methodAuth != null && methodAuth.ignore()) || (classAuth != null && classAuth.ignore())) {
+        boolean isIgnore = (methodAuth != null && methodAuth.ignore()) || (classAuth != null && classAuth.ignore());
+        if (isIgnore) {
             cache.put(key, EmptyAuthorizeDefinition.INSTANCE);
             return null;
         }
@@ -83,12 +84,12 @@ public class DefaultAopMethodAuthorizeDefinitionParser implements AopMethodAutho
         }
 
         logger.info("parsed authorizeDefinition {}.{} => {}.{} permission:{} actions:{}",
-                target.getName(),
-                method.getName(),
-                authorizeDefinition.getPermissionDescription(),
-                authorizeDefinition.getActionDescription(),
-                authorizeDefinition.getPermissions(),
-                authorizeDefinition.getActions());
+            target.getName(),
+            method.getName(),
+            authorizeDefinition.getPermissionDescription(),
+            authorizeDefinition.getActionDescription(),
+            authorizeDefinition.getPermissions(),
+            authorizeDefinition.getActions());
         cache.put(key, authorizeDefinition);
 
         return authorizeDefinition;
@@ -108,7 +109,7 @@ public class DefaultAopMethodAuthorizeDefinitionParser implements AopMethodAutho
     }
 
     class CacheKey {
-        private Class  type;
+        private Class type;
         private Method method;
 
         public CacheKey(Class type, Method method) {

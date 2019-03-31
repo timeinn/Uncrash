@@ -58,8 +58,8 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         return authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>())
-            );
+            new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>())
+        );
     }
 
     @Override
@@ -70,10 +70,10 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         Claims claims = Jwts.claims();
         claims.put("role", auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
         String token = Jwts.builder()
-                .setClaims(claims)
-                .setSubject(auth.getName())
-                .setExpiration(new Date(System.currentTimeMillis() + TIMEOUT))
-                .signWith(SignatureAlgorithm.HS256, JwtConst.SIGNING_KEY).compact();
+            .setClaims(claims)
+            .setSubject(auth.getName())
+            .setExpiration(new Date(System.currentTimeMillis() + TIMEOUT))
+            .signWith(SignatureAlgorithm.HS256, JwtConst.SIGNING_KEY).compact();
         response.setCharacterEncoding("UTF-8");
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         PrintWriter out;

@@ -25,6 +25,7 @@ public interface AuthorizedToken extends ParsedToken {
 
     /**
      * 令牌绑定的用户 ID
+     *
      * @return long
      */
     Long getUserId();

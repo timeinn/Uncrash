@@ -25,6 +25,7 @@ public interface Permission extends Serializable {
     /**
      * 用户对此权限的可操作事件(按钮)
      * 注意: 任何时候都不应该对返回的 Set 进行写操作
+     *
      * @return 如果没有配置返回空 Collections#emptySet(), 不会返回 null.
      */
     Set<String> getActions();

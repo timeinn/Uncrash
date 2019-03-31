@@ -69,13 +69,13 @@ public class ResponseMessage<T> implements Serializable {
 
     public static <T> ResponseMessage<T> ok(T result) {
         return new ResponseMessage<T>()
-                .result(result)
-                .status(200)
-                .putTimeStamp();
+            .result(result)
+            .status(200)
+            .putTimeStamp();
     }
 
     public Map<String, Object> toMap() {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(5);
         map.put("result", this.getResult());
         map.put("message", this.getMessage());
         map.put("status", this.getStatus());
@@ -255,11 +255,11 @@ public class ResponseMessage<T> implements Serializable {
     @Override
     public String toString() {
         return "ResponseMessage{" +
-                "message='" + message + '\'' +
-                ", result=" + result +
-                ", status=" + status +
-                ", timestamp=" + timestamp +
-                ", code='" + code + '\'' +
-                '}';
+            "message='" + message + '\'' +
+            ", result=" + result +
+            ", status=" + status +
+            ", timestamp=" + timestamp +
+            ", code='" + code + '\'' +
+            '}';
     }
 }

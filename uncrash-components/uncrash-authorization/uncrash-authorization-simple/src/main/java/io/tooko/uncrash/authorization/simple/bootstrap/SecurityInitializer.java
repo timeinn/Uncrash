@@ -35,12 +35,12 @@ public class SecurityInitializer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/api/**").authenticated()
-                .anyRequest().permitAll()
-                .and()
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-                .addFilter(new JWTLoginFilter(authenticationManager()))
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .authorizeRequests()
+            .antMatchers("/api/**").authenticated()
+            .anyRequest().permitAll()
+            .and()
+            .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+            .addFilter(new JWTLoginFilter(authenticationManager()))
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 }

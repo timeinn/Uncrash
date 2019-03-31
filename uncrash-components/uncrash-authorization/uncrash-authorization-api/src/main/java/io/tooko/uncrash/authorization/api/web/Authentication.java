@@ -1,7 +1,6 @@
 package io.tooko.uncrash.authorization.api.web;
 
 
-
 import io.tooko.uncrash.authorization.Permission;
 import io.tooko.uncrash.authorization.Role;
 import io.tooko.uncrash.authorization.User;
@@ -36,15 +35,15 @@ public interface Authentication extends Serializable {
             Optional.empty();
         }
         return getPermissions().stream()
-                .filter(permission -> permission.getId().equals(id))
-                .findAny();
+            .filter(permission -> permission.getId().equals(id))
+            .findAny();
     }
 
     default boolean hasPermission(String permissionId, String... actions) {
         return getPermission(permissionId)
-                .filter(permission -> actions.length == 0 ||
-                        permission.getActions().containsAll(Arrays.asList(actions)))
-                .isPresent();
+            .filter(permission -> actions.length == 0 ||
+                permission.getActions().containsAll(Arrays.asList(actions)))
+            .isPresent();
     }
 
     default boolean hasRole(String roleId) {
