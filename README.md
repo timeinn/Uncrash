@@ -3,7 +3,3 @@
 <div align="center">
 Fast website and server uptime monitoring.
 </div>
-
-<div align="center">
-
-</div>
