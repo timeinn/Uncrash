@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>cache</artifactId>
-        <groupId>io.tooko</groupId>
+        <groupId>net.uncrash</groupId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -14,7 +14,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.tooko</groupId>
+            <groupId>net.uncrash</groupId>
             <artifactId>cache-api</artifactId>
             <version>${project.version}</version>
         </dependency>

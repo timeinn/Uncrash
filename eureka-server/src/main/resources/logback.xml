@@ -10,7 +10,7 @@
         </encoder>
     </appender>
 
-    <logger name="io.tooko" level="DEBUG"/>
+    <logger name="net.uncrash" level="DEBUG"/>
 
     <logger name="org.springframework.boot.web.servlet" level="WARN"/>
     <!-- spring boot actuator -->

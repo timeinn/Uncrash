@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>uncrash</artifactId>
-        <groupId>io.tooko</groupId>
+        <groupId>net.uncrash</groupId>
         <version>${revision}</version>
     </parent>
 
@@ -15,33 +15,38 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mariadb.jdbc</groupId>
-            <artifactId>mariadb-java-client</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
         <!-- access logging -->
         <dependency>
-            <groupId>io.tooko</groupId>
+            <groupId>net.uncrash</groupId>
             <artifactId>logging</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- authorization -->
         <dependency>
-            <groupId>io.tooko</groupId>
+            <groupId>net.uncrash</groupId>
             <artifactId>authorization-basic</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -52,7 +57,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>io.tooko.uncrash.EurekaApplication</mainClass>
+                    <mainClass>net.uncrash.UserServerApplication</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
                 <executions>

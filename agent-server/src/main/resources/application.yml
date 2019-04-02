@@ -1,0 +1,11 @@
+server:
+  port: 18505
+
+spring:
+  application:
+    name: uncrash-agent-server
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://dev.uncrash.net:8761/eureka/

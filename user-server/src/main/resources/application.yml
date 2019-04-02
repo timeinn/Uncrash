@@ -3,20 +3,8 @@ server:
 spring:
   application:
     name: uncrash-user-server
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-  datasource:
-    url: jdbc:mariadb://127.0.0.1:3306/uncrash?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
-    username: root
-    password: 123456
+
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
-
-uncrash:
-  authorize:
-    two-factor:
-      enable: false
+      defaultZone: http://dev.uncrash.net:8761/eureka/

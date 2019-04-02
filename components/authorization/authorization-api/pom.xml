@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>authorization</artifactId>
-        <groupId>io.tooko</groupId>
+        <groupId>net.uncrash</groupId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -15,7 +15,7 @@
     <dependencies>
         <!-- core -->
         <dependency>
-            <groupId>io.tooko</groupId>
+            <groupId>net.uncrash</groupId>
             <artifactId>core</artifactId>
             <version>${project.version}</version>
         </dependency>
