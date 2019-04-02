@@ -28,10 +28,13 @@ public class ServerAgentLog {
     private String id;
 
     /**
-     * Agent 监控脚本号
+     * Agent 监控脚本版本号
      */
     private String agent;
 
+    /**
+     * 服务器连接数
+     */
     private Integer connections;
 
     /**
@@ -49,10 +52,19 @@ public class ServerAgentLog {
      */
     private String cpuName;
 
+    /**
+     * 创建时间
+     */
     private LocalDateTime createTime;
 
+    /**
+     * 磁盘总大小
+     */
     private Long diskTotal;
 
+    /**
+     * 磁盘已用大小
+     */
     private Long diskUsage;
 
     /**
@@ -84,6 +96,9 @@ public class ServerAgentLog {
      */
     private Double loadIo;
 
+    /**
+     * 网卡
+     */
     private String nic;
 
     /**
@@ -106,13 +121,15 @@ public class ServerAgentLog {
      */
     private Integer processes;
 
+    /**
+     * 内存总量
+     */
     private Long ramTotal;
 
+    /**
+     * 内存使用量
+     */
     private Long ramUsage;
-
-    private BigInteger rx;
-
-    private Integer rxGap;
 
     /**
      * 用户服务器ID
@@ -124,13 +141,29 @@ public class ServerAgentLog {
      */
     private Integer sessions;
 
+    /**
+     * 交换区大小
+     */
     private Long swapTotal;
 
+    /**
+     * 交换区使用量
+     */
     private Long swapUsage;
 
+    /**
+     * 上传流量 (出网)
+     */
     private BigInteger tx;
 
     private Integer txGap;
+
+    /**
+     * 下载流量 (入网)
+     */
+    private BigInteger rx;
+
+    private Integer rxGap;
 
     /**
      * 开机时长
