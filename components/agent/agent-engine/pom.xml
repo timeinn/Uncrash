@@ -12,4 +12,11 @@
     <artifactId>agent-engine</artifactId>
     <name>Uncrash-Agent-Engine</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>net.uncrash</groupId>
+            <artifactId>agent-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

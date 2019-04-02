@@ -20,4 +20,5 @@
         <module>core</module>
         <module>logging</module>
     </modules>
+
 </project>
