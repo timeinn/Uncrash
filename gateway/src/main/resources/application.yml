@@ -1,0 +1,8 @@
+server:
+  port: 8765
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: uncrash-gateway
