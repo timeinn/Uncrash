@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>gateway-server</artifactId>
+    <artifactId>gateway</artifactId>
     <name>Uncrash-Gateway</name>
 
     <dependencies>
