@@ -2,7 +2,7 @@ server:
   port: 18500
 spring:
   application:
-    name: CORE-USER-CENTER
+    name: uncrash-user-server
   jpa:
     show-sql: true
     hibernate:

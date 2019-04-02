@@ -1,13 +1,17 @@
 server:
   port: 8761
+
 spring:
   profiles:
     active: dev
   application:
-    name: UNCRASH_EUREKA
+    name: uncrash-eureka-server
+
 eureka:
+  instance:
+    hostname: localhost
   client:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      default-zone: http://localhost:${server.port}/eureka
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
