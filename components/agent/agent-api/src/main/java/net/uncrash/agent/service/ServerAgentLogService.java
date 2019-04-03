@@ -11,5 +11,20 @@ import org.springframework.data.domain.Pageable;
  * @date 2019/04/02
  */
 public interface ServerAgentLogService {
+
+    /**
+     * Save server agent log to database
+     *
+     * @param serverAgentLog the log to save
+     * @return the log which saved successful
+     */
+    ServerAgentLog save(ServerAgentLog serverAgentLog);
+
+    /**
+     * Query all server agent logs pageable
+     *
+     * @param pageable Page param
+     * @return server agent log list
+     */
     Page<ServerAgentLog> findAll(Pageable pageable);
 }

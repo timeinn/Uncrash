@@ -53,11 +53,6 @@ public class ServerAgentLog {
     private String cpuName;
 
     /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
-
-    /**
      * 磁盘总大小
      */
     private Long diskTotal;
@@ -169,4 +164,9 @@ public class ServerAgentLog {
      * 开机时长
      */
     private Integer uptime;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
 }
