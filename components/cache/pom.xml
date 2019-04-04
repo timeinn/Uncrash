@@ -17,8 +17,4 @@
         <module>cache-api</module>
         <module>cache-redis</module>
     </modules>
-
-    <dependencies>
-
-    </dependencies>
 </project>

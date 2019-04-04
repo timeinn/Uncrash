@@ -1,7 +1,7 @@
 package net.uncrash.authorization.annotation;
 
-import net.uncrash.authorization.define.Phased;
 import net.uncrash.authorization.define.Logical;
+import net.uncrash.authorization.define.Phased;
 
 import java.lang.annotation.*;
 

@@ -1,9 +1,9 @@
 package net.uncrash.authorization.simple.service;
 
+import lombok.RequiredArgsConstructor;
 import net.uncrash.authorization.simple.dao.UserDao;
 import net.uncrash.authorization.simple.domain.User;
 import net.uncrash.authorization.simple.entity.JwtUser;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

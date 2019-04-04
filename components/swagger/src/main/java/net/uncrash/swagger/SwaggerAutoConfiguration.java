@@ -1,6 +1,7 @@
-package net.uncrash.core.swagger;
+package net.uncrash.swagger;
 
 import com.fasterxml.classmate.TypeResolver;
+import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.schema.AlternateTypeRules;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.schema.WildcardType;
 import springfox.documentation.service.Tag;
@@ -21,8 +23,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.time.LocalDate;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static springfox.documentation.schema.AlternateTypeRules.newRule;
 
 /**
  * Swagger 2 configurations
@@ -57,19 +57,19 @@ public class SwaggerAutoConfiguration {
             .directModelSubstitute(LocalDate.class, String.class)
             .genericModelSubstitutes(ResponseEntity.class)
             .alternateTypeRules(
-                newRule(typeResolver.resolve(DeferredResult.class,
+                AlternateTypeRules.newRule(typeResolver.resolve(DeferredResult.class,
                     typeResolver.resolve(ResponseEntity.class, WildcardType.class)),
                     typeResolver.resolve(WildcardType.class)))
             .useDefaultResponseMessages(false)
             .globalResponseMessage(RequestMethod.GET,
-                newArrayList(new ResponseMessageBuilder()
+                Lists.newArrayList(new ResponseMessageBuilder()
                     .code(500)
                     .message("500 message")
                     .responseModel(new ModelRef("Error"))
                     .build()))
             .enableUrlTemplating(true)
             .globalOperationParameters(
-                newArrayList(new ParameterBuilder()
+                Lists.newArrayList(new ParameterBuilder()
                     .name("someGlobalParameter")
                     .description("Description of someGlobalParameter")
                     .modelRef(new ModelRef("string"))

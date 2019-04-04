@@ -1,10 +1,10 @@
 package net.uncrash.web.controller;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.uncrash.authorization.User;
 import net.uncrash.logging.api.AccessLogger;
 import net.uncrash.web.model.UserRegisterBody;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

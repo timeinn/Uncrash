@@ -4,8 +4,20 @@ server:
 spring:
   application:
     name: uncrash-agent-server
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: jdbc:mariadb://127.0.0.1:3306/uncrash
+    username: root
+    password: 123456
 
 eureka:
   client:
     service-url:
       defaultZone: http://dev.uncrash.net:8761/eureka/
+
+uncrash:
+  swagger2:
+    allow: true

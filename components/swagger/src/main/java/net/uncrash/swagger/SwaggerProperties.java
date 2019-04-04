@@ -1,4 +1,4 @@
-package net.uncrash.core.swagger;
+package net.uncrash.swagger;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -7,13 +7,19 @@ import springfox.documentation.service.Tag;
 
 import java.util.List;
 
+/**
+ * Swagger Properties
+ *
+ * @author Sendya
+ * @date 2019/04/04
+ */
 @Data
 @Configuration
-@ConfigurationProperties(prefix="spring.boot.swagger2")
+@ConfigurationProperties(prefix = "uncrash.swagger2")
 public class SwaggerProperties {
 
     /**
-     * 是否开启
+     * 是否开启Swagger
      */
     private boolean allow;
 

@@ -1,7 +1,7 @@
 package net.uncrash.authorization.define;
 
-import net.uncrash.core.boost.aop.MethodInterceptorContext;
 import net.uncrash.authorization.api.web.Authentication;
+import net.uncrash.core.boost.aop.MethodInterceptorContext;
 
 /**
  * 权限控制上下文

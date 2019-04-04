@@ -1,9 +1,9 @@
 package net.uncrash.web.controller;
 
+import lombok.RequiredArgsConstructor;
 import net.uncrash.authorization.Permission;
 import net.uncrash.authorization.annotation.Authorize;
 import net.uncrash.web.bean.HelloConfig;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

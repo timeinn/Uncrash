@@ -1,8 +1,8 @@
 package net.uncrash.authorization;
 
 
-import net.uncrash.core.utils.ThreadLocalUtils;
 import net.uncrash.authorization.api.web.Authentication;
+import net.uncrash.core.utils.ThreadLocalUtils;
 
 import java.util.ArrayList;
 import java.util.List;

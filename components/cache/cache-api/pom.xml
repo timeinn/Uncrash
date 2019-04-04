@@ -13,6 +13,10 @@
     <name>Uncrash-Cache-API</name>
 
     <dependencies>
-
+        <dependency>
+            <groupId>net.uncrash</groupId>
+            <artifactId>core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

@@ -1,8 +1,8 @@
 package net.uncrash.authorization.basic.handler;
 
+import lombok.extern.slf4j.Slf4j;
 import net.uncrash.authorization.AuthenticationHolder;
 import net.uncrash.authorization.AuthenticationUser;
-import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
