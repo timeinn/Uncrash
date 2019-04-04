@@ -23,3 +23,13 @@ eureka:
 uncrash:
   swagger2:
     enabled: true
+    base-package: net.uncrash.web.controller
+    title: Uncrash REST API
+    description: Fast website and server uptime monitoring.
+    version: v1
+    tos-url: https://uncrash.net/tos
+    contact-name: Uncrash
+    contact-url: https://uncrash.net
+    contact-email: contact@uncrash.net
+    license: MIT
+    licenseUrl: https://opensource.org/licenses/MIT

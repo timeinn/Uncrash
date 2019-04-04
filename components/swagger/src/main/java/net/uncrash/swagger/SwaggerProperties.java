@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.service.Tag;
+import springfox.documentation.service.VendorExtension;
 
 import java.util.List;
 
@@ -37,20 +38,44 @@ public class SwaggerProperties {
      * 说明
      */
     private String description;
+    /**
+     * API 版本
+     */
+    private String version;
+
+    /**
+     * TOS 地址
+     */
+    private String tosUrl;
+
+    /**
+     * 联系人名称
+     */
+    private String contactName;
+
+    /**
+     * 联系人网站
+     */
+    private String contactUrl;
+
+    /**
+     * 联系人邮箱
+     */
+    private String contactEmail;
+
+    /**
+     * 许可证
+     */
+    private String license;
+    /**
+     * 许可证网址
+     */
+    private String licenseUrl;
 
     /**
      * 服务地址
      */
     private String serviceUrl;
-
-    /**
-     * 联系方式
-     */
-    private String contact;
-    /**
-     * API 版本
-     */
-    private String version;
 
     /**
      * API 提供主机
