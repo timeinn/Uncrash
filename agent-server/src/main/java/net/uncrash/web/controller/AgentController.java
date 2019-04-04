@@ -7,14 +7,13 @@ import net.uncrash.agent.domain.AgentData;
 import net.uncrash.agent.domain.ServerAgentLog;
 import net.uncrash.agent.service.ServerAgentLogService;
 import net.uncrash.core.web.model.ResponseMessage;
+import net.uncrash.exception.BadRequestException;
 import net.uncrash.logging.api.AccessLogger;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Optional;
 
 /**
  * Uncrash agent(agent-shell or agent-go) controller
@@ -40,11 +39,7 @@ public class AgentController {
     @PostMapping("/stat")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseMessage<ServerAgentLog> agentStat(AgentData agentData) {
-        Optional<ServerAgentLog> serverAgentLogOpt = agentData.builder();
-        if (serverAgentLogOpt.isPresent()) {
-            return ResponseMessage.ok(serverAgentLogService.save(serverAgentLogOpt.get()));
-        } else {
-            return ResponseMessage.error(400, "Agent data could not be null");
-        }
+        ServerAgentLog serverAgentLog = agentData.builder().orElseThrow(() -> new BadRequestException("Agent data could not be null"));
+        return ResponseMessage.ok(serverAgentLogService.save(serverAgentLog));
     }
 }
