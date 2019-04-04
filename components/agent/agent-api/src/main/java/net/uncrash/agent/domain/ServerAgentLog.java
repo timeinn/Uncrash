@@ -2,14 +2,14 @@ package net.uncrash.agent.domain;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.Type;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
@@ -24,7 +24,11 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "t_server_agent_log")
-public class ServerAgentLog {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ServerAgentLog implements Serializable {
+
+    private static final long serialVersionUID = 5338782707274433472L;
 
     /**
      * Primary key
@@ -49,17 +53,14 @@ public class ServerAgentLog {
      * CPU 核心数
      */
     @ApiModelProperty("CPU 核心数")
-    @Column(precision = 8)
-    @Type(type = "big_decimal")
     private Integer cpuCore;
 
     /**
      * CPU 频率
      */
     @ApiModelProperty("CPU 频率")
-    @Column(precision = 8, scale = 2)
-    @Type(type = "big_decimal")
-    private Double cpuFreq;
+    @Column(precision = 10, scale = 2)
+    private Float cpuFreq;
 
     /**
      * CPU 名称
@@ -101,23 +102,22 @@ public class ServerAgentLog {
      * 系统负载 1|5|15 分钟计
      */
     @ApiModelProperty("系统负载 1|5|15 分钟计")
+    @Column(name = "[load]")
     private String load;
 
     /**
      * CPU 负载
      */
     @ApiModelProperty("CPU 负载")
-    @Column(precision = 8, scale = 2)
-    @Type(type = "big_decimal")
-    private Double loadCpu;
+    @Column(precision = 10, scale = 2)
+    private Float loadCpu;
 
     /**
      * IO 负载
      */
     @ApiModelProperty("IO 负载")
-    @Column(precision = 8, scale = 2)
-    @Type(type = "big_decimal")
-    private Double loadIo;
+    @Column(precision = 10, scale = 2)
+    private Float loadIo;
 
     /**
      * 网卡
@@ -189,6 +189,7 @@ public class ServerAgentLog {
      * 上传流量 (出网)
      */
     @ApiModelProperty("出网流量")
+    @Column(columnDefinition = "bigint(20) comment '出网流量' ")
     private BigInteger tx;
 
     @ApiModelProperty("出网流量Gap")
@@ -198,6 +199,7 @@ public class ServerAgentLog {
      * 下载流量 (入网)
      */
     @ApiModelProperty("入网流量")
+    @Column(columnDefinition = "bigint(20) comment '入网流量' ")
     private BigInteger rx;
 
     @ApiModelProperty("入网流量Gap")

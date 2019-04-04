@@ -1,23 +1,16 @@
 package net.uncrash.exception;
 
-public class BadRequestException extends RuntimeException {
-    private int status = 400;
+/**
+ * Http Code 400 Bad Request
+ * 错误的请求
+ *
+ * 用于任何参数错误时，抛出的异常
+ *
+ * @author Sendya
+ */
+public class BadRequestException extends BusinessException {
 
     public BadRequestException(String message) {
-        this(message, 400);
-    }
-
-    public BadRequestException(String message, int status) {
-        super(message);
-        this.status = status;
-    }
-
-    public BadRequestException(String message, Throwable cause, int status) {
-        super(message, cause);
-        this.status = status;
-    }
-
-    public int getStatus() {
-        return status;
+        super(message, 400);
     }
 }

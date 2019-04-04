@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
  * @author Acris
  * @date 2019/04/02
  */
-public interface ServerAgentLogService {
+public interface ServerAgentLogService extends JpaService<ServerAgentLog, String> {
 
     /**
      * Save server agent log to database

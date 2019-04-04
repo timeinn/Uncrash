@@ -3,6 +3,7 @@ package net.uncrash.core.web.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -21,7 +22,7 @@ public class ResponseMessage<T> implements Serializable {
 
     protected Long timestamp;
 
-    private String code;
+    private String code = "0";
 
     @ApiModelProperty(value = "调用结果消息", name = "message")
     public String getMessage() {
@@ -56,11 +57,17 @@ public class ResponseMessage<T> implements Serializable {
         return error(status, null);
     }
 
+    public static <T> ResponseMessage<T> error(HttpStatus status) { return error(status.value(), status.getReasonPhrase()); }
+
     public static <T> ResponseMessage<T> error(int status, String message) {
         ResponseMessage<T> response = new ResponseMessage<T>();
         response.setMessage(message);
         response.setStatus(status);
         return response.putTimeStamp();
+    }
+
+    public static <T> ResponseMessage<T> error(HttpStatus status, String message) {
+        return error(status.value(), message);
     }
 
     public static <T> ResponseMessage<T> ok() {

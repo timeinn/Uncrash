@@ -2,6 +2,7 @@ package net.uncrash.web.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import net.uncrash.core.web.model.ResponseMessage;
+import net.uncrash.exception.BusinessException;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +19,23 @@ import javax.servlet.http.HttpServletResponse;
 @Order(1)
 public class RestControllerExceptionTranslator {
 
-    @ExceptionHandler(RuntimeException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(BusinessException.class)
     @ResponseBody
-    ResponseEntity handleException(RuntimeException exception, HttpServletResponse response) {
-        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    ResponseEntity handleBusinessException(BusinessException exception) {
         if (exception.getCause() != null) {
             log.error("{}:{}", exception.getMessage(), exception.getCause());
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(exception.getStatus())
+            .body(ResponseMessage.error(exception.getStatus(), exception.getMessage()));
+    }
+
+    @ExceptionHandler(Throwable.class)
+    @ResponseBody
+    ResponseEntity handleException(Exception exception) {
+        if (exception.getCause() != null) {
+            log.error("{}:{}", exception.getMessage(), exception.getCause());
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(ResponseMessage.error(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage()));
     }
 }

@@ -1,12 +1,13 @@
 package net.uncrash.agent.domain;
 
-import sun.management.Agent;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Data
 public class AgentData {
 
     private String token;
@@ -38,7 +39,7 @@ public class AgentData {
             .osArch(data.get(9))
             .cpuName(data.get(10))
             .cpuCore(Integer.valueOf(data.get(11)))
-            .cpuFreq(Double.valueOf(data.get(12)))
+            .cpuFreq(Float.valueOf(data.get(12)))
             .ramTotal(Long.valueOf(data.get(13)))
             .ramUsage(Long.valueOf(data.get(14)))
             .swapTotal(Long.valueOf(data.get(15)))
@@ -54,13 +55,13 @@ public class AgentData {
             .rxGap(Integer.valueOf(data.get(26)))
             .txGap(Integer.valueOf(data.get(27)))
             .load(data.get(28))
-            .loadCpu(Double.valueOf(data.get(29)))
-            .loadIo(Double.valueOf(data.get(30)))
+            .loadCpu(Float.valueOf(data.get(29)))
+            .loadIo(Float.valueOf(data.get(30)))
             .build();
         return Optional.of(agentLog);
     }
 
-    public static List<Process> decodeProcessList(String json) {
+    private static List<Process> decodeProcessList(String json) {
         if (json == null || json.length() == 0) {
             return null;
         }
@@ -84,11 +85,11 @@ public class AgentData {
         return "";
     }
 
-    public static List<DiskLog> decodeDiskList(String json) {
+    private static List<DiskLog> decodeDiskList(String json) {
         if (json == null || json.length() == 0) {
             return null;
         }
-        return Arrays.asList(json.trim().split(";")).stream()
+        return Arrays.stream(json.trim().split(";"))
             .map(AgentData::decodeDisk)
             .collect(Collectors.toList());
     }
@@ -102,14 +103,14 @@ public class AgentData {
             .build();
     }
 
-    public static List<Double> decodeSystemLoad(String json) {
-        return Arrays.asList(json.trim().split(" ")).stream()
+    private static List<Double> decodeSystemLoad(String json) {
+        return Arrays.stream(json.trim().split(" "))
             .filter(s -> s != null && s.length() > 0)
-            .map(s -> Double.valueOf(s))
+            .map(Double::valueOf)
             .collect(Collectors.toList());
     }
 
-    public static List<PingLog> decodePingList(String json) {
+    private static List<PingLog> decodePingList(String json) {
         return new ArrayList<>();
     }
 
@@ -122,8 +123,7 @@ public class AgentData {
             return new ArrayList<>();
         }
 
-        return Arrays.asList(str.split(regex))
-            .stream()
+        return Arrays.stream(str.split(regex))
             .map(AgentData::decodeBase64)
             .collect(Collectors.toList());
     }
