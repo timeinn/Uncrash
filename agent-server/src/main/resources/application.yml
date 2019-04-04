@@ -20,4 +20,4 @@ eureka:
 
 uncrash:
   swagger2:
-    allow: true
+    enabled: true

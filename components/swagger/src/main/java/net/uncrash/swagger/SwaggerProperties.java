@@ -21,7 +21,7 @@ public class SwaggerProperties {
     /**
      * 是否开启Swagger
      */
-    private boolean allow;
+    private boolean enabled;
 
     /**
      * API Controller 扫描包路径

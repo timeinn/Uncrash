@@ -40,7 +40,7 @@ public class SwaggerAutoConfiguration {
 
     @Bean
     public Docket petApi() {
-        if (!properties.isAllow()) {
+        if (!properties.isEnabled()) {
             return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.none())
