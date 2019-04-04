@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: uncrash-user-server
+  profiles:
+    active: dev
   jpa:
     show-sql: true
     hibernate:
