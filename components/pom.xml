@@ -19,6 +19,7 @@
         <module>cache</module>
         <module>core</module>
         <module>logging</module>
+        <module>swagger</module>
     </modules>
 
 </project>
