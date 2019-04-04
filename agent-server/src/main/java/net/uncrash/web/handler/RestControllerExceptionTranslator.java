@@ -31,11 +31,9 @@ public class RestControllerExceptionTranslator {
 
     @ExceptionHandler(Throwable.class)
     @ResponseBody
-    ResponseEntity handleException(Exception exception) {
-        if (exception.getCause() != null) {
-            log.error("{}:{}", exception.getMessage(), exception.getCause());
-        }
+    ResponseEntity handleException(Throwable throwable) {
+        log.error("{}:{}", throwable.getMessage(), throwable.getCause());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(ResponseMessage.error(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage()));
+            .body(ResponseMessage.error(HttpStatus.INTERNAL_SERVER_ERROR, throwable.getMessage()));
     }
 }

@@ -2,6 +2,7 @@ package net.uncrash.web.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import net.uncrash.agent.domain.AgentData;
 import net.uncrash.agent.domain.ServerAgentLog;
@@ -12,7 +13,6 @@ import net.uncrash.exception.NotFoundException;
 import net.uncrash.logging.api.AccessLogger;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -60,8 +60,8 @@ public class AgentController {
 
     @ApiOperation("查询列表")
     @GetMapping("/")
-    public ResponseMessage<Page<ServerAgentLog>> list(@NonNull Integer pageNo,
-                                                      @NonNull Integer pageSize,
+    public ResponseMessage<Page<ServerAgentLog>> list(@RequestParam(value = "pageNo") Integer pageNo,
+                                                      @RequestParam(value = "pageSize") Integer pageSize,
                                                       Long serverId, String cpuName) {
         return ResponseMessage.ok(serverAgentLogService.findAll(Example.of(ServerAgentLog.builder()
             .serverId(serverId)
