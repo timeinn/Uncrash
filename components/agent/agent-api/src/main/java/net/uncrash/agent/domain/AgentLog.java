@@ -6,15 +6,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 /**
- * Server Agent Log Domain
+ * Agent Log Domain
  *
  * @author Sendya
  * @date 2019/01/13
@@ -22,11 +24,11 @@ import java.time.LocalDateTime;
 @ApiModel
 @Builder
 @Data
-@Entity
-@Table(name = "t_server_agent_log")
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServerAgentLog implements Serializable {
+@Entity
+@Table(name = "t_agent_log")
+public class AgentLog implements Serializable {
 
     private static final long serialVersionUID = 5338782707274433472L;
 

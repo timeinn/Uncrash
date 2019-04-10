@@ -14,7 +14,7 @@ public class AgentData {
 
     private String data;
 
-    public Optional<ServerAgentLog> builder() {
+    public Optional<AgentLog> builder() {
         if (this.data == null || this.data.length() <= 0) {
             return Optional.empty();
         }
@@ -27,7 +27,7 @@ public class AgentData {
         List<PingLog> pingDataList = AgentData.decodePingList(data.get(31));
 
 
-        ServerAgentLog agentLog = ServerAgentLog.builder()
+        AgentLog agentLog = AgentLog.builder()
             .agent(data.get(0))
             .uptime(Integer.valueOf(data.get(1)))
             .sessions(Integer.valueOf(data.get(2)))

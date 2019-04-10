@@ -13,10 +13,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @EnableAccessLogger
 @SpringBootApplication
-public class AgentServerApplication {
+public class AgentServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AgentServerApplication.class, args);
+        SpringApplication.run(AgentServiceApplication.class, args);
     }
 
 }

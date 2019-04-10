@@ -10,9 +10,10 @@ import java.util.Optional;
 
 /**
  * Abstract jpa method
- * @author Sendya
+ *
  * @param <T>
  * @param <ID>
+ * @author Sendya
  */
 public abstract class AbstractJpaService<T, ID> implements JpaService<T, ID> {
 
@@ -20,7 +21,6 @@ public abstract class AbstractJpaService<T, ID> implements JpaService<T, ID> {
 
     private Class<ID> primaryKeyType;
 
-    @SuppressWarnings("unchecked")
     public AbstractJpaService() {
     }
 
@@ -50,13 +50,13 @@ public abstract class AbstractJpaService<T, ID> implements JpaService<T, ID> {
     }
 
     @Override
-    public <S extends T> S saveAndFlush(S var1) {
-        return getRepository().saveAndFlush(var1);
+    public <S extends T> S saveAndFlush(S entity) {
+        return getRepository().saveAndFlush(entity);
     }
 
     @Override
-    public void deleteInBatch(Iterable<T> var1) {
-        getRepository().deleteInBatch(var1);
+    public void deleteInBatch(Iterable<T> entities) {
+        getRepository().deleteInBatch(entities);
     }
 
     @Override
@@ -65,22 +65,22 @@ public abstract class AbstractJpaService<T, ID> implements JpaService<T, ID> {
     }
 
     @Override
-    public Optional<T> findOne(ID var1) {
-        return getRepository().findById(var1);
+    public Optional<T> findOne(ID id) {
+        return getRepository().findById(id);
     }
 
     @Override
-    public <S extends T> List<S> findAll(Example<S> var1) {
-        return getRepository().findAll(var1);
+    public <S extends T> List<S> findAll(Example<S> example) {
+        return getRepository().findAll(example);
     }
 
     @Override
-    public <S extends T> List<S> findAll(Example<S> var1, Sort var2) {
-        return getRepository().findAll(var1, var2);
+    public <S extends T> List<S> findAll(Example<S> example, Sort sort) {
+        return getRepository().findAll(example, sort);
     }
 
     @Override
-    public <S extends T> Page<S> findAll(Example<S> var1, Pageable var2) {
-        return getRepository().findAll(var1, var2);
+    public <S extends T> Page<S> findAll(Example<S> example, Pageable sort) {
+        return getRepository().findAll(example, sort);
     }
 }

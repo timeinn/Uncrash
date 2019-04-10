@@ -15,25 +15,25 @@ public interface JpaService<T, ID> {
 
     List<T> findAll();
 
-    List<T> findAll(Sort var1);
+    List<T> findAll(Sort sort);
 
-    List<T> findAllById(Iterable<ID> var1);
+    List<T> findAllById(Iterable<ID> ids);
 
-    <S extends T> List<S> saveAll(Iterable<S> var1);
+    <S extends T> List<S> saveAll(Iterable<S> entities);
 
     void flush();
 
-    <S extends T> S saveAndFlush(S var1);
+    <S extends T> S saveAndFlush(S entity);
 
-    void deleteInBatch(Iterable<T> var1);
+    void deleteInBatch(Iterable<T> entities);
 
     void deleteAllInBatch();
 
-    Optional<T> findOne(ID var1);
+    Optional<T> findOne(ID id);
 
-    <S extends T> List<S> findAll(Example<S> var1);
+    <S extends T> List<S> findAll(Example<S> example);
 
-    <S extends T> List<S> findAll(Example<S> var1, Sort var2);
+    <S extends T> List<S> findAll(Example<S> example, Sort sort);
 
-    <S extends T> Page<S> findAll(Example<S> var1, Pageable var2);
+    <S extends T> Page<S> findAll(Example<S> example, Pageable pageable);
 }
