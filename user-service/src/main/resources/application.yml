@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: uncrash-user-server
+    name: uncrash-user-service
   profiles:
     active: dev
   jpa:

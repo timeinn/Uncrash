@@ -18,11 +18,11 @@
     <description>Free Website And Server Uptime Monitoring.</description>
 
     <modules>
-        <module>agent-server</module>
+        <module>agent-service</module>
         <module>components</module>
         <module>eureka-server</module>
         <module>gateway</module>
-        <module>user-server</module>
+        <module>user-service</module>
     </modules>
 
     <properties>

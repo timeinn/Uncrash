@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: uncrash-agent-server
+    name: uncrash-agent-service
   profiles:
     active: dev
   jpa:

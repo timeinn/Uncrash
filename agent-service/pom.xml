@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>uncrash</artifactId>
         <groupId>net.uncrash</groupId>
         <version>${revision}</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>user-server</artifactId>
-    <name>Uncrash-User</name>
+    <artifactId>agent-service</artifactId>
+    <name>Uncrash Agent Service</name>
 
     <dependencies>
         <dependency>
@@ -25,16 +25,16 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
+        <!-- agent engine -->
+        <dependency>
+            <groupId>net.uncrash</groupId>
+            <artifactId>agent-engine</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- access logging -->
         <dependency>
             <groupId>net.uncrash</groupId>
             <artifactId>logging</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <!-- authorization -->
-        <dependency>
-            <groupId>net.uncrash</groupId>
-            <artifactId>authorization-basic</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- swagger -->
