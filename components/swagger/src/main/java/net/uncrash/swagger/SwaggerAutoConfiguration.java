@@ -38,6 +38,7 @@ public class SwaggerAutoConfiguration {
         }
 
         return new Docket(DocumentationType.SWAGGER_2)
+            .host(properties.getHost())
             .select()
             .apis(StringUtils.isEmpty(properties.getBasePackage()) ?
                 RequestHandlerSelectors.any() :

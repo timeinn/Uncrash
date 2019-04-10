@@ -73,11 +73,6 @@ public class SwaggerProperties {
     private String licenseUrl;
 
     /**
-     * 服务地址
-     */
-    private String serviceUrl;
-
-    /**
      * API 提供主机
      */
     private String host;
@@ -86,5 +81,10 @@ public class SwaggerProperties {
      * 文档标签数组
      */
     private List<Tag> tags;
+
+    /**
+     * 服务地址
+     */
+    private String serviceUrl;
 
 }
