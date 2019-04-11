@@ -76,7 +76,7 @@ public class AgentLogController {
             .serverId(serverId)
             .cpuName(cpuName)
             .build(), ExampleMatcher.matching()
-            .withMatcher("cpuName", ExampleMatcher.GenericPropertyMatchers.contains())
+            .withMatcher("cpuName", ExampleMatcher.GenericPropertyMatchers.endsWith())
         ), PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, "createTime"))));
     }
 }
