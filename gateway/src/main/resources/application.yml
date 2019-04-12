@@ -6,3 +6,14 @@ spring:
     active: dev
   application:
     name: uncrash-gateway
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://dev.uncrash.net:8761/eureka/

@@ -2,6 +2,8 @@ package net.uncrash;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.gateway.filter.factory.GatewayFilterFactory;
+import org.springframework.cloud.gateway.filter.factory.StripPrefixGatewayFilterFactory;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +31,11 @@ public class GatewayApplication {
             .route("user-api", r -> r.path("/v1/user/**")
                 .uri("https://api.uncrash.net"))
             .route("agent-api", r -> r.path("/v1/agent/**")
-                .uri("https://api.uncrash.net"))
+                .uri("lb://uncrash-agent-service/")
+                .filters(new StripPrefixGatewayFilterFactory()
+                    .apply(config -> config.setParts(1)))
+            ) // https://api.uncrash.net
+
             .build();
         //@formatter:on
     }
