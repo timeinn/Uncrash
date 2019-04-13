@@ -6,6 +6,21 @@ spring:
     active: dev
   application:
     name: uncrash-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: agent-api
+          uri: lb://uncrash-agent-service
+          predicates:
+            - Path=/v1/agent/**
+          filters:
+            - RewritePath=/v1/(?<segment>.*), /$\{segment}
+        - id: user-api
+          uri: lb://uncrash-user-service
+          predicates:
+            - Path=/v1/user/**
+          filters:
+            - RewritePath=/v1/(?<segment>.*), /$\{segment}
 
 eureka:
   client:
