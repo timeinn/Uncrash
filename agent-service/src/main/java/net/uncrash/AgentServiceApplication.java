@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Agent Server for Uncrash
+ * Agent Service for Uncrash
  *
  * @author Sendya
  * @author Acris

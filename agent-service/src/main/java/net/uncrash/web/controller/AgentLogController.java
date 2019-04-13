@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Uncrash agent log controller
  *
+ * @author Sendya
  * @author Acris
  * @date 2019/04/02
  */
@@ -26,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/agent/logs")
 @AccessLogger("服务状态推送")
 public class AgentLogController {
-
     private final AgentLogService agentLogService;
 
     /**
@@ -76,7 +76,7 @@ public class AgentLogController {
             .serverId(serverId)
             .cpuName(cpuName)
             .build(), ExampleMatcher.matching()
-            .withMatcher("cpuName", ExampleMatcher.GenericPropertyMatchers.endsWith())
+            .withMatcher("cpuName", ExampleMatcher.GenericPropertyMatcher::endsWith)
         ), PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, "createTime"))));
     }
 }

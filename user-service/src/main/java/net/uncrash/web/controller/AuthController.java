@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/user/auth")
 @AccessLogger("授权服务")
 @RequiredArgsConstructor
 public class AuthController {

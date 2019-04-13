@@ -1,4 +1,4 @@
-package net.uncrash.web.handler.logger;
+package net.uncrash.logging.listener;
 
 import net.uncrash.core.utils.JSONUtil;
 import net.uncrash.logging.api.AccessLoggerInfo;
@@ -15,6 +15,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.stream.Stream;
 
+/**
+ * Slf4j access logger listener
+ *
+ * @author Sendya
+ */
 @Component
 public class Slf4jAccessLoggerListener {
 
