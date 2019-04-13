@@ -3,10 +3,6 @@ package net.uncrash.swagger;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.service.Tag;
-import springfox.documentation.service.VendorExtension;
-
-import java.util.List;
 
 /**
  * Swagger Properties
@@ -76,15 +72,4 @@ public class SwaggerProperties {
      * API 提供主机
      */
     private String host;
-
-    /**
-     * 文档标签数组
-     */
-    private List<Tag> tags;
-
-    /**
-     * 服务地址
-     */
-    private String serviceUrl;
-
 }
