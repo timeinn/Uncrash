@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>agent-engine</artifactId>
-    <name>Uncrash-Agent-Engine</name>
+    <name>Uncrash Agent Engine</name>
 
     <dependencies>
         <dependency>

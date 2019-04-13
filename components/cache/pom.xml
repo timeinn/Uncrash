@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>cache</artifactId>
-    <name>Uncrash-Cache</name>
+    <name>Uncrash Cache</name>
     <packaging>pom</packaging>
 
     <modules>

@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>gateway</artifactId>
-    <name>Uncrash-Gateway</name>
+    <name>Uncrash Gateway</name>
 
     <dependencies>
         <dependency>

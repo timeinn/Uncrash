@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>cache-redis</artifactId>
-    <name>Uncrash-Cache-Redis</name>
+    <name>Uncrash Cache Redis</name>
 
     <dependencies>
         <dependency>

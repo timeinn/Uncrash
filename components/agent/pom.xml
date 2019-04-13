@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>agent</artifactId>
-    <name>Uncrash-Agent</name>
+    <name>Uncrash Agent</name>
     <packaging>pom</packaging>
 
     <modules>

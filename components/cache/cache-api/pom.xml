@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>cache-api</artifactId>
-    <name>Uncrash-Cache-API</name>
+    <name>Uncrash Cache API</name>
 
     <dependencies>
         <dependency>

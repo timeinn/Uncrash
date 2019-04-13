@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>authorization-basic</artifactId>
-    <name>Uncrash-Authorization-Basic</name>
+    <name>Uncrash Authorization Basic</name>
 
     <dependencies>
         <!-- authorization api -->

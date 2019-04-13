@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>components</artifactId>
-    <name>Uncrash-Components</name>
+    <name>Uncrash Components</name>
     <packaging>pom</packaging>
 
     <modules>

@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>agent-api</artifactId>
-    <name>Uncrash-Agent-API</name>
+    <name>Uncrash Agent API</name>
 
     <dependencies>
         <dependency>

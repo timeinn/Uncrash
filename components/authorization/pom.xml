@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>authorization</artifactId>
-    <name>Uncrash-Authorization</name>
+    <name>Uncrash Authorization</name>
     <packaging>pom</packaging>
 
     <modules>
@@ -20,10 +20,5 @@
     </modules>
 
     <dependencies>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <optional>true</optional>
-        </dependency>
     </dependencies>
 </project>

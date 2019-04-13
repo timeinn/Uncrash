@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>logging</artifactId>
-    <name>Uncrash-Logging</name>
+    <name>Uncrash Logging</name>
 
     <dependencies>
         <dependency>

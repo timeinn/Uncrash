@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>core</artifactId>
-    <name>Uncrash-Core</name>
+    <name>Uncrash Core</name>
 
     <dependencies>
         <dependency>

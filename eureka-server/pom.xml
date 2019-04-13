@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>eureka-server</artifactId>
-    <name>Uncrash-Eureka</name>
+    <name>Uncrash Eureka Server</name>
 
     <dependencies>
         <dependency>

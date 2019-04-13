@@ -12,7 +12,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>swagger</artifactId>
-    <name>Uncrash-Swagger</name>
+    <name>Uncrash Swagger</name>
 
     <dependencies>
         <dependency>
