@@ -36,7 +36,7 @@ public class AgentLogController {
      * @return saved agent log
      */
     @ApiOperation("保存服务端 Agent Log 信息")
-    @PostMapping("/")
+    @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseMessage<AgentLog> agentStat(@RequestBody AgentData agentData) {
         return ResponseMessage.ok(agentLogService.save(agentData.builder()
@@ -67,7 +67,7 @@ public class AgentLogController {
      * @return agent log list
      */
     @ApiOperation("查询 Agent Log 列表")
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseMessage<Page<AgentLog>> list(@RequestParam Integer pageNo,
                                                 @RequestParam Integer pageSize,
                                                 @RequestParam Long serverId,
