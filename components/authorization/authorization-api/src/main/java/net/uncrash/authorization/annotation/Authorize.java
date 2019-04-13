@@ -43,14 +43,14 @@ public @interface Authorize {
     /**
      * 验证授权失败时返回的消息内容
      *
-     * @return
+     * @return message
      */
     String message() default "unauthorized";
 
     /**
      * 合并类上的注解
      *
-     * @return
+     * @return merge result
      */
     boolean merge() default true;
 
