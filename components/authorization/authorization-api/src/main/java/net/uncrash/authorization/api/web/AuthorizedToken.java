@@ -6,7 +6,7 @@ public interface AuthorizedToken extends ParsedToken {
 
     {
         "sub": "1",
-        "iss": "http://dev.uncrash.net:8000/auth/login",
+        "iss": "http://127.0.0.1:8000/auth/login",
         "iat": 1451888119,
         "exp": 1454516119,
         "nbf": 1451888119,

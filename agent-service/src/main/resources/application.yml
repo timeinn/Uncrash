@@ -13,12 +13,12 @@ spring:
   datasource:
     url: jdbc:mariadb://127.0.0.1:3306/uncrash
     username: root
-    password: 123456
+    password: ChangeMe!!!
 
 eureka:
   client:
     service-url:
-      defaultZone: http://dev.uncrash.net:8761/eureka/
+      defaultZone: http://127.0.0.1:8761/eureka/
 
 uncrash:
   swagger2:
