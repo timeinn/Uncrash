@@ -3,32 +3,31 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>uncrash</artifactId>
+        <artifactId>components</artifactId>
         <groupId>net.uncrash</groupId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>components</artifactId>
-    <name>Uncrash Components</name>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>data-api</module>
-        <module>agent</module>
-        <module>server</module>
-        <module>authorization</module>
-        <module>cache</module>
-        <module>core</module>
-        <module>logging</module>
-        <module>swagger</module>
-    </modules>
+    <artifactId>server</artifactId>
+    <name>Uncrash-Component-Server</name>
 
     <dependencies>
         <dependency>
+            <groupId>net.uncrash</groupId>
+            <artifactId>data-api</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-            <optional>true</optional>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
+
 </project>

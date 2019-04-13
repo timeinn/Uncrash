@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author Sendya
  */
-public class AuthenticationUser implements Authentication {
+public class  AuthenticationUser implements Authentication {
 
     private static final long serialVersionUID = -5917177037722252175L;
 
