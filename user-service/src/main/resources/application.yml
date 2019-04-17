@@ -10,10 +10,15 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   datasource:
     url: jdbc:mariadb://127.0.0.1:3306/uncrash
     username: root
-    password: 123456
+    password: ChangeMe!!!
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
 
 eureka:
   client:
