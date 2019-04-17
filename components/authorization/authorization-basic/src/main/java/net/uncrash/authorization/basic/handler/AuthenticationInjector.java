@@ -3,6 +3,8 @@ package net.uncrash.authorization.basic.handler;
 import lombok.extern.slf4j.Slf4j;
 import net.uncrash.authorization.AuthenticationHolder;
 import net.uncrash.authorization.AuthenticationUser;
+import net.uncrash.authorization.basic.entity.DefaultUser;
+import net.uncrash.core.utils.id.IDGenerator;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -26,6 +28,13 @@ public class AuthenticationInjector {
         log.debug("Pointcut before: {}", joinPoint);
 
         authenticationUser = (AuthenticationUser) AuthenticationHolder.get();
+        // 设置一个默认值
+        if (authenticationUser == null) {
+            authenticationUser = new AuthenticationUser();
+            authenticationUser.setUser(DefaultUser.builder()
+                .id(IDGenerator.UUID_NO_SEPARATOR.generate())
+                .build());
+        }
 
         log.debug("Pointcut proceed AuthenticationUser: {}", authenticationUser);
     }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import net.uncrash.authorization.AuthenticationUser;
 import net.uncrash.core.utils.id.IDGenerator;
 import net.uncrash.core.web.model.ResponseMessage;
+import net.uncrash.logging.api.AccessLogger;
 import net.uncrash.server.domain.UserMonitor;
 import net.uncrash.server.service.UserMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 
 /**
@@ -24,14 +24,14 @@ import springfox.documentation.annotations.ApiIgnore;
  *
  * @author Sendya
  */
-@Api(value = "监控模块", tags = "UserMonitor Service")
+@Api(tags = "UserMonitor Service")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/user/servers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@AccessLogger("监控模块")
 public class MonitorController {
 
-    @Autowired
-    private UserMonitorService monitorService;
+    private final UserMonitorService monitorService;
 
     @ApiOperation("获取监控信息")
     @GetMapping("/{id}")
@@ -42,26 +42,32 @@ public class MonitorController {
 
     @ApiOperation("获取用户监控列表")
     @GetMapping("/")
-    public ResponseMessage<Page<UserMonitor>> list(@RequestParam Integer pageNo,
-                                                   @RequestParam Integer pageSize,
-                                                   AuthenticationUser user) {
+    public ResponseMessage<Page<UserMonitor>> list(AuthenticationUser user,
+                                                   @RequestParam Integer pageNo,
+                                                   @RequestParam Integer pageSize) {
         // 假设用户已经登录，并注入了用户对象到 controller
-        return ResponseMessage.ok(monitorService.findAll(Example.of(UserMonitor.builder()
-            .userId(user.getUser().getId())
-            .build()),
-            PageRequest.of(
-                pageNo,
-                pageSize,
-                Sort.by(Sort.Direction.DESC, "createTime")
-            )));
+
+        // 假定是管理员
+        boolean requiredUser = false;
+        UserMonitor monitor = UserMonitor.builder().build();
+        if (requiredUser) {
+            monitor.setUserId(user.getUser().getId());
+        }
+
+        return ResponseMessage.ok(monitorService.findAll(Example.of(monitor), PageRequest.of(
+            pageNo,
+            pageSize,
+            Sort.by(Sort.Direction.DESC, "createTime")
+        )));
 
     }
 
     @ApiOperation("增加一个监控")
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseMessage<UserMonitor> add(@RequestBody UserMonitor monitor) {
+    public ResponseMessage<UserMonitor> add(AuthenticationUser user, @RequestBody UserMonitor monitor) {
         monitor.setId(IDGenerator.UUID_NO_SEPARATOR.generate());
+        monitor.setUserId(user.getUser().getId());
         return ResponseMessage.ok(monitorService.saveAndFlush(monitor));
     }
 

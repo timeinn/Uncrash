@@ -28,7 +28,7 @@ eureka:
 uncrash:
   swagger2:
     enabled: true
-    host: https://api.uncrash.net
+    host: api.uncrash.net
     base-package: net.uncrash.web.controller
     title: Uncrash REST API
     description: Fast website and server uptime monitoring.
