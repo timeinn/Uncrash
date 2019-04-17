@@ -1,4 +1,4 @@
-package net.uncrash.logging.listener;
+package net.uncrash.web.handler.logger;
 
 import net.uncrash.core.utils.JSONUtil;
 import net.uncrash.logging.api.AccessLoggerInfo;
