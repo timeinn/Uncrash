@@ -6,28 +6,32 @@ import lombok.RequiredArgsConstructor;
 import net.uncrash.authorization.AuthenticationUser;
 import net.uncrash.core.utils.id.IDGenerator;
 import net.uncrash.core.web.model.ResponseMessage;
-import net.uncrash.service.domain.UserMonitor;
-import net.uncrash.service.service.UserMonitorService;
+import net.uncrash.server.domain.UserMonitor;
+import net.uncrash.server.service.UserMonitorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 
 /**
- * User servers controller
+ * User monitor controller
  *
  * @author Sendya
  */
-@Api("监控模块")
+@Api(value = "监控模块", tags = "UserMonitor Service")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user/servers")
+@RequestMapping(value = "/user/servers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class MonitorController {
 
-    private final UserMonitorService monitorService;
+    @Autowired
+    private UserMonitorService monitorService;
 
     @ApiOperation("获取监控信息")
     @GetMapping("/{id}")

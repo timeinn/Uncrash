@@ -1,6 +1,7 @@
 package net.uncrash.swagger;
 
 import lombok.RequiredArgsConstructor;
+import net.uncrash.authorization.AuthenticationUser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
@@ -9,6 +10,7 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -37,15 +39,32 @@ public class SwaggerAutoConfiguration {
                 .build();
         }
 
-        return new Docket(DocumentationType.SWAGGER_2)
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
             .host(properties.getHost())
             .select()
             .apis(StringUtils.isEmpty(properties.getBasePackage()) ?
                 RequestHandlerSelectors.any() :
                 RequestHandlerSelectors.basePackage(properties.getBasePackage()))
+
             .paths(PathSelectors.any())
             .build()
             .apiInfo(apiInfo());
+
+        // 忽略类
+        boolean authorizationIsAvailable;
+        Class authenticationUser = null;
+
+        try {
+            authenticationUser = Class.forName("net.uncrash.authorization.AuthenticationUser");
+            authorizationIsAvailable = authenticationUser != null;
+        } catch (ClassNotFoundException e) {
+            authorizationIsAvailable = false;
+        }
+        if (authorizationIsAvailable) {
+            docket.ignoredParameterTypes(authenticationUser.getClass());
+        }
+
+        return docket;
     }
 
     private ApiInfo apiInfo() {

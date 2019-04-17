@@ -5,7 +5,7 @@ import net.uncrash.agent.domain.AgentLog;
 import net.uncrash.agent.repository.AgentLogRepository;
 import net.uncrash.agent.service.AgentLogService;
 import net.uncrash.core.utils.id.IDGenerator;
-import net.uncrash.service.api.AbstractJpaService;
+import net.uncrash.server.api.AbstractJpaService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,7 +1,7 @@
 package net.uncrash.agent.service;
 
 import net.uncrash.agent.domain.AgentLog;
-import net.uncrash.service.api.JpaService;
+import net.uncrash.server.api.JpaService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
