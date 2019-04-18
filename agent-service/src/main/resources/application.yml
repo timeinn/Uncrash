@@ -11,7 +11,7 @@ spring:
     hibernate:
       ddl-auto: validate
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
   datasource:
     url: jdbc:mariadb://127.0.0.1:3306/uncrash
     username: root
