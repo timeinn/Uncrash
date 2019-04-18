@@ -57,7 +57,7 @@ public class MonitorController {
         return ResponseMessage.ok(monitorService.findAll(Example.of(monitor), PageRequest.of(
             pageNo,
             pageSize,
-            Sort.by(Sort.Direction.DESC, "createTime")
+            Sort.by(Sort.Direction.DESC, "createdTime")
         )));
 
     }
