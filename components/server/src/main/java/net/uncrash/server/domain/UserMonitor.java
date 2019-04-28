@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.Column;
@@ -87,7 +88,7 @@ public class UserMonitor implements Serializable {
      * 0 关、1 开
      */
     @ApiModelProperty("数据丢失时，进行额外的 PING 检查 0 关、1 开")
-    @Column(columnDefinition = "tinyint(1) comment '数据丢失时，进行额外的 PING 检查 0 关、1 开'")
+    @Column(nullable = false, columnDefinition = "TINYINT(1) comment '数据丢失时，进行额外的 PING 检查 0 关、1 开'", length = 1)
     private Boolean lossRequirePing;
 
     /**
@@ -95,7 +96,7 @@ public class UserMonitor implements Serializable {
      * 0 关、1 开
      */
     @ApiModelProperty("资源使用阈值通知 0 关、1 开")
-    @Column(columnDefinition = "tinyint(1) comment '资源使用阈值通知 0 关、1 开'")
+    @Column(nullable = false, columnDefinition = "TINYINT(1) comment '资源使用阈值通知 0 关、1 开'", length = 1)
     private Boolean resourceNotification;
 
     /**

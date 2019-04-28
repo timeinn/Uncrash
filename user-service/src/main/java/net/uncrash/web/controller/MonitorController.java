@@ -4,6 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import net.uncrash.authorization.AuthenticationUser;
+import net.uncrash.authorization.Permission;
+import net.uncrash.authorization.annotation.Authorize;
 import net.uncrash.core.utils.id.IDGenerator;
 import net.uncrash.core.web.model.ResponseMessage;
 import net.uncrash.logging.api.AccessLogger;
@@ -18,6 +20,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * User monitor controller
@@ -29,6 +33,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping(value = "/user/servers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @AccessLogger("监控模块")
+@Authorize(permission = "monitor")
 public class MonitorController {
 
     private final UserMonitorService monitorService;
@@ -42,10 +47,14 @@ public class MonitorController {
 
     @ApiOperation("获取用户监控列表")
     @GetMapping("/")
+    @Authorize(action = Permission.ACTION_QUERY)
     public ResponseMessage<Page<UserMonitor>> list(AuthenticationUser user,
+                                                   HttpServletRequest request,
                                                    @RequestParam Integer pageNo,
                                                    @RequestParam Integer pageSize) {
         // 假设用户已经登录，并注入了用户对象到 controller
+        String token = request.getHeader("access-token");
+        System.out.println("user token: " + token);
 
         // 假定是管理员
         boolean requiredUser = false;

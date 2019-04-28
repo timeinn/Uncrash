@@ -6,6 +6,7 @@ import net.uncrash.authorization.basic.aop.DefaultAopMethodAuthorizeDefinitionPa
 import net.uncrash.authorization.define.AuthorizationConst;
 import net.uncrash.authorization.define.AuthorizeDefinition;
 import net.uncrash.authorization.define.AuthorizingContext;
+import net.uncrash.authorization.exception.UnAuthorizedException;
 import net.uncrash.authorization.handler.AuthorizingHandler;
 import net.uncrash.core.boost.aop.MethodInterceptorContext;
 import net.uncrash.core.boost.aop.MethodInterceptorHolder;
@@ -50,10 +51,12 @@ public class AopAuthorizingController extends StaticMethodMatcherPointcutAdvisor
             MethodInterceptorHolder holder = MethodInterceptorHolder.create(methodInvocation);
             MethodInterceptorContext paramContext = holder.createParamContext();
             AuthorizeDefinition definition = aopMethodAuthorizeDefinitionParser.parse(methodInvocation.getThis().getClass(), methodInvocation.getMethod());
-
             logger.info("AuthorizeDefinition: {}", definition);
+            Map<String, String> headers = WebUtil.getHeaders();
+            logger.info("Headers: {}", headers);
 
             Object result = null;
+
             boolean isControl = false;
 
             if (definition != null && !definition.isEmpty()) {
@@ -63,11 +66,9 @@ public class AopAuthorizingController extends StaticMethodMatcherPointcutAdvisor
                 context.setDefinition(definition);
                 context.setParamContext(paramContext);
 
+                logger.info("AuthorizingContext: {}", context);
+
                 authorizingHandler.handRBAC(context);
-
-                Map<String, String> headers = WebUtil.getHeaders();
-
-                logger.debug("Headers: {}", headers);
 
                 isControl = true;
             }
