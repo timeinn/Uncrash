@@ -3,7 +3,7 @@ package net.uncrash.authorization.basic.handler;
 import lombok.extern.slf4j.Slf4j;
 import net.uncrash.authorization.AuthenticationHolder;
 import net.uncrash.authorization.AuthenticationUser;
-import net.uncrash.authorization.basic.entity.DefaultUser;
+import net.uncrash.authorization.basic.domain.DefaultUser;
 import net.uncrash.core.utils.id.IDGenerator;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

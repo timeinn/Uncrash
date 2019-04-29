@@ -30,10 +30,10 @@ public class DefaultAopMethodAuthorizeDefinitionParser implements AopMethodAutho
     @Override
     public AuthorizeDefinition parse(Class target, Method method, Authentication authentication) {
 
-        logger.trace("===========================");
-        logger.trace("AuthorizeDefinition: Class: {}, Method: {}, Context: {}", target.getName(), method.getName(), authentication);
-        logger.trace("MethodName: {}", method.getName());
-        logger.trace("===========================");
+        logger.info("===========================");
+        logger.info("AuthorizeDefinition: Class: {}, Method: {}, Context: {}", target.getName(), method.getName(), authentication);
+        logger.info("MethodName: {}", method.getName());
+        logger.info("===========================");
 
         CacheKey key = buildCacheKey(target, method);
         AuthorizeDefinition definition = cache.get(key);

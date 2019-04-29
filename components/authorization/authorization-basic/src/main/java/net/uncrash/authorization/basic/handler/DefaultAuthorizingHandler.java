@@ -50,48 +50,53 @@ public class DefaultAuthorizingHandler implements AuthorizingHandler {
                     permissions,
                     actions);
             }
-            List<Permission> permissionList = authentication.getPermissions().stream()
-                .filter(permission -> {
-                    // 未持有任何一个权限
-                    if (permissions.contains(permission.getId())) {
-                        return false;
-                    }
 
-                    // 未配置 action
-                    if (actions.isEmpty()) {
-                        return true;
-                    }
+            if (authentication.getPermissions() != null) {
+                List<Permission> permissionList = authentication.getPermissions().stream()
+                    .filter(permission -> {
+                        // 未持有任何一个权限
+                        if (permissions.contains(permission.getId())) {
+                            return false;
+                        }
 
-                    // 已配置 action, 进行校验
-                    List<String> actionList = permission.getActions()
-                        .stream()
-                        .filter(actions::contains)
-                        .collect(Collectors.toList());
+                        // 未配置 action
+                        if (actions.isEmpty()) {
+                            return true;
+                        }
 
-                    if (actionList.isEmpty()) {
-                        return false;
-                    }
+                        // 已配置 action, 进行校验
+                        List<String> actionList = permission.getActions()
+                            .stream()
+                            .filter(actions::contains)
+                            .collect(Collectors.toList());
 
-                    // 如果设定的条件是 OR 则只要满足一个 action 条件即可
-                    return logicalIsOr || permission.getActions().containsAll(actions);
-                }).collect(Collectors.toList());
+                        if (actionList.isEmpty()) {
+                            return false;
+                        }
 
-            access = logicalIsOr ?
-                !CollectionUtils.isEmpty(permissions) :
-                //权限数量和配置的数量相同
-                permissionList.size() == permissions.size();
+                        // 如果设定的条件是 OR 则只要满足一个 action 条件即可
+                        return logicalIsOr || permission.getActions().containsAll(actions);
+                   }).collect(Collectors.toList());
 
+                access = logicalIsOr ?
+                    !CollectionUtils.isEmpty(permissions) :
+                    //权限数量和配置的数量相同
+                    permissionList.size() == permissions.size();
+            }
         }
 
         if (!roles.isEmpty()) {
             if (log.isInfoEnabled()) {
                 log.info("检查 角色权限 :{}, definition: {}", roles, definition.getRoles());
             }
-            Function<Predicate<String>, Boolean> func = logicalIsOr
-                ? roles.stream()::anyMatch
-                : roles.stream()::allMatch;
 
-            access = func.apply(role -> authentication.getRole().equals(role));
+            if (authentication.getRole() != null) {
+                Function<Predicate<String>, Boolean> func = logicalIsOr
+                    ? roles.stream()::anyMatch
+                    : roles.stream()::allMatch;
+
+                access = func.apply(role -> authentication.getRole().equals(role));
+            }
         }
 
         if (access) {

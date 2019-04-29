@@ -2,6 +2,7 @@ package net.uncrash.authorization;
 
 
 import net.uncrash.authorization.api.web.Authentication;
+import net.uncrash.authorization.api.web.GeneratedToken;
 import net.uncrash.core.utils.ThreadLocalUtils;
 
 import java.util.ArrayList;
@@ -20,23 +21,14 @@ public final class AuthenticationHolder {
     private static final ReadWriteLock LOCK = new ReentrantReadWriteLock();
 
     private static Authentication get(Function<AuthenticationSupplier, Authentication> func) {
-        LOCK.readLock().lock();
-        try {
-            return SUPPLIERS.stream()
-                .map(func)
-                .filter(Objects::nonNull)
-                .findFirst()
-                .orElse(null);
-        } finally {
-            LOCK.readLock().unlock();
-        }
+        return SUPPLIERS.stream()
+            .map(func)
+            .filter(Objects::nonNull)
+            .findFirst()
+            .orElse(null);
     }
 
     public static Authentication get() {
-        String currentId = ThreadLocalUtils.get(CURRENT_USER_ID_KEY);
-        if (currentId != null) {
-            return get(currentId);
-        }
         return get(AuthenticationSupplier::get);
     }
 
@@ -51,6 +43,13 @@ public final class AuthenticationHolder {
         } finally {
             LOCK.writeLock().lock();
         }
+    }
+
+    public static GeneratedToken save(Authentication authentication) {
+        GeneratedToken token = SUPPLIERS.stream()
+            .findFirst().get()
+            .set(authentication.getToken(), authentication);
+        return token;
     }
 
     public static void setCurrentUserId(String id) {

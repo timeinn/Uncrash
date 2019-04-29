@@ -28,7 +28,7 @@ public interface AopMethodAuthorizeDefinitionParser {
     AuthorizeDefinition parse(Class target, Method method, Authentication authentication);
 
     default AuthorizeDefinition parse(Class target, Method method) {
-        return parse(target, method, AuthenticationHolder.get());
+        return parse(target, method, null); // AuthenticationHolder.get()
     }
 
     List<AuthorizeDefinition> getAllParsed();

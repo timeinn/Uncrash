@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @RequestMapping(value = "/user/servers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @AccessLogger("监控模块")
-@Authorize(permission = "monitor")
+@Authorize(permission = "servers")
 public class MonitorController {
 
     private final UserMonitorService monitorService;
@@ -47,7 +47,7 @@ public class MonitorController {
 
     @ApiOperation("获取用户监控列表")
     @GetMapping("/")
-    @Authorize(action = Permission.ACTION_QUERY)
+    @Authorize
     public ResponseMessage<Page<UserMonitor>> list(AuthenticationUser user,
                                                    HttpServletRequest request,
                                                    @RequestParam Integer pageNo,
@@ -74,6 +74,7 @@ public class MonitorController {
     @ApiOperation("增加一个监控")
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
+    @Authorize(action = Permission.ACTION_ADD)
     public ResponseMessage<UserMonitor> add(AuthenticationUser user, @RequestBody UserMonitor monitor) {
         monitor.setId(IDGenerator.UUID_NO_SEPARATOR.generate());
         monitor.setUserId(user.getUser().getId());

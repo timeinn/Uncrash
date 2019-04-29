@@ -1,5 +1,6 @@
 package net.uncrash.authorization.basic.handler;
 
+import net.uncrash.authorization.AuthenticationHolder;
 import net.uncrash.authorization.annotation.Authorize;
 import net.uncrash.authorization.basic.aop.AopMethodAuthorizeDefinitionParser;
 import net.uncrash.authorization.basic.aop.DefaultAopMethodAuthorizeDefinitionParser;
@@ -50,7 +51,10 @@ public class AopAuthorizingController extends StaticMethodMatcherPointcutAdvisor
         super((MethodInterceptor) methodInvocation -> {
             MethodInterceptorHolder holder = MethodInterceptorHolder.create(methodInvocation);
             MethodInterceptorContext paramContext = holder.createParamContext();
-            AuthorizeDefinition definition = aopMethodAuthorizeDefinitionParser.parse(methodInvocation.getThis().getClass(), methodInvocation.getMethod());
+            AuthorizeDefinition definition = aopMethodAuthorizeDefinitionParser.parse(methodInvocation.getThis().getClass(),
+                methodInvocation.getMethod(),
+                AuthenticationHolder.get());
+
             logger.info("AuthorizeDefinition: {}", definition);
             Map<String, String> headers = WebUtil.getHeaders();
             logger.info("Headers: {}", headers);
@@ -89,7 +93,7 @@ public class AopAuthorizingController extends StaticMethodMatcherPointcutAdvisor
             || AopUtils.findAnnotation(aClass, method, Authorize.class) != null;
 
         if (support) {
-            logger.trace("Class: {}\tMethod: {}, {}", aClass, method.getName(), method.getParameters());
+            logger.info("Class: {}\tMethod: {}, {}", aClass, method.getName(), method.getParameters());
             defaultParser.parse(aClass, method);
         }
         return support;

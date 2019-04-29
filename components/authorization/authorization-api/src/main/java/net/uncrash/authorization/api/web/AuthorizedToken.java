@@ -26,9 +26,9 @@ public interface AuthorizedToken extends ParsedToken {
     /**
      * 令牌绑定的用户 ID
      *
-     * @return long
+     * @return string
      */
-    Long getUserId();
+    String getUserId();
 
     /**
      * @return 令牌有效期，单位毫秒，-1为长期有效
