@@ -67,6 +67,10 @@ public class UserMonitor implements Serializable {
     @Column(columnDefinition = "varchar(100) comment '监控主机 可以是域名、IP(可带端口)、一个可访问的地址'")
     private String monitorHost;
 
+    @ApiModelProperty("监控端口号")
+    @Column(columnDefinition = "int(5) comment '监控端口号'")
+    private Integer port;
+
     /**
      * Agent 模式下推送 Token
      */

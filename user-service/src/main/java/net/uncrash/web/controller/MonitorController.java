@@ -6,12 +6,13 @@ import lombok.RequiredArgsConstructor;
 import net.uncrash.authorization.AuthenticationUser;
 import net.uncrash.authorization.Permission;
 import net.uncrash.authorization.annotation.Authorize;
+import net.uncrash.core.exception.BadRequestException;
 import net.uncrash.core.utils.id.IDGenerator;
 import net.uncrash.core.web.model.ResponseMessage;
 import net.uncrash.logging.api.AccessLogger;
+import net.uncrash.server.consts.MonitorType;
 import net.uncrash.server.domain.UserMonitor;
 import net.uncrash.server.service.UserMonitorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,8 +20,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -49,12 +48,9 @@ public class MonitorController {
     @GetMapping("/")
     @Authorize
     public ResponseMessage<Page<UserMonitor>> list(AuthenticationUser user,
-                                                   HttpServletRequest request,
                                                    @RequestParam Integer pageNo,
                                                    @RequestParam Integer pageSize) {
         // 假设用户已经登录，并注入了用户对象到 controller
-        String token = request.getHeader("access-token");
-        System.out.println("user token: " + token);
 
         // 假定是管理员
         boolean requiredUser = false;
@@ -78,7 +74,30 @@ public class MonitorController {
     public ResponseMessage<UserMonitor> add(AuthenticationUser user, @RequestBody UserMonitor monitor) {
         monitor.setId(IDGenerator.UUID_NO_SEPARATOR.generate());
         monitor.setUserId(user.getUser().getId());
-        return ResponseMessage.ok(monitorService.saveAndFlush(monitor));
+
+        switch (MonitorType.fromValue(monitor.getType())) {
+            case ICMP:
+
+                break;
+            case CURL:
+
+                break;
+            case PORT:
+                if (monitor.getPort() == null || monitor.getPort() == 0) {
+                    throw new BadRequestException("参数错误，端口不存在");
+                }
+                break;
+            case AGENT:
+            default:
+                // 监控 3 分钟内丢失次数后通知
+                if (monitor.getLossNotification() > 0) {
+                    // 检查是否开启 附加 PING 监测
+                }
+                monitor.setPushToken(IDGenerator.PUSH_TOKEN.generate());
+                break;
+        }
+        UserMonitor monitor1 = monitorService.saveAndFlush(monitor);
+        return ResponseMessage.ok();
     }
 
     @ApiOperation("修改一个监控")

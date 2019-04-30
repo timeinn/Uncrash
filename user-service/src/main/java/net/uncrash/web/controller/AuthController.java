@@ -11,6 +11,7 @@ import net.uncrash.authorization.api.web.Authentication;
 import net.uncrash.authorization.api.web.GeneratedToken;
 import net.uncrash.authorization.basic.domain.DefaultRole;
 import net.uncrash.authorization.basic.domain.DefaultUser;
+import net.uncrash.authorization.basic.service.UserService;
 import net.uncrash.logging.api.AccessLogger;
 import net.uncrash.web.model.UserRegisterBody;
 import org.springframework.http.MediaType;
@@ -29,6 +30,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthController {
 
+    private final UserService userService;
+
     @PostMapping("/register")
     @AccessLogger("注册用户")
     public User register(@RequestBody UserRegisterBody body) {
@@ -38,19 +41,7 @@ public class AuthController {
     @PostMapping("/login")
     @AccessLogger("登录")
     public Map<String, Object> login(@RequestBody UserRegisterBody body) {
-        AuthenticationUser authentication = new AuthenticationUser();
-        User user = DefaultUser.builder()
-            .id("123")
-            .username("admin")
-            .name("管理员")
-            .build();
-        authentication.setUser(user);
-        authentication.setRole(DefaultRole.builder()
-            .id("roleId")
-            .name("testRole")
-            .build());
-        authentication.setPermissions(Collections.EMPTY_LIST);
-        GeneratedToken token = AuthenticationHolder.save(authentication);
+        GeneratedToken token = userService.selectByUserNameAndPassword(body.getUsername(), body.getPassword());
         return token.getResponse();
     }
 }

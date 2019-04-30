@@ -37,6 +37,11 @@
             <artifactId>logging</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>net.uncrash</groupId>
+            <artifactId>core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- swagger -->
         <dependency>
             <groupId>net.uncrash</groupId>

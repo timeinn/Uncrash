@@ -1,6 +1,6 @@
 package net.uncrash.server.service;
 
-import net.uncrash.server.api.JpaService;
+import net.uncrash.data.api.JpaService;
 import net.uncrash.server.domain.UserMonitor;
 
 /**

@@ -2,7 +2,7 @@ package net.uncrash.web.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import net.uncrash.core.web.model.ResponseMessage;
-import net.uncrash.exception.BusinessException;
+import net.uncrash.core.exception.BusinessException;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

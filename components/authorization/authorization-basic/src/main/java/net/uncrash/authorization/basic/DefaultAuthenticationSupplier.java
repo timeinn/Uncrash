@@ -4,17 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import net.uncrash.authorization.*;
 import net.uncrash.authorization.api.web.Authentication;
 import net.uncrash.authorization.api.web.GeneratedToken;
-import net.uncrash.authorization.api.web.ParsedToken;
 import net.uncrash.authorization.api.web.TokenParser;
 import net.uncrash.authorization.basic.define.AuthorizationConst;
 import net.uncrash.authorization.basic.domain.DefaultRole;
 import net.uncrash.authorization.basic.domain.DefaultUser;
-import net.uncrash.authorization.basic.domain.DefaultPermission;
 import net.uncrash.authorization.basic.domain.PermissionRaw;
+import net.uncrash.authorization.basic.jwt.JwtAuthorizedToken;
 import net.uncrash.authorization.basic.jwt.JwtConfig;
 import net.uncrash.authorization.basic.jwt.JwtTokenGenerator;
 import net.uncrash.authorization.basic.jwt.JwtTokenParser;
-import net.uncrash.authorization.exception.UnAuthorizedException;
 import net.uncrash.core.utils.JSONUtil;
 import net.uncrash.core.utils.WebUtil;
 import org.springframework.beans.BeansException;
@@ -51,7 +49,7 @@ public class DefaultAuthenticationSupplier implements AuthenticationSupplier, Ap
     @Override
     public GeneratedToken set(String userId, Authentication authentication) {
         GeneratedToken generatedToken = generator.generate(authentication);
-        final String userRedisKey = AuthorizationConst.joiner(generatedToken.getToken());
+        final String userRedisKey = AuthorizationConst.joiner(authentication.getUser().getId());
         log.info("Authentication RedisKey: {}", userRedisKey);
 
         redisTemplate.opsForValue().set(userRedisKey,
@@ -65,7 +63,7 @@ public class DefaultAuthenticationSupplier implements AuthenticationSupplier, Ap
         if (WebUtil.getHttpServletRequest() == null) {
             return null;
         }
-        ParsedToken token = parser.parseToken(WebUtil.getHttpServletRequest());
+        JwtAuthorizedToken token = (JwtAuthorizedToken) parser.parseToken(WebUtil.getHttpServletRequest());
 
         log.info("Authentication Token: {}", JSONUtil.toJSON(token));
         if (Objects.isNull(token)) {
@@ -73,7 +71,7 @@ public class DefaultAuthenticationSupplier implements AuthenticationSupplier, Ap
             return null;
         }
 
-        final String userRedisKey = AuthorizationConst.joiner(token.getToken());
+        final String userRedisKey = AuthorizationConst.joiner(token.getUserId());
         log.info("Authentication RedisKey: {}", userRedisKey);
 
         String redisVal = redisTemplate.opsForValue().get(userRedisKey);
@@ -89,9 +87,7 @@ public class DefaultAuthenticationSupplier implements AuthenticationSupplier, Ap
 
         if (loginUser.getRoles() != null && loginUser.getRoles().size() > 0) {
             DefaultRole role = (DefaultRole) loginUser.getRoles().get(0);
-            List<Permission> permissionList = role.getPermission();
             authentication.setRole(role);
-            authentication.setPermissions(permissionList);
         } else {
             authentication.setRole(DefaultRole.builder().build());
             authentication.setPermissions(Collections.EMPTY_LIST);

@@ -1,4 +1,4 @@
-package net.uncrash.exception;
+package net.uncrash.core.exception;
 
 /**
  * Http Code 404 Not Found

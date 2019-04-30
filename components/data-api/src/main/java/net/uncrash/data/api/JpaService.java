@@ -1,4 +1,4 @@
-package net.uncrash.server.api;
+package net.uncrash.data.api;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;

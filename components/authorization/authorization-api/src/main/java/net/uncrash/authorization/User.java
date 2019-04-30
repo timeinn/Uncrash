@@ -14,4 +14,6 @@ public interface User extends Serializable {
 
     String getRole();
 
+    Byte getStatus();
+
 }

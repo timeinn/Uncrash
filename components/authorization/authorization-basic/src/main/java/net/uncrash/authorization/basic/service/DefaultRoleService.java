@@ -3,7 +3,7 @@ package net.uncrash.authorization.basic.service;
 import lombok.RequiredArgsConstructor;
 import net.uncrash.authorization.basic.domain.DefaultRole;
 import net.uncrash.authorization.basic.repository.RoleRepository;
-import net.uncrash.server.api.AbstractJpaService;
+import net.uncrash.data.api.AbstractJpaService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 

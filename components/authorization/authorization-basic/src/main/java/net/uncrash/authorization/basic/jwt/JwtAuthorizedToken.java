@@ -1,4 +1,5 @@
 package net.uncrash.authorization.basic.jwt;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.uncrash.authorization.api.dict.TokenTypeEnum;
 import net.uncrash.authorization.api.web.AuthorizedToken;
 
@@ -9,8 +10,6 @@ public class JwtAuthorizedToken implements AuthorizedToken {
 
     public static final Byte TOKEN_TYPE = TokenTypeEnum.JWT.getValue();
 
-    private String token;
-
     private String userId;
 
     private Integer type;
@@ -20,13 +19,8 @@ public class JwtAuthorizedToken implements AuthorizedToken {
     public JwtAuthorizedToken() {
     }
 
-    public JwtAuthorizedToken(String token, String userId) {
-        this.token = token;
+    public JwtAuthorizedToken(String userId) {
         this.userId = userId;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public void setUserId(String userId) {
@@ -39,8 +33,9 @@ public class JwtAuthorizedToken implements AuthorizedToken {
     }
 
     @Override
+    @JsonIgnore
     public String getToken() {
-        return token;
+        return null;
     }
 
     @Override

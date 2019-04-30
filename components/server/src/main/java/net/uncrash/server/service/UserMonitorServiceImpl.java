@@ -1,7 +1,7 @@
 package net.uncrash.server.service;
 
 import lombok.RequiredArgsConstructor;
-import net.uncrash.server.api.AbstractJpaService;
+import net.uncrash.data.api.AbstractJpaService;
 import net.uncrash.server.domain.UserMonitor;
 import net.uncrash.server.repository.UserMonitorRepository;
 import org.springframework.data.jpa.repository.JpaRepository;

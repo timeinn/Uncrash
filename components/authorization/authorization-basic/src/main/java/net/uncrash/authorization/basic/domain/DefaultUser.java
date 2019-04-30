@@ -37,6 +37,12 @@ public class DefaultUser implements User {
     private String username;
 
     @Column(length = 128)
+    private String password;
+
+    @Column(length = 64)
+    private String slat;
+
+    @Column(length = 128)
     private String email;
 
     @Column(name = "[name]", length = 128)
@@ -44,6 +50,9 @@ public class DefaultUser implements User {
 
     @Column(length = 6)
     private String type;
+
+    @Column(columnDefinition = "TINYINT(1)", length = 1)
+    private Byte status;
 
     /**
      * 单一角色关联用
@@ -80,6 +89,11 @@ public class DefaultUser implements User {
     @Override
     public String getRole() {
         return role;
+    }
+
+    @Override
+    public Byte getStatus() {
+        return status;
     }
 
     public List<Role> getRoles() {

@@ -3,12 +3,10 @@ package net.uncrash.authorization.basic.domain;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
-import net.uncrash.authorization.Permission;
 import net.uncrash.authorization.Role;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,6 +33,9 @@ public class DefaultRole implements Role {
     @Column(name = "[describe]", length = 256)
     private String describe;
 
+    @Transient
+    private List<PermissionRaw> permissions;
+
     @Override
     public String getId() {
         return id;
@@ -45,8 +46,8 @@ public class DefaultRole implements Role {
         return name;
     }
 
-    public List<Permission> getPermission() {
-        return Collections.EMPTY_LIST;
+    public List<PermissionRaw> getPermission() {
+        return this.permissions;
     }
 
 }

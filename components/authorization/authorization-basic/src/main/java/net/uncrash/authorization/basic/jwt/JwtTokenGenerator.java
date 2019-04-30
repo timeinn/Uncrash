@@ -28,16 +28,10 @@ public class JwtTokenGenerator implements TokenGenerator {
         return TOKEN_TYPE;
     }
 
-    private String createToken() {
-        return IDGenerator.MD5.generate();
-    }
-
     @Override
     public GeneratedToken generate(Authentication authentication) {
-        String token = createToken();
         String userId = authentication.getUser().getId();
-
-        String subject = JSONUtil.toJSON(new JwtAuthorizedToken(token, userId));
+        String subject = JSONUtil.toJSON(new JwtAuthorizedToken(userId));
         String jwtToken = createJWT(jwtConfig.getId(), subject, jwtConfig.getTtl());
 
         int timeout = jwtConfig.getTtl();
@@ -57,7 +51,7 @@ public class JwtTokenGenerator implements TokenGenerator {
 
             @Override
             public String getToken() {
-                return token;
+                return null;
             }
 
             @Override
