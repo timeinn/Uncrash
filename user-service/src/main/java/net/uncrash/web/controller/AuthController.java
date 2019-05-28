@@ -12,16 +12,26 @@ import net.uncrash.authorization.api.web.GeneratedToken;
 import net.uncrash.authorization.basic.domain.DefaultRole;
 import net.uncrash.authorization.basic.domain.DefaultUser;
 import net.uncrash.authorization.basic.service.UserService;
+import net.uncrash.authorization.listener.event.AuthorizationBeforeEvent;
+import net.uncrash.authorization.listener.event.AuthorizationDecodeEvent;
+import net.uncrash.authorization.listener.event.AuthorizationFailedEvent;
+import net.uncrash.authorization.listener.event.AuthorizationSuccessEvent;
+import net.uncrash.core.exception.NotFoundException;
+import net.uncrash.core.utils.WebUtil;
 import net.uncrash.logging.api.AccessLogger;
 import net.uncrash.web.model.UserRegisterBody;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 @Slf4j
 @RestController
@@ -32,6 +42,8 @@ public class AuthController {
 
     private final UserService userService;
 
+    private final ApplicationEventPublisher eventPublisher;
+
     @PostMapping("/register")
     @AccessLogger("注册用户")
     public User register(@RequestBody UserRegisterBody body) {
@@ -40,8 +52,46 @@ public class AuthController {
 
     @PostMapping("/login")
     @AccessLogger("登录")
-    public Map<String, Object> login(@RequestBody UserRegisterBody body) {
-        GeneratedToken token = userService.selectByUserNameAndPassword(body.getUsername(), body.getPassword());
-        return token.getResponse();
+    public ResponseEntity login(@RequestBody UserRegisterBody body) {
+        return doLogin(body.getUsername(), body.getPassword(), new HashMap<>(8));
+    }
+
+    private ResponseEntity doLogin(String username, String password, Map<String, ?> parameter) {
+        AuthorizationFailedEvent.Reason reason = AuthorizationFailedEvent.Reason.OTHER;
+        Function<String, Object> parameterGetter = parameter::get;
+
+        try {
+            // 触发事件 - 用户密码解码 :注意不能异步:
+            AuthorizationDecodeEvent decodeEvent = new AuthorizationDecodeEvent(username, password, parameterGetter);
+            eventPublisher.publishEvent(decodeEvent);
+            username = decodeEvent.getUsername();
+            password = decodeEvent.getPassword();
+
+            // 触发事件 - 尝试开始登陆
+            AuthorizationBeforeEvent beforeEvent = new AuthorizationBeforeEvent(username, password, parameterGetter);
+            eventPublisher.publishEvent(beforeEvent);
+
+            GeneratedToken generatedToken = userService.selectByUserNameAndPassword(username, password);
+
+            Authentication authentication = AuthenticationHolder.get(generatedToken.getToken());
+            DefaultUser user = (DefaultUser) authentication.getUser();
+            // 登陆成功事件
+            AuthorizationSuccessEvent successEvent = new AuthorizationSuccessEvent(authentication, parameterGetter);
+            String loginIp = WebUtil.getIpAddr();
+            successEvent.getResult().put("loginIp", loginIp);
+            successEvent.getResult().put("lastLoginIp", null);
+            successEvent.getResult().put("lastLoginTime", null);
+            successEvent.getResult().putAll(generatedToken.getResponse());
+            eventPublisher.publishEvent(successEvent);
+
+            return ResponseEntity.ok(generatedToken.getResponse());
+        } catch (Exception e) {
+            // 异常，触发事件
+            AuthorizationFailedEvent failedEvent = new AuthorizationFailedEvent(username, password, parameterGetter, reason);
+            failedEvent.setException(e);
+            System.out.println(e);
+            eventPublisher.publishEvent(failedEvent);
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
