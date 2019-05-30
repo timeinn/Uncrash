@@ -56,6 +56,12 @@ public class AuthController {
         return doLogin(body.getUsername(), body.getPassword(), new HashMap<>(8));
     }
 
+    @PostMapping("/logout")
+    @AccessLogger("登出")
+    public ResponseEntity logout() {
+        return ResponseEntity.ok().build();
+    }
+
     private ResponseEntity doLogin(String username, String password, Map<String, ?> parameter) {
         AuthorizationFailedEvent.Reason reason = AuthorizationFailedEvent.Reason.OTHER;
         Function<String, Object> parameterGetter = parameter::get;
