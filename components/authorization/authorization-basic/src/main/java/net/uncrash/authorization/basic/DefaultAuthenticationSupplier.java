@@ -14,6 +14,7 @@ import net.uncrash.authorization.basic.jwt.JwtConfig;
 import net.uncrash.authorization.basic.jwt.JwtTokenGenerator;
 import net.uncrash.authorization.basic.jwt.JwtTokenParser;
 import net.uncrash.core.utils.JSONUtil;
+import net.uncrash.core.utils.StringUtils;
 import net.uncrash.core.utils.WebUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -56,6 +57,18 @@ public class DefaultAuthenticationSupplier implements AuthenticationSupplier, Ap
             JSONUtil.toJSON(authentication.getUser()),
         generatedToken.getTimeout(), TimeUnit.SECONDS);
         return generatedToken;
+    }
+
+    @Override
+    public void remove(final String token) {
+        redisTemplate.delete(AuthorizationConst.joiner(token));
+    }
+
+    @Override
+    public void remove(Authentication authentication) {
+        if (authentication != null && !StringUtils.isEmpty(authentication.getToken())) {
+            this.remove(authentication.getToken());
+        }
     }
 
     @Override

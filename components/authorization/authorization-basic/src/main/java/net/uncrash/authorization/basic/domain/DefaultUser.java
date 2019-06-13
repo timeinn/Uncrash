@@ -39,8 +39,8 @@ public class DefaultUser implements User {
     @Column(length = 128)
     private String password;
 
-    @Column(length = 64)
-    private String slat;
+    @Column(length = 16)
+    private String salt;
 
     @Column(length = 128)
     private String email;

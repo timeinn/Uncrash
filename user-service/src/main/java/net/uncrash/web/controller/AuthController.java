@@ -12,10 +12,7 @@ import net.uncrash.authorization.api.web.GeneratedToken;
 import net.uncrash.authorization.basic.domain.DefaultRole;
 import net.uncrash.authorization.basic.domain.DefaultUser;
 import net.uncrash.authorization.basic.service.UserService;
-import net.uncrash.authorization.listener.event.AuthorizationBeforeEvent;
-import net.uncrash.authorization.listener.event.AuthorizationDecodeEvent;
-import net.uncrash.authorization.listener.event.AuthorizationFailedEvent;
-import net.uncrash.authorization.listener.event.AuthorizationSuccessEvent;
+import net.uncrash.authorization.listener.event.*;
 import net.uncrash.core.exception.NotFoundException;
 import net.uncrash.core.utils.WebUtil;
 import net.uncrash.logging.api.AccessLogger;
@@ -47,6 +44,7 @@ public class AuthController {
     @PostMapping("/register")
     @AccessLogger("注册用户")
     public User register(@RequestBody UserRegisterBody body) {
+
         return null;
     }
 
@@ -58,7 +56,8 @@ public class AuthController {
 
     @PostMapping("/logout")
     @AccessLogger("登出")
-    public ResponseEntity logout() {
+    public ResponseEntity logout(Authentication authentication) {
+        this.doLogout(authentication);
         return ResponseEntity.ok().build();
     }
 
@@ -99,5 +98,12 @@ public class AuthController {
             eventPublisher.publishEvent(failedEvent);
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    private void doLogout(Authentication authentication) {
+        AuthenticationHolder.remove(authentication);
+        // 推送退出事件
+        AuthorizationExitEvent exitEvent = new AuthorizationExitEvent(authentication);
+        eventPublisher.publishEvent(exitEvent);
     }
 }

@@ -11,4 +11,7 @@ public interface AuthenticationSupplier extends Supplier<Authentication> {
 
     GeneratedToken set(String userId, Authentication authentication);
 
+    void remove(final String token);
+
+    void remove(Authentication authentication);
 }
