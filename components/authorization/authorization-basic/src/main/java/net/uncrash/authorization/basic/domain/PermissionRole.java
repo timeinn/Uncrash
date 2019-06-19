@@ -1,8 +1,10 @@
 package net.uncrash.authorization.basic.domain;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import net.uncrash.authorization.Permission;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,8 +20,10 @@ import java.util.stream.Collectors;
 @Builder
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "t_permission_role")
-public class PermissionRaw implements Permission {
+public class PermissionRole {
 
     @Id
     @ApiModelProperty("主键")
@@ -37,17 +41,10 @@ public class PermissionRaw implements Permission {
     @Column(columnDefinition = "TEXT")
     private String actions;
 
-    @Override
     public String getId() {
         return id;
     }
 
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
     public Set<String> getActions() {
         return getActionList().stream()
             .map(Action::getAction)

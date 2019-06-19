@@ -9,8 +9,13 @@ import lombok.NoArgsConstructor;
 import net.uncrash.authorization.Role;
 import net.uncrash.authorization.User;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -53,6 +58,22 @@ public class DefaultUser implements User {
 
     @Column(columnDefinition = "TINYINT(1)", length = 1)
     private Byte status;
+
+    @CreatedDate
+    @Column
+    private Date createdTime;
+
+    @CreatedBy
+    @Column
+    private String createdBy;
+
+    @LastModifiedDate
+    @Column
+    private Date updatedTime;
+
+    @LastModifiedBy
+    @Column
+    private String updatedBy;
 
     /**
      * 单一角色关联用

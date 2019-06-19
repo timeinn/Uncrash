@@ -8,7 +8,6 @@ import net.uncrash.authorization.api.web.TokenParser;
 import net.uncrash.authorization.basic.define.AuthorizationConst;
 import net.uncrash.authorization.basic.domain.DefaultRole;
 import net.uncrash.authorization.basic.domain.DefaultUser;
-import net.uncrash.authorization.basic.domain.PermissionRaw;
 import net.uncrash.authorization.basic.jwt.JwtAuthorizedToken;
 import net.uncrash.authorization.basic.jwt.JwtConfig;
 import net.uncrash.authorization.basic.jwt.JwtTokenGenerator;
@@ -24,7 +23,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;

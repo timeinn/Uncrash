@@ -18,6 +18,8 @@ public interface IDGenerator<T> {
 
     IDGenerator<String> UUID_NO_SEPARATOR = () -> UUID.generate().replaceAll("-", "");
 
+    IDGenerator<String> UUID2 = () -> UUID_NO_SEPARATOR.generate();
+
     IDGenerator<String> RANDOM = RandomUtil::randomChar;
 
     IDGenerator<String> PUSH_TOKEN = () -> Base64.getEncoder().encodeToString(IDGenerator.MD5.generate().getBytes());

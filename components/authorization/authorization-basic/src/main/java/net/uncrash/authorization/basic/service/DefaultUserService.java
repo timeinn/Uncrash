@@ -5,7 +5,7 @@ import net.uncrash.authorization.*;
 import net.uncrash.authorization.api.web.GeneratedToken;
 import net.uncrash.authorization.basic.domain.DefaultRole;
 import net.uncrash.authorization.basic.domain.DefaultUser;
-import net.uncrash.authorization.basic.domain.PermissionRaw;
+import net.uncrash.authorization.basic.domain.PermissionRole;
 import net.uncrash.authorization.basic.repository.PermissionRepository;
 import net.uncrash.authorization.basic.repository.RoleRepository;
 import net.uncrash.authorization.basic.repository.UserRepository;
@@ -65,8 +65,8 @@ public class DefaultUserService extends AbstractJpaService<DefaultUser, String> 
         authentication.setRole(role);
 
         if (role != null) {
-            List<PermissionRaw> allByRoleId = permissionRepository.findAllByRoleId(role.getId());
-            role.setPermissions(allByRoleId);
+//            List<PermissionRole> allByRoleId = permissionRepository.findAllByRoleId(role.getId());
+//            role.setPermissions(allByRoleId);
         }
 
         List<Role> roles = new ArrayList<>();

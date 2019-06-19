@@ -3,9 +3,11 @@ package net.uncrash.authorization.basic.domain;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
+import net.uncrash.authorization.Permission;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * 权限角色关联关系
@@ -16,12 +18,7 @@ import javax.persistence.*;
 @Builder
 @Table(name = "t_permission")
 @Entity
-public class DefaultPermission {
-
-/*    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Integer id;*/
+public class DefaultPermission implements Permission {
 
     @Id
     @ApiModelProperty("主键")
@@ -39,4 +36,8 @@ public class DefaultPermission {
     @Column(name = "[describe]", length = 257)
     private String describe;
 
+    @Override
+    public Set<String> getActions() {
+        return null;
+    }
 }

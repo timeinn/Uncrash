@@ -34,7 +34,7 @@ public class DefaultRole implements Role {
     private String describe;
 
     @Transient
-    private List<PermissionRaw> permissions;
+    private List<PermissionRole> permissions;
 
     @Override
     public String getId() {
@@ -46,7 +46,7 @@ public class DefaultRole implements Role {
         return name;
     }
 
-    public List<PermissionRaw> getPermission() {
+    public List<PermissionRole> getPermission() {
         return this.permissions;
     }
 

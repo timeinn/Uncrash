@@ -2,8 +2,10 @@ package net.uncrash.authorization.basic.domain;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import net.uncrash.core.utils.StringUtils;
 
 import java.io.IOException;
@@ -17,6 +19,8 @@ import java.util.Set;
  */
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Action {
 
     private String action;
@@ -34,6 +38,7 @@ public class Action {
         try {
             return objectMapper.readValue(json, new TypeReference<Set<Action>>() { });
         } catch (IOException e) {
+            e.printStackTrace();
             return Collections.emptySet();
         }
     }
