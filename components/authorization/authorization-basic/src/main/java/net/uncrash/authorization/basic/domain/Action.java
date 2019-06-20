@@ -42,4 +42,9 @@ public class Action {
             return Collections.emptySet();
         }
     }
+
+    public static final Action add = Action.builder().action("add").checked(true).name("新增").build();
+    public static final Action update = Action.builder().action("update").checked(true).name("更新").build();
+    public static final Action query = Action.builder().action("query").checked(true).name("查询").build();
+    public static final Action delete = Action.builder().action("delete").checked(false).name("删除").build();
 }
