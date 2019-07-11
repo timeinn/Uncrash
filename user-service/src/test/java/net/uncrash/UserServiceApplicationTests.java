@@ -65,9 +65,13 @@ public class UserServiceApplicationTests {
 
         DefaultPermission permission = DefaultPermission.builder()
             .id(permissionId)
-            .name("角色管理")
-            .actions(JSONUtil.toJSON(actionSet))
+            .name("系统管理")
+            .actions(null)
             .describe("")
+            .parent(null)
+            .component("PageView")
+            .icon("system")
+            .path("/system")
             .sort(0)
             .build();
 

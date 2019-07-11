@@ -96,9 +96,9 @@ public class AuthController {
             // 异常，触发事件
             AuthorizationFailedEvent failedEvent = new AuthorizationFailedEvent(username, password, parameterGetter, reason);
             failedEvent.setException(e);
-            System.out.println(e);
             eventPublisher.publishEvent(failedEvent);
-            return ResponseEntity.badRequest().build();
+            // return ResponseEntity.badRequest().build();
+            throw e;
         }
     }
 
