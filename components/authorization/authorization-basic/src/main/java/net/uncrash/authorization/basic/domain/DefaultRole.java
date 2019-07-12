@@ -1,8 +1,10 @@
 package net.uncrash.authorization.basic.domain;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import net.uncrash.authorization.Role;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -17,6 +19,8 @@ import java.util.List;
 @Builder
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "t_role")
 public class DefaultRole implements Role {
 

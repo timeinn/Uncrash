@@ -1,5 +1,8 @@
 package net.uncrash.authorization.basic.jwt;
 
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
@@ -47,7 +50,8 @@ public class JwtConfig {
     }
 
     public SecretKey generalKey() {
-        byte[] encodeKye = Base64.getDecoder().decode(secret);
-        return new SecretKeySpec(encodeKye, 0, encodeKye.length, "AES");
+        /*byte[] encodeKye = Base64.getDecoder().decode(secret);
+        return new SecretKeySpec(encodeKye, 0, encodeKye.length, SignatureAlgorithm.HS256.getValue());*/
+        return Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 }

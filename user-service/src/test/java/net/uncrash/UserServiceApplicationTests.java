@@ -6,14 +6,20 @@ import lombok.extern.slf4j.Slf4j;
 import net.uncrash.authorization.Permission;
 import net.uncrash.authorization.basic.domain.Action;
 import net.uncrash.authorization.basic.domain.DefaultPermission;
+import net.uncrash.authorization.basic.domain.DefaultUser;
 import net.uncrash.authorization.basic.domain.PermissionRole;
+import net.uncrash.authorization.basic.service.DefaultUserService;
 import net.uncrash.authorization.basic.service.PermissionRoleService;
 import net.uncrash.authorization.basic.service.PermissionService;
+import net.uncrash.authorization.basic.service.UserService;
+import net.uncrash.core.exception.NotFoundException;
 import net.uncrash.core.utils.JSONUtil;
+import net.uncrash.core.utils.PasswordBuilder;
 import net.uncrash.core.utils.id.IDGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Example;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
@@ -27,9 +33,11 @@ import java.util.Set;
 public class UserServiceApplicationTests {
 
     @Resource
-    private PermissionService permissionService;
+    private PermissionService     permissionService;
     @Resource
     private PermissionRoleService permissionRoleService;
+    @Resource
+    private DefaultUserService    userService;
 
     @Test
     public void test() {
@@ -78,5 +86,17 @@ public class UserServiceApplicationTests {
         DefaultPermission permission1 = permissionService.saveAndFlush(permission);
 
 
+    }
+
+    @Test
+    public void testPassword() {
+
+        String userId = "8a80cb816b549901016b54a1a5720000";
+        String password = PasswordBuilder.builder("yladmxa", "TCnKpa8K");
+        DefaultUser user = userService.findOne(userId)
+            .orElseThrow(() -> new NotFoundException("账户或密码错误"));
+        user.setPassword(password);
+        userService.saveAndFlush(user);
+        log.info("updated user: {}", user);
     }
 }

@@ -10,26 +10,24 @@ public class JwtAuthorizedToken implements AuthorizedToken {
 
     public static final Byte TOKEN_TYPE = TokenTypeEnum.JWT.getValue();
 
-    private String userId;
+    private String id;
 
     private Integer type;
-
-    private Integer maxInactiveInterval;
 
     public JwtAuthorizedToken() {
     }
 
     public JwtAuthorizedToken(String userId) {
-        this.userId = userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+        this.id = userId;
     }
 
     @Override
-    public String getUserId() {
-        return userId;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

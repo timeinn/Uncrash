@@ -34,27 +34,7 @@ public class User implements net.uncrash.authorization.User {
 
     @Override
     public String getId() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
-    public String getType() {
-        return null;
-    }
-
-    @Override
-    public String getRole() {
-        return null;
+        return id;
     }
 
     public void setId(String id) {
@@ -67,6 +47,11 @@ public class User implements net.uncrash.authorization.User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 
     public void setUsername(String username) {
@@ -89,15 +74,35 @@ public class User implements net.uncrash.authorization.User {
         this.slat = slat;
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String getType() {
+        return type;
     }
 
     public void setType(String type) {
         this.type = type;
     }
 
+    @Override
+    public String getRole() {
+        return role;
+    }
+
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public Byte getStatus() {
+        return null;
     }
 }

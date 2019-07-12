@@ -7,4 +7,6 @@ public interface TokenParser {
 
     ParsedToken parseToken(HttpServletRequest request);
 
+    ParsedToken parseJwt(String jwtToken);
+
 }

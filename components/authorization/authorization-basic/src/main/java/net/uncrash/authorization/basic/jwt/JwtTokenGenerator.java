@@ -51,7 +51,7 @@ public class JwtTokenGenerator implements TokenGenerator {
 
             @Override
             public String getToken() {
-                return null;
+                return jwtToken;
             }
 
             @Override
@@ -75,7 +75,7 @@ public class JwtTokenGenerator implements TokenGenerator {
                 .setId(id)
                 .setIssuedAt(nowDate)
                 .setSubject(subject)
-                .signWith(signatureAlgorithm, key);
+                .signWith(key, signatureAlgorithm);
         if (ttl >= 0) {
             long exprieMillis = now + ttl;
             Date exprie = new Date(exprieMillis);

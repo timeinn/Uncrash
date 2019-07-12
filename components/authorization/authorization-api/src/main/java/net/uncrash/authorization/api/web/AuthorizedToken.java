@@ -28,13 +28,5 @@ public interface AuthorizedToken extends ParsedToken {
      *
      * @return string
      */
-    String getUserId();
-
-    /**
-     * @return 令牌有效期，单位毫秒，-1为长期有效
-     */
-    default long getMaxInactiveInterval() {
-        return -1;
-    }
-
+    String getId();
 }

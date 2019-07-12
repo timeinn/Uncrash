@@ -80,14 +80,13 @@ public class AuthController {
 
             GeneratedToken generatedToken = userService.selectByUserNameAndPassword(username, password);
 
+
             Authentication authentication = AuthenticationHolder.get(generatedToken.getToken());
             DefaultUser user = (DefaultUser) authentication.getUser();
             // 登陆成功事件
             AuthorizationSuccessEvent successEvent = new AuthorizationSuccessEvent(authentication, parameterGetter);
             String loginIp = WebUtil.getIpAddr();
             successEvent.getResult().put("loginIp", loginIp);
-            successEvent.getResult().put("lastLoginIp", null);
-            successEvent.getResult().put("lastLoginTime", null);
             successEvent.getResult().putAll(generatedToken.getResponse());
             eventPublisher.publishEvent(successEvent);
 

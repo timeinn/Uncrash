@@ -42,7 +42,10 @@ public class DefaultAuthenticationSupplier implements AuthenticationSupplier, Ap
 
     @Override
     public Authentication get(String userId) {
-        return null;
+        if (userId.indexOf(".") > -1) {
+            return getUserCachedByJwt((JwtAuthorizedToken) parser.parseJwt(userId));
+        }
+        return getUserCachedById(userId);
     }
 
     @Override
@@ -81,8 +84,15 @@ public class DefaultAuthenticationSupplier implements AuthenticationSupplier, Ap
             // throw new UnAuthorizedException("Required Login", 401);
             return null;
         }
+        return getUserCachedByJwt(token);
+    }
 
-        final String userRedisKey = AuthorizationConst.joiner(token.getUserId());
+    private AuthenticationUser getUserCachedByJwt(JwtAuthorizedToken token) {
+        return getUserCachedById(token.getId());
+    }
+
+    private AuthenticationUser getUserCachedById(String userId) {
+        final String userRedisKey = AuthorizationConst.joiner(userId);
         log.info("Authentication RedisKey: {}", userRedisKey);
 
         String redisVal = redisTemplate.opsForValue().get(userRedisKey);

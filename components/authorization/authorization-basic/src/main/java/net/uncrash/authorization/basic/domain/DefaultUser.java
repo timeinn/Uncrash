@@ -78,7 +78,7 @@ public class DefaultUser implements User {
     /**
      * 单一角色关联用
      */
-    @Transient
+    @Column
     private String role;
 
     /**

@@ -46,7 +46,7 @@ public class DefaultUserService extends AbstractJpaService<DefaultUser, String> 
             Example.of(DefaultUser.builder().username(username).build())
         ).orElseThrow(() -> new NotFoundException("账户或密码错误"));
 
-        boolean checked = check(user.getPassword(), user.getSalt(), password);
+        boolean checked = check(password, user.getSalt(), user.getPassword());
 
         if (!checked) {
             throw new RuntimeException("用户名或密码错误");
