@@ -13,7 +13,8 @@ import java.util.List;
  */
 public interface RoleRepository extends JpaRepository<DefaultRole, String> {
 
-    @Query(value = "SELECT p.id, p.key, p.name, p.component, p.path, p.icon, pr.actions " +
+    @Query(value = "SELECT p.id AS id, p.key AS key, p.name AS name, " +
+        "p.component AS component, p.path AS path, p.icon AS icon, pr.actions AS actions " +
         "FROM t_permission_role pr " +
         "LEFT JOIN t_permission p " +
         "ON pr.permission_id = p.id " +
