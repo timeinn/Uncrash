@@ -9,9 +9,11 @@ import java.util.Base64;
 
 public class JwtConfig {
 
-    private String id = "uncrash-jwt";
+    private static Base64.Encoder encoder = Base64.getEncoder();
 
-    private String secret = Base64.getEncoder().encodeToString("uncrash.jwt.secret".getBytes());
+    private String id;
+
+    private String secret;
 
     private int ttl = 60 * 60 * 1000;
 
@@ -50,8 +52,11 @@ public class JwtConfig {
     }
 
     public SecretKey generalKey() {
-        /*byte[] encodeKye = Base64.getDecoder().decode(secret);
-        return new SecretKeySpec(encodeKye, 0, encodeKye.length, SignatureAlgorithm.HS256.getValue());*/
-        return Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        if (secret.length() < 16) {
+            secret = String.format("%-16s", secret);
+        }
+        byte[] encodeKey = encoder.encode(encoder.encode(secret.getBytes()));
+        return new SecretKeySpec(encodeKey, SignatureAlgorithm.HS256.getJcaName());
+//         return Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 }

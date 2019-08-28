@@ -38,20 +38,11 @@ public class DefaultRole implements Role {
     private String describe;
 
     @Transient
-    private List<PermissionRole> permissions;
+    private List<RolePermission> permissions;
 
     @Override
     public String getId() {
         return id;
-    }
-
-    @Override
-    public String getRoleName() {
-        return name;
-    }
-
-    public List<PermissionRole> getPermission() {
-        return this.permissions;
     }
 
 }

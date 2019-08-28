@@ -6,7 +6,9 @@ import net.uncrash.authorization.api.web.GeneratedToken;
 import net.uncrash.authorization.basic.domain.DefaultRole;
 import net.uncrash.authorization.basic.domain.DefaultUser;
 import net.uncrash.authorization.basic.domain.PermissionRole;
+import net.uncrash.authorization.basic.domain.RolePermission;
 import net.uncrash.authorization.basic.repository.PermissionRepository;
+import net.uncrash.authorization.basic.repository.PermissionRoleRepository;
 import net.uncrash.authorization.basic.repository.RoleRepository;
 import net.uncrash.authorization.basic.repository.UserRepository;
 import net.uncrash.core.exception.NotFoundException;
@@ -33,6 +35,7 @@ public class DefaultUserService extends AbstractJpaService<DefaultUser, String> 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PermissionRepository permissionRepository;
+    private final PermissionRoleRepository permissionRoleRepository;
 
     @Override
     public JpaRepository<DefaultUser, String> getRepository() {
@@ -41,7 +44,7 @@ public class DefaultUserService extends AbstractJpaService<DefaultUser, String> 
 
 
     @Override
-    public GeneratedToken selectByUserNameAndPassword(String username, String password) {
+    public User selectByUserNameAndPassword(String username, String password) {
         DefaultUser user = userRepository.findOne(
             Example.of(DefaultUser.builder().username(username).build())
         ).orElseThrow(() -> new NotFoundException("账户或密码错误"));
@@ -60,22 +63,21 @@ public class DefaultUserService extends AbstractJpaService<DefaultUser, String> 
                .orElse(DefaultRole.builder().build());
             // .orElseThrow(() -> new AuthorizeException("账户未分配权限，无法登陆"));
 
-        AuthenticationUser authentication = new AuthenticationUser();
-        authentication.setUser(user);
-        authentication.setRole(role);
+//        AuthenticationUser authentication = new AuthenticationUser();
+//        authentication.setUser(user);
+//        authentication.setRole(role);
 
         if (role != null) {
-//            List<PermissionRole> allByRoleId = permissionRepository.findAllByRoleId(role.getId());
-//            role.setPermissions(allByRoleId);
+            List<RolePermission> permissions = roleRepository.findPermissionByRoleId(role.getId());
+            role.setPermissions(permissions);
         }
 
-        List<Role> roles = new ArrayList<>();
+        List<DefaultRole> roles = new ArrayList<>();
         roles.add(role);
         user.setRoles(roles);
         // save to authentication manager
-        GeneratedToken generatedToken = AuthenticationHolder.save(authentication);
-
-        return generatedToken;
+        // GeneratedToken generatedToken = AuthenticationHolder.save(authentication);
+        return user;
     }
 
     @Override

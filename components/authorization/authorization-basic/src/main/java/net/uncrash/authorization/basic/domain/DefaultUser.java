@@ -85,7 +85,7 @@ public class DefaultUser implements User {
      * 多角色关联
      */
     @Transient
-    private List<Role> roles;
+    private List<DefaultRole> roles;
 
     @Override
     public String getId() {
@@ -117,7 +117,7 @@ public class DefaultUser implements User {
         return status;
     }
 
-    public List<Role> getRoles() {
+    public List<DefaultRole> getRoles() {
         return roles;
     }
 }

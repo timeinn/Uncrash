@@ -2,12 +2,17 @@ package net.uncrash;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import net.uncrash.authorization.Permission;
 import net.uncrash.authorization.basic.domain.Action;
 import net.uncrash.authorization.basic.domain.DefaultPermission;
 import net.uncrash.authorization.basic.domain.DefaultUser;
 import net.uncrash.authorization.basic.domain.PermissionRole;
+import net.uncrash.authorization.basic.jwt.JwtConfig;
 import net.uncrash.authorization.basic.service.DefaultUserService;
 import net.uncrash.authorization.basic.service.PermissionRoleService;
 import net.uncrash.authorization.basic.service.PermissionService;
@@ -23,9 +28,9 @@ import org.springframework.data.domain.Example;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.util.*;
 
 @Slf4j
 @RunWith(SpringRunner.class)
@@ -38,6 +43,8 @@ public class UserServiceApplicationTests {
     private PermissionRoleService permissionRoleService;
     @Resource
     private DefaultUserService    userService;
+    @Resource
+    private JwtConfig jwtConfig;
 
     @Test
     public void test() {
@@ -98,5 +105,37 @@ public class UserServiceApplicationTests {
         user.setPassword(password);
         userService.saveAndFlush(user);
         log.info("updated user: {}", user);
+    }
+
+    @Test
+    public void testJWT() {
+        log.info("Config: {}", jwtConfig);
+        long ttl = jwtConfig.getTtl();
+        long now = System.currentTimeMillis();
+        Date nowDate = new Date();
+        long exprieMillis = now + ttl;
+        Date exprie = new Date(exprieMillis);
+
+        SecretKey key = jwtConfig.generalKey();
+        log.info("SecretKey: {}", key);
+
+        JwtBuilder builder = Jwts.builder()
+            .setId(jwtConfig.getId())
+            .setIssuedAt(nowDate)
+            .setSubject("abc")
+            .signWith(key)
+            .setExpiration(exprie);
+        String jwtToken = builder.compact();
+        log.info("jwt-token: {}", jwtToken);
+
+        log.info("SecretKey: {}", jwtConfig.generalKey());
+        Claims claims = Jwts.parser()
+            .setSigningKey(jwtConfig.generalKey())
+            .parseClaimsJws(jwtToken)
+            .getBody();
+
+        log.info("Claims: {}", claims);
+
+
     }
 }

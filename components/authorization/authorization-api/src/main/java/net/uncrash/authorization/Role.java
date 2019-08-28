@@ -6,6 +6,6 @@ public interface Role extends Serializable {
 
     String getId();
 
-    String getRoleName();
+    String getName();
 
 }

@@ -12,6 +12,7 @@ import net.uncrash.authorization.api.web.GeneratedToken;
 import net.uncrash.authorization.basic.domain.DefaultRole;
 import net.uncrash.authorization.basic.domain.DefaultUser;
 import net.uncrash.authorization.basic.service.UserService;
+import net.uncrash.authorization.exception.UnAuthorizedException;
 import net.uncrash.authorization.listener.event.*;
 import net.uncrash.core.exception.NotFoundException;
 import net.uncrash.core.utils.WebUtil;
@@ -20,6 +21,7 @@ import net.uncrash.web.model.UserRegisterBody;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,11 +80,22 @@ public class AuthController {
             AuthorizationBeforeEvent beforeEvent = new AuthorizationBeforeEvent(username, password, parameterGetter);
             eventPublisher.publishEvent(beforeEvent);
 
-            GeneratedToken generatedToken = userService.selectByUserNameAndPassword(username, password);
+            DefaultUser user = (DefaultUser) userService.selectByUserNameAndPassword(username, password);
 
+            if (user == null) {
+                throw new UnAuthorizedException();
+            }
 
-            Authentication authentication = AuthenticationHolder.get(generatedToken.getToken());
-            DefaultUser user = (DefaultUser) authentication.getUser();
+            AuthenticationUser authentication = new AuthenticationUser();
+            authentication.setUser(user);
+            // user.getRoles()
+            // 目前只接受单角色
+            if (!CollectionUtils.isEmpty(user.getRoles())) {
+                authentication.setRole(user.getRoles().get(0));
+            }
+            // 保存登录信息到 Authentication Manager
+            GeneratedToken generatedToken = AuthenticationHolder.save(authentication);
+
             // 登陆成功事件
             AuthorizationSuccessEvent successEvent = new AuthorizationSuccessEvent(authentication, parameterGetter);
             String loginIp = WebUtil.getIpAddr();

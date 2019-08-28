@@ -31,6 +31,9 @@ public class DefaultPermission implements Permission {
     @Column(length = 32)
     private String id;
 
+    @Column(name = "[key]", length = 128, unique = true, columnDefinition = "comment '唯一权限KEY'")
+    private String key;
+
     @Column(name = "[name]", length = 128, columnDefinition = "comment '权限名称'")
     private String name;
 

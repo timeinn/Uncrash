@@ -75,7 +75,7 @@ public class JwtTokenGenerator implements TokenGenerator {
                 .setId(id)
                 .setIssuedAt(nowDate)
                 .setSubject(subject)
-                .signWith(key, signatureAlgorithm);
+                .signWith(key);
         if (ttl >= 0) {
             long exprieMillis = now + ttl;
             Date exprie = new Date(exprieMillis);
