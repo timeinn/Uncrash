@@ -26,36 +26,37 @@ public class DefaultPermission implements Permission {
 
     @Id
     @ApiModelProperty("主键")
-    @GeneratedValue(generator = "GenUUID")
-    @GenericGenerator(name = "GenUUID", strategy = "uuid")
-    @Column(length = 32)
+    @Column(length = 32, columnDefinition = "VARCHAR(32) comment '权限唯一键'")
     private String id;
 
-    @Column(name = "[key]", length = 128, unique = true, columnDefinition = "comment '唯一权限KEY'")
-    private String key;
-
-    @Column(name = "[name]", length = 128, columnDefinition = "comment '权限名称'")
+    @Column(name = "[name]", length = 128, columnDefinition = "VARCHAR(128) comment '权限名称'")
     private String name;
 
     @Column(columnDefinition = "TEXT comment '权限操作级别'")
     private String actions;
 
-    @Column(name = "[describe]", length = 257, columnDefinition = "comment '权限说明'")
+    @Column(name = "[describe]", length = 257, columnDefinition = "VARCHAR(128) comment '权限说明'")
     private String describe;
 
-    @Column(name = "[parent]", length = 32, columnDefinition = "comment '父级'")
+    @Column(name = "[parent]", length = 32, columnDefinition = "VARCHAR(32) comment '父级'")
     private String parent;
 
-    @Column(name = "component", columnDefinition = "comment '前端组件名'")
+    @Column(name = "component", columnDefinition = "VARCHAR(128) comment '前端组件名'")
     private String component;
 
-    @Column(name = "icon", length = 50, columnDefinition = "comment '权限路由图标'")
+    @Column(name = "icon", length = 50, columnDefinition = "VARCHAR(128) comment '权限路由图标'")
     private String icon;
 
-    @Column(name = "[path]", length = 500, columnDefinition = "comment '路由路径，如没有则自动生成'")
+    @Column(name = "show_in_menu", columnDefinition = "TINYINT(1) comment '显示到菜单'")
+    private Boolean showInMenu;
+
+    @Column(name = "hide_children_in_menu", columnDefinition = "TINYINT(1) comment '隐藏子菜单'")
+    private Boolean hideChildrenInMenu;
+
+    @Column(name = "[path]", length = 500, columnDefinition = "VARCHAR(255) comment '路由路径，如没有则自动生成'")
     private String path;
 
-    @Column(name = "[sort]", length = 4, columnDefinition = "comment '排序字段'")
+    @Column(name = "[sort]", length = 4, columnDefinition = "int(11) comment '排序字段'")
     private Integer sort;
 
     @Override

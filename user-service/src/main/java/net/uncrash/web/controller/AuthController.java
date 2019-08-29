@@ -46,9 +46,11 @@ public class AuthController {
     @PostMapping("/register")
     @AccessLogger("注册用户")
     public User register(@RequestBody UserRegisterBody body) {
-        User user = userService.register(body.getEmail(), body.getUsername(), body.getPassword());
+        DefaultUser user = (DefaultUser) userService.register(body.getEmail(), body.getUsername(), body.getPassword());
         RegisterSuccessEvent event = new RegisterSuccessEvent(user);
         eventPublisher.publishEvent(event);
+        user.setPassword(null);
+        user.setSalt(null);
         return user;
     }
 

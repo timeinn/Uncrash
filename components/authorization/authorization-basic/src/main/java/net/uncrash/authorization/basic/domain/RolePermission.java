@@ -1,17 +1,15 @@
 package net.uncrash.authorization.basic.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import net.uncrash.authorization.Permission;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class RolePermission {
+public class RolePermission implements Permission {
 
     private String id;
-
-    private String key;
 
     private String name;
 
@@ -25,6 +23,31 @@ public class RolePermission {
 
     private Boolean hideChildrenInMenu;
 
-    private String actions;
+    private Set<String> actions;
 
+    private String originActions;
+
+    public RolePermission() {
+    }
+
+    public RolePermission(String id, String name, String component, String path, String icon, String actions) {
+        this.id = id;
+        this.name = name;
+        this.component = component;
+        this.path = path;
+        this.icon = icon;
+        this.showInMenu = false;
+        this.hideChildrenInMenu = false;
+        this.originActions = actions;
+    }
+
+    public Set<String> getActions() {
+        return getActionList().stream()
+            .map(Action::getAction)
+            .collect(Collectors.toSet());
+    }
+
+    public Set<Action> getActionList() {
+        return Action.json2Actions(this.originActions);
+    }
 }

@@ -22,9 +22,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -109,6 +107,9 @@ public class DefaultAuthenticationSupplier implements AuthenticationSupplier, Ap
         if (loginUser.getRoles() != null && loginUser.getRoles().size() > 0) {
             DefaultRole role = (DefaultRole) loginUser.getRoles().get(0);
             authentication.setRole(role);
+            List<Permission> permissionList = new ArrayList<>();
+            permissionList.addAll(role.getPermissions());
+            authentication.setPermissions(permissionList);
         } else {
             authentication.setRole(DefaultRole.builder().build());
             authentication.setPermissions(Collections.EMPTY_LIST);

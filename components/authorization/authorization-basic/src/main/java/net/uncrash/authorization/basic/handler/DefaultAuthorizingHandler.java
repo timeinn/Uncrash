@@ -3,8 +3,8 @@ package net.uncrash.authorization.basic.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import net.uncrash.authorization.Permission;
-import net.uncrash.authorization.Role;
 import net.uncrash.authorization.api.web.Authentication;
+import net.uncrash.authorization.basic.domain.DefaultRole;
 import net.uncrash.authorization.define.AuthorizeDefinition;
 import net.uncrash.authorization.define.AuthorizingContext;
 import net.uncrash.authorization.define.Logical;
@@ -39,67 +39,75 @@ public class DefaultAuthorizingHandler implements AuthorizingHandler {
         Logical logical = definition.getLogical() == Logical.DEFAULT ? Logical.OR : definition.getLogical();
         boolean logicalIsOr = logical == Logical.OR;
 
-        Set<String> roles = definition.getRoles();
-        Set<String> permissions = definition.getPermissions();
-        Set<String> actions = definition.getActions();
+        Set<String> rolesDef = definition.getRoles();
+        Set<String> permissionsDef = definition.getPermissions();
+        Set<String> actionsDef = definition.getActions();
+        Set<String> usersDef = definition.getUser();
+        // 单角色检查
+        Set<String> roleKeys = Set.of(authentication.getRole().getName());
 
+        // 多角色检查
+        //Set<String> roleKeys = authentication.getRoles().stream().map(item -> item.getName()).collect(Collectors.toSet());
+
+        // 检查权限
         if (!definition.getPermissions().isEmpty()) {
             if (log.isInfoEnabled()) {
-                log.info("执行权限控制: 权限{}({}), 操作{}",
+                log.info("执行权限控制: 权限{}({}), 操作{}.",
                     definition.getPermissionDescription(),
-                    permissions,
-                    actions);
+                    permissionsDef,
+                    actionsDef);
             }
 
-            if (authentication.getPermissions() != null) {
-                List<Permission> permissionList = authentication.getPermissions().stream()
-                    .filter(permission -> {
-                        // 未持有任何一个权限
-                        if (permissions.contains(permission.getId())) {
-                            return false;
-                        }
+            List<Permission> permissions = authentication.getPermissions().stream()
+                .filter(permission -> {
+                    // 未持有任何一个权限
+                    if (!permissionsDef.contains(permission.getId())) {
+                        return false;
+                    }
 
-                        // 未配置 action
-                        if (actions.isEmpty()) {
-                            return true;
-                        }
+                    // 未配置 action
+                    if (actionsDef.isEmpty()) {
+                        return true;
+                    }
 
-                        // 已配置 action, 进行校验
-                        List<String> actionList = permission.getActions()
-                            .stream()
-                            .filter(actions::contains)
-                            .collect(Collectors.toList());
+                    // 已配置 action, 进行校验
+                    List<String> actionList = permission.getActions()
+                        .stream()
+                        .filter(actionsDef::contains)
+                        .collect(Collectors.toList());
 
-                        if (actionList.isEmpty()) {
-                            return false;
-                        }
+                    if (actionList.isEmpty()) {
+                        return false;
+                    }
 
-                        // 如果设定的条件是 OR 则只要满足一个 action 条件即可
-                        return logicalIsOr || permission.getActions().containsAll(actions);
-                   }).collect(Collectors.toList());
+                    // 如果设定的条件是 OR 则只要满足一个 action 条件即可
+                    // 否则过滤结果数量必须和配置的数量相同
+                    return logicalIsOr || permission.getActions().containsAll(actionList);
+                }).collect(Collectors.toList());
+            log.info("permissions: {}", permissions);
 
-                access = logicalIsOr ?
-                    !CollectionUtils.isEmpty(permissions) :
-                    //权限数量和配置的数量相同
-                    permissionList.size() == permissions.size();
-            }
+            access = logicalIsOr ?
+                !CollectionUtils.isEmpty(permissions) :
+                //权限数量和配置的数量相同
+                permissions.size() == permissionsDef.size();
         }
 
-        if (!roles.isEmpty()) {
+        // 检查角色
+        if (!rolesDef.isEmpty()) {
             if (log.isInfoEnabled()) {
-                log.info("检查 角色权限 :{}, definition: {}", roles, definition.getRoles());
+                log.info("检查 角色权限 :{}, definition: {}", rolesDef, definition.getRoles());
             }
 
             if (authentication.getRole() != null) {
                 Function<Predicate<String>, Boolean> func = logicalIsOr
-                    ? roles.stream()::anyMatch
-                    : roles.stream()::allMatch;
+                    ? roleKeys.stream()::anyMatch
+                    : roleKeys.stream()::allMatch;
 
-                access = func.apply(role -> authentication.getRole().equals(role));
+                access = func.apply(role -> rolesDef.equals(role));
             }
         }
 
-        if (access) {
+        if (!access) {
             throw new AccessDenyException(definition.getMessage());
         }
     }

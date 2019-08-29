@@ -13,11 +13,11 @@ import java.util.List;
  */
 public interface RoleRepository extends JpaRepository<DefaultRole, String> {
 
-    @Query(value = "SELECT p.id AS id, p.key AS key, p.name AS name, " +
-        "p.component AS component, p.path AS path, p.icon AS icon, pr.actions AS actions " +
-        "FROM t_permission_role pr " +
-        "LEFT JOIN t_permission p " +
-        "ON pr.permission_id = p.id " +
-        "WHERE pr.role_id = :roleId", nativeQuery = true)
+    @Query(value = "SELECT new net.uncrash.authorization.basic.domain.RolePermission(p.id, p.name, " +
+        "p.component, p.path, p.icon, pr.actions) " +
+        "FROM PermissionRole pr " +
+        "LEFT JOIN DefaultPermission p " +
+        "ON pr.permissionId = p.id " +
+        "WHERE pr.roleId = :roleId")
     List<RolePermission> findPermissionByRoleId(@Param("roleId") String roleId);
 }

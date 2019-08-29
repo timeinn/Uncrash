@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.uncrash.authorization.Permission;
 import net.uncrash.authorization.Role;
 import org.hibernate.annotations.GenericGenerator;
 

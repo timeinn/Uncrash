@@ -8,15 +8,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import net.uncrash.authorization.Permission;
-import net.uncrash.authorization.basic.domain.Action;
-import net.uncrash.authorization.basic.domain.DefaultPermission;
-import net.uncrash.authorization.basic.domain.DefaultUser;
-import net.uncrash.authorization.basic.domain.PermissionRole;
+import net.uncrash.authorization.basic.domain.*;
 import net.uncrash.authorization.basic.jwt.JwtConfig;
-import net.uncrash.authorization.basic.service.DefaultUserService;
-import net.uncrash.authorization.basic.service.PermissionRoleService;
-import net.uncrash.authorization.basic.service.PermissionService;
-import net.uncrash.authorization.basic.service.UserService;
+import net.uncrash.authorization.basic.service.*;
 import net.uncrash.core.exception.NotFoundException;
 import net.uncrash.core.utils.JSONUtil;
 import net.uncrash.core.utils.PasswordBuilder;
@@ -42,22 +36,21 @@ public class UserServiceApplicationTests {
     @Resource
     private PermissionRoleService permissionRoleService;
     @Resource
+    private DefaultRoleService    roleService;
+    @Resource
     private DefaultUserService    userService;
     @Resource
-    private JwtConfig jwtConfig;
+    private JwtConfig             jwtConfig;
 
     @Test
-    public void test() {
+    public void testAddPermissionRole() {
 
-        String roleId = IDGenerator.UUID2.generate();
-        String permissionId = IDGenerator.UUID2.generate();
+        // String roleId = IDGenerator.UUID2.generate();
+        // String permissionId = IDGenerator.UUID2.generate();
+        String roleId = "2c9087a56cdb56e0016cdb56ff1d0000";
+        String permissionId = "2c9087a56cdb683e016cdb686c2e0000";
 
-        Action add = Action.builder().action("add").checked(true).name("新增").build();
-        Action update = Action.builder().action("update").checked(true).name("更新").build();
-        Action query = Action.builder().action("query").checked(true).name("查询").build();
-        Action delete = Action.builder().action("delete").checked(false).name("删除").build();
-
-        List<Action> actions = Lists.newArrayList(add, update, query, delete);
+        List<Action> actions = Lists.newArrayList(Action.add, Action.update, Action.query, Action.delete);
 
         PermissionRole pr = PermissionRole.builder()
             .permissionId(permissionId)
@@ -65,11 +58,23 @@ public class UserServiceApplicationTests {
             .actions(JSONUtil.toJSON(actions))
             .build();
 
-        // permissionRoleService.saveAndFlush(pr);
+        permissionRoleService.saveAndFlush(pr);
 
         List<PermissionRole> permissionRoleList = permissionService.findAllByRoleId("be12fa74d78b4d728123d38eacc8a27f");
         log.info("PermissionRole: {}", JSONUtil.toJSON(permissionRoleList));
 
+    }
+
+    @Test
+    public void testAddRole() {
+        String roleId = IDGenerator.UUID2.generate();
+
+        DefaultRole role = DefaultRole.builder()
+            .id(roleId)
+            .name("管理员")
+            .describe("就是管理员")
+            .build();
+        roleService.saveAndFlush(role);
     }
 
     @Test
@@ -80,13 +85,15 @@ public class UserServiceApplicationTests {
 
         DefaultPermission permission = DefaultPermission.builder()
             .id(permissionId)
-            .name("系统管理")
-            .actions(null)
+            .name("权限管理")
+            .actions(JSONUtil.toJSON(actionSet))
             .describe("")
             .parent(null)
-            .component("PageView")
-            .icon("system")
-            .path("/system")
+            .component("Permission.vue")
+            .icon(null)
+            .path("/system/permission")
+            .hideChildrenInMenu(false)
+            .showInMenu(true)
             .sort(0)
             .build();
 
