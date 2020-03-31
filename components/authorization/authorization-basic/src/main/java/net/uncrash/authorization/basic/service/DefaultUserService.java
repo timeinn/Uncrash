@@ -13,6 +13,7 @@ import net.uncrash.authorization.basic.repository.RoleRepository;
 import net.uncrash.authorization.basic.repository.UserRepository;
 import net.uncrash.core.exception.NotFoundException;
 import net.uncrash.core.utils.PasswordBuilder;
+import net.uncrash.core.utils.id.IDGenerator;
 import net.uncrash.data.api.AbstractJpaService;
 import net.uncrash.data.dict.DataStatus;
 import org.springframework.data.domain.Example;
@@ -86,6 +87,7 @@ public class DefaultUserService extends AbstractJpaService<DefaultUser, String> 
     public User register(String email, String username, String password) {
         final String salt = PasswordBuilder.createSalt();
         DefaultUser user = DefaultUser.builder()
+            .id(IDGenerator.UUID2.generate())
             .email(email)
             .username(username)
             .password(PasswordBuilder.builder(password, salt))

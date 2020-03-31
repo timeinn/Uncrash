@@ -3,7 +3,7 @@ package net.uncrash.authorization.basic.jwt;
 import io.jsonwebtoken.*;
 import net.uncrash.authorization.api.web.ParsedToken;
 import net.uncrash.authorization.api.web.TokenParser;
-import net.uncrash.core.utils.JSONUtil;
+import net.uncrash.core.utils.Serializers;
 import net.uncrash.core.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +60,7 @@ public class JwtTokenParser implements TokenParser {
             if (claims.getExpiration().getTime() <= System.currentTimeMillis()) {
                 return null;
             }
-            return JSONUtil.toBean(claims.getSubject(), JwtAuthorizedToken.class);
+            return Serializers.toBean(claims.getSubject(), JwtAuthorizedToken.class);
         } catch (Exception e) {
             logger.error("parseJWT [{}] err: {}", jwtToken, e.getMessage());
         }

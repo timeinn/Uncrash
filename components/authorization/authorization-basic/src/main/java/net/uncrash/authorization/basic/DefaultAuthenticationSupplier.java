@@ -12,7 +12,7 @@ import net.uncrash.authorization.basic.jwt.JwtAuthorizedToken;
 import net.uncrash.authorization.basic.jwt.JwtConfig;
 import net.uncrash.authorization.basic.jwt.JwtTokenGenerator;
 import net.uncrash.authorization.basic.jwt.JwtTokenParser;
-import net.uncrash.core.utils.JSONUtil;
+import net.uncrash.core.utils.Serializers;
 import net.uncrash.core.utils.StringUtils;
 import net.uncrash.core.utils.WebUtil;
 import org.springframework.beans.BeansException;
@@ -53,7 +53,7 @@ public class DefaultAuthenticationSupplier implements AuthenticationSupplier, Ap
         log.info("Authentication RedisKey: {}", userRedisKey);
 
         redisTemplate.opsForValue().set(userRedisKey,
-            JSONUtil.toJSON(authentication.getUser()),
+            Serializers.toJSON(authentication.getUser()),
         generatedToken.getTimeout(), TimeUnit.SECONDS);
         return generatedToken;
     }
@@ -77,7 +77,7 @@ public class DefaultAuthenticationSupplier implements AuthenticationSupplier, Ap
         }
         JwtAuthorizedToken token = (JwtAuthorizedToken) parser.parseToken(WebUtil.getHttpServletRequest());
 
-        log.info("Authentication Token: {}", JSONUtil.toJSON(token));
+        log.info("Authentication Token: {}", Serializers.toJSON(token));
         if (Objects.isNull(token)) {
             // throw new UnAuthorizedException("Required Login", 401);
             return null;
@@ -94,7 +94,7 @@ public class DefaultAuthenticationSupplier implements AuthenticationSupplier, Ap
         log.info("Authentication RedisKey: {}", userRedisKey);
 
         String redisVal = redisTemplate.opsForValue().get(userRedisKey);
-        DefaultUser loginUser = Optional.ofNullable(JSONUtil.toBean(redisVal, DefaultUser.class)).orElse(DefaultUser.builder().build());
+        DefaultUser loginUser = Optional.ofNullable(Serializers.toBean(redisVal, DefaultUser.class)).orElse(DefaultUser.builder().build());
         log.info("Login User: {}", loginUser);
 
         if (Objects.isNull(loginUser)) {

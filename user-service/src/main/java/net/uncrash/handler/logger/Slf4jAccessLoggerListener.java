@@ -1,6 +1,6 @@
-package net.uncrash.web.handler.logger;
+package net.uncrash.handler.logger;
 
-import net.uncrash.core.utils.JSONUtil;
+import net.uncrash.core.utils.Serializers;
 import net.uncrash.logging.api.AccessLoggerInfo;
 import net.uncrash.logging.api.events.AccessLoggerAfterEvent;
 import org.slf4j.Logger;
@@ -42,11 +42,11 @@ public class Slf4jAccessLoggerListener {
 
         if (logger.isInfoEnabled()) {
             try {
-                logger.info(JSONUtil.toJSON(info.toSimpleMap(obj -> {
+                logger.info(Serializers.toJSON(info.toSimpleMap(obj -> {
                     if (Stream.of(EXCLUDES).anyMatch(aClass -> aClass.isInstance(obj))) {
                         return obj.getClass().getName();
                     }
-                    return JSONUtil.toJSON(obj);
+                    return Serializers.toJSON(obj);
                 })));
             } catch (Exception e) {
                 logger.error("onLogger Error: {}", e.getMessage());

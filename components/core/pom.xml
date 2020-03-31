@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>core</artifactId>
+    <packaging>jar</packaging>
     <name>Uncrash Core</name>
 
     <dependencies>

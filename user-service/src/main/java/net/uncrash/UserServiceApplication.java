@@ -3,6 +3,7 @@ package net.uncrash;
 import net.uncrash.logging.aop.EnableAccessLogger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * User service for Uncrash
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Acris
  * @date 2019/04/13
  */
+@EnableAsync
 @EnableAccessLogger
 @SpringBootApplication
 public class UserServiceApplication {

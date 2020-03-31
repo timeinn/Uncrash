@@ -8,7 +8,7 @@
     <!-- 控制台输出日志 -->
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%clr(%d{HH:mm:ss.SSS}){faint} > %clr(${LOG_LEVEL_PATTERN:-%5p}) %logger{30} - %m%n</pattern>
+            <pattern>%clr(%d{HH:mm:ss.SSS}){faint} > %clr(${LOG_LEVEL_PATTERN:-%5p}) [%thread] %logger{30} - %m%n</pattern>
         </encoder>
     </appender>
 

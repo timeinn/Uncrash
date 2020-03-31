@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
-public class JSONUtil {
+public class Serializers {
 
     private static ObjectMapper mapper = new ObjectMapper();
 

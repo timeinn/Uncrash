@@ -7,8 +7,7 @@ import net.uncrash.authorization.api.dict.TokenTypeEnum;
 import net.uncrash.authorization.api.web.Authentication;
 import net.uncrash.authorization.api.web.GeneratedToken;
 import net.uncrash.authorization.api.web.TokenGenerator;
-import net.uncrash.core.utils.JSONUtil;
-import net.uncrash.core.utils.id.IDGenerator;
+import net.uncrash.core.utils.Serializers;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -31,7 +30,7 @@ public class JwtTokenGenerator implements TokenGenerator {
     @Override
     public GeneratedToken generate(Authentication authentication) {
         String userId = authentication.getUser().getId();
-        String subject = JSONUtil.toJSON(new JwtAuthorizedToken(userId));
+        String subject = Serializers.toJSON(new JwtAuthorizedToken(userId));
         String jwtToken = createJWT(jwtConfig.getId(), subject, jwtConfig.getTtl());
 
         int timeout = jwtConfig.getTtl();

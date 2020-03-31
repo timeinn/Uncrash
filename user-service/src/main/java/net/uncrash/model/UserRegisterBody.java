@@ -1,4 +1,4 @@
-package net.uncrash.web.model;
+package net.uncrash.model;
 
 import lombok.Data;
 

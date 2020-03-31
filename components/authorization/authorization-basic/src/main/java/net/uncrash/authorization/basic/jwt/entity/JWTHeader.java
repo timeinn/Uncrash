@@ -1,7 +1,7 @@
 package net.uncrash.authorization.basic.jwt.entity;
 
 import lombok.Data;
-import net.uncrash.core.utils.JSONUtil;
+import net.uncrash.core.utils.Serializers;
 
 import java.util.Base64;
 
@@ -22,7 +22,7 @@ public class JWTHeader {
     private String alg;
 
     public String toBase64() {
-        String json = JSONUtil.toJSON(this);
+        String json = Serializers.toJSON(this);
         return Base64.getEncoder().encodeToString(json.getBytes());
     }
 }

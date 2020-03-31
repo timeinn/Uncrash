@@ -5,25 +5,21 @@ import com.google.common.collect.Sets;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
-import net.uncrash.authorization.Permission;
 import net.uncrash.authorization.basic.domain.*;
 import net.uncrash.authorization.basic.jwt.JwtConfig;
 import net.uncrash.authorization.basic.service.*;
 import net.uncrash.core.exception.NotFoundException;
-import net.uncrash.core.utils.JSONUtil;
+import net.uncrash.core.utils.Serializers;
 import net.uncrash.core.utils.PasswordBuilder;
 import net.uncrash.core.utils.id.IDGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Example;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.util.*;
 
 @Slf4j
@@ -55,13 +51,13 @@ public class UserServiceApplicationTests {
         PermissionRole pr = PermissionRole.builder()
             .permissionId(permissionId)
             .roleId(roleId)
-            .actions(JSONUtil.toJSON(actions))
+            .actions(Serializers.toJSON(actions))
             .build();
 
         permissionRoleService.saveAndFlush(pr);
 
         List<PermissionRole> permissionRoleList = permissionService.findAllByRoleId("be12fa74d78b4d728123d38eacc8a27f");
-        log.info("PermissionRole: {}", JSONUtil.toJSON(permissionRoleList));
+        log.info("PermissionRole: {}", Serializers.toJSON(permissionRoleList));
 
     }
 
@@ -86,7 +82,7 @@ public class UserServiceApplicationTests {
         DefaultPermission permission = DefaultPermission.builder()
             .id(permissionId)
             .name("权限管理")
-            .actions(JSONUtil.toJSON(actionSet))
+            .actions(Serializers.toJSON(actionSet))
             .describe("")
             .parent(null)
             .component("Permission.vue")

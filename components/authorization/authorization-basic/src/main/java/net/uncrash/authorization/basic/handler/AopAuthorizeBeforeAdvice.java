@@ -2,7 +2,7 @@ package net.uncrash.authorization.basic.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import net.uncrash.authorization.annotation.Authorize;
-import net.uncrash.core.utils.JSONUtil;
+import net.uncrash.core.utils.Serializers;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.MethodBeforeAdvice;
@@ -21,7 +21,7 @@ public class AopAuthorizeBeforeAdvice implements MethodBeforeAdvice, MethodInter
     @Override
     public void before(Method method, Object[] objects, Object target) throws Throwable {
 
-        log.info("invoke: {} {}", method.getName(), JSONUtil.toJSON(objects));
+        log.info("invoke: {} {}", method.getName(), Serializers.toJSON(objects));
         Annotation[][] annotations = method.getParameterAnnotations();
 
         log.info("Annotation[][]: {}", (Object[]) annotations);

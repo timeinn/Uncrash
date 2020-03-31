@@ -1,4 +1,4 @@
-package net.uncrash.web.controller;
+package net.uncrash.controller;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -6,18 +6,15 @@ import lombok.extern.slf4j.Slf4j;
 import net.uncrash.authorization.AuthenticationHolder;
 import net.uncrash.authorization.AuthenticationUser;
 import net.uncrash.authorization.User;
-import net.uncrash.authorization.annotation.Authorize;
 import net.uncrash.authorization.api.web.Authentication;
 import net.uncrash.authorization.api.web.GeneratedToken;
-import net.uncrash.authorization.basic.domain.DefaultRole;
 import net.uncrash.authorization.basic.domain.DefaultUser;
 import net.uncrash.authorization.basic.service.UserService;
 import net.uncrash.authorization.exception.UnAuthorizedException;
 import net.uncrash.authorization.listener.event.*;
-import net.uncrash.core.exception.NotFoundException;
 import net.uncrash.core.utils.WebUtil;
 import net.uncrash.logging.api.AccessLogger;
-import net.uncrash.web.model.UserRegisterBody;
+import net.uncrash.model.UserRegisterBody;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +22,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;

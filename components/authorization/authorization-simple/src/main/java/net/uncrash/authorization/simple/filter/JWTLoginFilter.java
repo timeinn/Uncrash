@@ -4,7 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import net.uncrash.authorization.model.AuthenticationBean;
-import net.uncrash.core.utils.JSONUtil;
+import net.uncrash.core.utils.Serializers;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,7 +44,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
             || contentType.equals(MediaType.APPLICATION_JSON_VALUE)) {
             UsernamePasswordAuthenticationToken authRequest = null;
             try {
-                AuthenticationBean bean = JSONUtil.toBean(StreamUtils.copyToString(request.getInputStream(), Charset.forName("UTF-8")), AuthenticationBean.class);
+                AuthenticationBean bean = Serializers.toBean(StreamUtils.copyToString(request.getInputStream(), Charset.forName("UTF-8")), AuthenticationBean.class);
                 authRequest = bean == null ? this.emptyToken() : new UsernamePasswordAuthenticationToken(bean.getUsername(), bean.getPassword());
             } catch (IOException e) {
                 e.printStackTrace();
