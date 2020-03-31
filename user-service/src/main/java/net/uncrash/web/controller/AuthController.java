@@ -22,10 +22,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -62,9 +60,15 @@ public class AuthController {
 
     @PostMapping("/logout")
     @AccessLogger("登出")
-    public ResponseEntity logout(Authentication authentication) {
+    public ResponseEntity logout(@ApiIgnore Authentication authentication) {
         this.doLogout(authentication);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/info")
+    @AccessLogger("获取授权信息")
+    public ResponseEntity<User> info(@ApiIgnore Authentication authentication) {
+        return ResponseEntity.ok(authentication.getUser());
     }
 
     private ResponseEntity doLogin(String username, String password, Map<String, ?> parameter) {

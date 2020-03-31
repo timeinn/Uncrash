@@ -28,7 +28,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "t_user")
+@Table(name = "s_user")
 public class DefaultUser implements User {
 
     @Id
@@ -78,8 +78,8 @@ public class DefaultUser implements User {
     /**
      * 单一角色关联用
      */
-    @Column
-    private String role;
+    @Column(name = "role_id")
+    private String roleId;
 
     /**
      * 多角色关联
@@ -109,7 +109,7 @@ public class DefaultUser implements User {
 
     @Override
     public String getRole() {
-        return role;
+        return roleId;
     }
 
     @Override
