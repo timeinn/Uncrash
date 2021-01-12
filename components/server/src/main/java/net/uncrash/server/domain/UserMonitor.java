@@ -41,8 +41,7 @@ public class UserMonitor implements Serializable {
      */
     @Id
     @ApiModelProperty("主键")
-    @Column(length = 32)
-    private String id;
+    private Long id;
 
     /**
      * 唯一
@@ -92,7 +91,7 @@ public class UserMonitor implements Serializable {
      * 0 关、1 开
      */
     @ApiModelProperty("数据丢失时，进行额外的 PING 检查 0 关、1 开")
-    @Column(nullable = false, columnDefinition = "TINYINT(1) comment '数据丢失时，进行额外的 PING 检查 0 关、1 开'", length = 1)
+        @Column(nullable = false, columnDefinition = "BIT comment '数据丢失时，进行额外的 PING 检查 0 关、1 开'", length = 1)
     private Boolean lossRequirePing;
 
     /**
@@ -100,7 +99,7 @@ public class UserMonitor implements Serializable {
      * 0 关、1 开
      */
     @ApiModelProperty("资源使用阈值通知 0 关、1 开")
-    @Column(nullable = false, columnDefinition = "TINYINT(1) comment '资源使用阈值通知 0 关、1 开'", length = 1)
+    @Column(nullable = false, columnDefinition = "BIT comment '资源使用阈值通知 0 关、1 开'", length = 1)
     private Boolean resourceNotification;
 
     /**
@@ -132,7 +131,7 @@ public class UserMonitor implements Serializable {
      * 0 停用 1 启用 2 已离线
      */
     @ApiModelProperty("监控状态：0 停用 1 启用 2 已离线")
-    @Column(columnDefinition = "tinyint(1) comment '监控状态：0 停用 1 启用 2 已离线'")
+    @Column(columnDefinition = "BIT comment '监控状态：0 停用 1 启用 2 已离线'")
     private Integer status;
 
     /**
@@ -143,7 +142,7 @@ public class UserMonitor implements Serializable {
      * 3 Port 端口监控
      */
     @ApiModelProperty("监控类型：0 Agent 推送、1 cURL HTTP(s) 请求、2 ICMP (Ping)、3 Port 端口")
-    @Column(columnDefinition = "tinyint(1) comment '监控类型：0 Agent 推送、1 cURL HTTP(s) 请求、2 ICMP (Ping)、3 Port 端口'")
+    @Column(columnDefinition = "BIT comment '监控类型：0 Agent 推送、1 cURL HTTP(s) 请求、2 ICMP (Ping)、3 Port 端口'")
     private Integer type;
 
     @Column

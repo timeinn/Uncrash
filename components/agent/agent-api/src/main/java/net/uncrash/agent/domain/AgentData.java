@@ -1,12 +1,16 @@
 package net.uncrash.agent.domain;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import net.uncrash.agent.domain.consts.PingNode;
+import net.uncrash.core.utils.StringUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Data
 public class AgentData {
 
@@ -24,10 +28,13 @@ public class AgentData {
         List<Process> processList = AgentData.decodeProcessList(data.get(4));
         List<DiskLog> diskList = AgentData.decodeDiskList(data.get(17));
         List<Double> systemLoadList = AgentData.decodeSystemLoad(data.get(28));
+        // get all ping log
         List<PingLog> pingDataList = AgentData.decodePingList(data.get(31));
 
+        log.info("pingDataList: {}", pingDataList);
 
-        AgentLog agentLog = AgentLog.builder()
+        AgentLog agentLog = AgentLog
+            .builder()
             .agent(data.get(0))
             .uptime(Integer.valueOf(data.get(1)))
             .sessions(Integer.valueOf(data.get(2)))
@@ -66,14 +73,18 @@ public class AgentData {
             return null;
         }
         List<String> data = Arrays.asList(json.split(";"));
-        return data.stream()
+        return data
+            .stream()
             .map(AgentData::decodeProcess)
             .collect(Collectors.toList());
     }
 
     private static Process decodeProcess(String str) {
-        List<String> data = Arrays.asList(str.trim().split(" "));
-        return Process.builder()
+        List<String> data = Arrays.asList(str
+                                              .trim()
+                                              .split(" "));
+        return Process
+            .builder()
             .name(data.get(3))
             .cpu(new BigDecimal(data.get(1)))
             .memory(new BigDecimal(data.get(2)))
@@ -89,14 +100,20 @@ public class AgentData {
         if (json == null || json.length() == 0) {
             return null;
         }
-        return Arrays.stream(json.trim().split(";"))
+        return Arrays
+            .stream(json
+                        .trim()
+                        .split(";"))
             .map(AgentData::decodeDisk)
             .collect(Collectors.toList());
     }
 
     private static DiskLog decodeDisk(String str) {
-        List<String> data = Arrays.asList(str.trim().split(" "));
-        return DiskLog.builder()
+        List<String> data = Arrays.asList(str
+                                              .trim()
+                                              .split(" "));
+        return DiskLog
+            .builder()
             .device(data.get(0))
             .totalSize(Long.valueOf(data.get(1)))
             .usedSize(Long.valueOf(data.get(2)))
@@ -104,18 +121,33 @@ public class AgentData {
     }
 
     private static List<Double> decodeSystemLoad(String json) {
-        return Arrays.stream(json.trim().split(" "))
+        return Arrays
+            .stream(json
+                        .trim()
+                        .split(" "))
             .filter(s -> s != null && s.length() > 0)
             .map(Double::valueOf)
             .collect(Collectors.toList());
     }
 
-    private static List<PingLog> decodePingList(String json) {
-        return new ArrayList<>();
+    private static List<PingLog> decodePingList(String pingLogStr) {
+        return Arrays
+            .stream(pingLogStr.split(","))
+            .filter(StringUtils::isNotEmpty)
+            .peek(item -> log.info("PingNode: {}", item))
+            .map(item -> item.split(":"))
+            .map(item -> PingLog
+                .builder()
+                .nodeName(PingNode.of(Integer.valueOf(item[0])).getName())
+                .build()
+            )
+            .collect(Collectors.toList());
     }
 
     private static String decodeBase64(String ent) {
-        return new String(Base64.getDecoder().decode(ent));
+        return new String(Base64
+                              .getDecoder()
+                              .decode(ent));
     }
 
     private static List<String> explode(String str, String regex) {
@@ -123,7 +155,8 @@ public class AgentData {
             return new ArrayList<>();
         }
 
-        return Arrays.stream(str.split(regex))
+        return Arrays
+            .stream(str.split(regex))
             .map(AgentData::decodeBase64)
             .collect(Collectors.toList());
     }

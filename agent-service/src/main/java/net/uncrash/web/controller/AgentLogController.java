@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 import net.uncrash.agent.domain.AgentData;
 import net.uncrash.agent.domain.AgentLog;
 import net.uncrash.agent.service.AgentLogService;
-import net.uncrash.core.web.model.ResponseMessage;
 import net.uncrash.core.exception.BadRequestException;
 import net.uncrash.core.exception.NotFoundException;
+import net.uncrash.core.web.model.ResponseMessage;
 import net.uncrash.logging.api.AccessLogger;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
@@ -38,9 +38,10 @@ public class AgentLogController {
     @ApiOperation("保存服务端 Agent Log 信息")
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseMessage<AgentLog> agentStat(@RequestBody AgentData agentData) {
-        return ResponseMessage.ok(agentLogService.save(agentData.builder()
-            .orElseThrow(() -> new BadRequestException("Agent data could not be null"))
+    public ResponseMessage<AgentLog> agentStat(AgentData agentData) {
+        return ResponseMessage.ok(agentLogService.save(agentData
+                                                           .builder()
+                                                           .orElseThrow(() -> new BadRequestException("Agent data could not be null"))
         ));
     }
 
@@ -53,30 +54,33 @@ public class AgentLogController {
     @ApiOperation("根据 ID 查询详情")
     @GetMapping("/{id}")
     public ResponseMessage<AgentLog> info(@PathVariable("id") String id) {
-        return ResponseMessage.ok(agentLogService.findOne(id)
-            .orElseThrow(() -> new NotFoundException("Agent log not found")));
+        return ResponseMessage.ok(agentLogService
+                                      .findOne(id)
+                                      .orElseThrow(() -> new NotFoundException("Agent log not found")));
     }
 
     /**
      * Get agent log list
      *
-     * @param pageNo   page number
-     * @param pageSize page size
+     * @param current   page number
+     * @param size page size
      * @param serverId user server id
      * @param cpuName  cpu name
      * @return agent log list
      */
     @ApiOperation("查询 Agent Log 列表")
     @GetMapping("")
-    public ResponseMessage<Page<AgentLog>> list(@RequestParam Integer pageNo,
-                                                @RequestParam Integer pageSize,
-                                                @RequestParam Long serverId,
-                                                @RequestParam String cpuName) {
-        return ResponseMessage.ok(agentLogService.findAll(Example.of(AgentLog.builder()
-            .serverId(serverId)
-            .cpuName(cpuName)
-            .build(), ExampleMatcher.matching()
-            .withMatcher("cpuName", ExampleMatcher.GenericPropertyMatcher::endsWith)
-        ), PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, "createTime"))));
+    public Page<AgentLog> list(@RequestParam(required = false, defaultValue = "0") Integer current,
+                               @RequestParam(required = false, defaultValue = "10") Integer size,
+                               @RequestParam(required = false) Long serverId,
+                               @RequestParam(required = false) String cpuName) {
+        return agentLogService.findAll(Example.of(AgentLog
+                                                      .builder()
+                                                      .serverId(serverId)
+                                                      .cpuName(cpuName)
+                                                      .build(), ExampleMatcher
+                                                      .matching()
+                                                      .withMatcher("cpuName", ExampleMatcher.GenericPropertyMatcher::endsWith)
+        ), PageRequest.of(current, size, Sort.by(Sort.Direction.DESC, "createTime")));
     }
 }

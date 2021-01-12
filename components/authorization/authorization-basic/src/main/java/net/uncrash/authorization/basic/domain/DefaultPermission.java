@@ -47,10 +47,10 @@ public class DefaultPermission implements Permission {
     @Column(name = "icon", length = 50, columnDefinition = "VARCHAR(128) comment '权限路由图标'")
     private String icon;
 
-    @Column(name = "show_in_menu", columnDefinition = "TINYINT(1) comment '显示到菜单'")
+    @Column(name = "show_in_menu", columnDefinition = "BIT comment '显示到菜单'")
     private Boolean showInMenu;
 
-    @Column(name = "hide_children_in_menu", columnDefinition = "TINYINT(1) comment '隐藏子菜单'")
+    @Column(name = "hide_children_in_menu", columnDefinition = "BIT comment '隐藏子菜单'")
     private Boolean hideChildrenInMenu;
 
     @Column(name = "[path]", length = 500, columnDefinition = "VARCHAR(255) comment '路由路径，如没有则自动生成'")
