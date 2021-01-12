@@ -34,7 +34,7 @@
         <swagger.version>2.9.2</swagger.version>
         <swagger.annotations.version>1.5.22</swagger.annotations.version>
         <jsonwebtoken.version>0.10.7</jsonwebtoken.version>
-        <beanutils.version>1.9.3</beanutils.version>
+        <beanutils.version>1.9.4</beanutils.version>
         <mariadb.client.version>2.4.1</mariadb.client.version>
     </properties>
 
